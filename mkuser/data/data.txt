@@ -1,1 +1,4 @@
+# This is just an example of what output mkuser will store when given 'james'
+# as the username and 'blah' as the password
+
 james : $2a$15$kEGaEwDDNTTQjEbYuzpW/.CFMFk3BFuGLZVTevVzMoJ6V9W40v0D2
