@@ -1,0 +1,32 @@
+#! /usr/bin/python3
+from gi.repository import Gtk
+
+class LabelWindow(Gtk.Window):
+
+    def __init__(self):
+        Gtk.Window.__init__(self, title="Label test")
+
+        hbox = Gtk.Box(spacing=10)
+        hbox.set_homogenous(False)
+        vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        vbox_left.set_homogenous(False)
+        vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        vbox_right.set_homogenous(False)
+
+        hbox.pack_start(vbox_left, True, True, 0)
+        hbox.pack_start(vbox_right, True, True, 0)
+
+        label = Gtk.Label("This here be your average label.")
+        vbox_left.pack_start(label, True, True, 0)
+
+        label = Gtk.Label()
+        label.set_text("This is a left-justified labelesque \nwith multiple lines.")
+        label.set_justify(Gtk.Justification.LEFT)
+        vbox_left.pack_start(label, True, True, 0)
+
+        # Start from here
+        
+win = LabelWindow
+win.connect("delete-event", Gtk.main_quit)
+win.show_all()
+Gtk.main()
