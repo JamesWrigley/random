@@ -7,14 +7,11 @@ class LabelWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="Label test")
 
         hbox = Gtk.Box(spacing=10)
-        hbox.set_homogenous(False)
         vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_left.set_homogenous(False)
         vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_right.set_homogenous(False)
 
-        hbox.pack_start(vbox_left, True, True, 0)
-        hbox.pack_start(vbox_right, True, True, 0)
+        hbox.pack_start(vbox_left, True, True, 2)
+        hbox.pack_start(vbox_right, True, True, 2)
 
         label = Gtk.Label("This here be your average label.")
         vbox_left.pack_start(label, True, True, 0)
@@ -59,11 +56,14 @@ class LabelWindow(Gtk.Window):
         vbox_left.pack_start(label, True, True, 0)
         label.set_selectable(True)
 
-        button = Gtk.Button(label="Click at thine own risk")
+        button = Gtk.Button(label="Click this to quit")
+        button.connect("clicked", Gtk.main_quit)
         label.set_mnemonic_widget(button)
         vbox_right.pack_start(button, True, True, 0)
+
+        self.add(hbox)
         
-label_window = LabelLabel_windowdow()
+label_window = LabelWindow()
 label_window.connect("delete-event", Gtk.main_quit)
 label_window.show_all()
 Gtk.main()
