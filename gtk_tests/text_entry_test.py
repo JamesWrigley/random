@@ -5,7 +5,7 @@ class EntryWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Text Entry Test")
-        self.set_size_request(200, 100)
+        self.set_size_request(350, 100)
 
         self.timeout_id = None
 
@@ -29,8 +29,8 @@ class EntryWindow(Gtk.Window):
         self.check_visible.set_active(True)
         hbox.pack_start(self.check_visible, True, True, 0)
 
-        self.pulse = Gtk.CheckButton("Pulse")
-        self.pulse.connect("toggled", self.on_pulse_toggled)
+        self.pulse = Gtk.CheckButton("Progress")
+        self.pulse.connect("toggled", self.on_progress_toggled)
         self.pulse.set_active(False)
         hbox.pack_start(self.pulse, True, True, 0)
 
@@ -47,7 +47,7 @@ class EntryWindow(Gtk.Window):
         value = button.get_active()
         self.entry.set_visibility(value)
 
-    def on_pulse_toggled(self, button):
+    def on_progress_toggled(self, button):
         if button.get_active():
             self.entry.set_progress_pulse_step(0.2)
             # Call self.do_pulse every 100 ms
