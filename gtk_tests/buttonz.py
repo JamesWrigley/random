@@ -46,12 +46,18 @@ class HelloWindow(Gtk.Window):
         self.toggle_button2.connect("toggled", self.toggle_button2_state)
         hbox.pack_start(self.toggle_button2, True, True, 4)
 
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, True, True, 0)
+
+        label = Gtk.Label(label="Enable the check box?")
+        hbox.pack_start(label, True, True, 5)
+
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")
-
+        
     def open_button_clicked(self, button):
         print("\"Open\" button was clicked")
-
+        
     def close_button_clicked(self, button):
         print("\"Close\" button was clicked")
 

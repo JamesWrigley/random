@@ -22,7 +22,7 @@ int main()
   int height = 528491;
 
   printf("I be %d years old.\n", age);
-  printf("I am %d inches tall.\n", height);
+  printf("I am %d inches tall.\n", heigh);
 
   return 0;
 }
