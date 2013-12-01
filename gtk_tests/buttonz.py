@@ -8,6 +8,7 @@ class HelloWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Button Demo")
+        self.set_size_request(250, 250)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.add(vbox)
@@ -47,10 +48,24 @@ class HelloWindow(Gtk.Window):
         hbox.pack_start(self.toggle_button2, True, True, 4)
 
         hbox = Gtk.Box()
-        vbox.pack_start(hbox, True, True, 0)
+        vbox.pack_start(hbox, True, True, 10)
 
         label = Gtk.Label(label="Enable the check box?")
         hbox.pack_start(label, True, True, 5)
+
+        self.check_button = Gtk.CheckButton()
+        self.check_button.connect("toggled", self.check_button_toggle)
+        hbox.pack_start(self.check_button, True, True, 0)
+
+        label = Gtk.Label(label="Select your choice of radio buttons:")
+        vbox.pack_start(label, True, True, 0)
+
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, True, True, 0)
+
+        self.radio_button1 = Gtk.RadioButton.new_with_label_from_widget(None, "Button One")
+        self.radio_button1.connect("toggled", self.radio_button_toggle, "1")    
+        hbox.pack_start(self.radio_button1, False, False, 0)
 
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")
@@ -66,6 +81,13 @@ class HelloWindow(Gtk.Window):
 
     def toggle_button2_state(self, button):
         print("Button 2 is set to " + str(button.get_active()))
+
+    def check_button_toggle(self, button):
+        print("Check button is set to" + str(button.get_active()))
+
+    def radio_button_toggle(self, button, name):
+        if button.get_active() == True:
+            print("Button " + name + " is now active")
 
         
 win = HelloWindow()
