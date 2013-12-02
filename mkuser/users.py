@@ -58,6 +58,9 @@ class UserOps:
 
 
 def initiate():
+    '''
+    This starts the whole process
+    '''
     while True:
         try:
             if int(input('Welcome to my piece of junk! \nIf you want to make a new user account, press 1. \nPress any other key to exit: ')) == 1:
@@ -69,6 +72,6 @@ def initiate():
             quit()
 
 
-
+# So initiate() is not called when the test file is run
 if __name__ == '__main__':
     initiate()
