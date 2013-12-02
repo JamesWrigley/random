@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
-# PyGTK button conglomeration
+# A truly disgusting PyGTK button conglomeration, will try and clean this
+# up sometime
 
 from gi.repository import Gtk
 
@@ -60,12 +61,21 @@ class HelloWindow(Gtk.Window):
         label = Gtk.Label(label="Select your choice of radio buttons:")
         vbox.pack_start(label, True, True, 0)
 
+
         hbox = Gtk.Box()
         vbox.pack_start(hbox, True, True, 0)
 
         self.radio_button1 = Gtk.RadioButton.new_with_label_from_widget(None, "Button One")
         self.radio_button1.connect("toggled", self.radio_button_toggle, "1")    
         hbox.pack_start(self.radio_button1, False, False, 0)
+
+        self.radio_button2 = Gtk.RadioButton.new_with_label_from_widget(self.radio_button1, "Button Two")
+        self.radio_button2.connect("toggled", self.radio_button_toggle, "2")
+        hbox.pack_start(self.radio_button2, False, False, 0)
+
+        self.radio_button3 = Gtk.RadioButton.new_with_label_from_widget(self.radio_button1, "Button Three")
+        self.radio_button3.connect("toggled", self.radio_button_toggle, "3")
+        hbox.pack_start(self.radio_button3, False, False, 0)
 
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")

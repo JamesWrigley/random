@@ -1,4 +1,4 @@
-// Exercise 1 from LCTHW
+// Exercise 2 from LCTHW (yes I know it's exactly the same as ex1)
 #include <stdio.h>
 
 int main(int argc, char *argv[])

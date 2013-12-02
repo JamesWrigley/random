@@ -1,3 +1,5 @@
+// Exercise 5 from LCTHW
+
 #include <stdio.h>
 
 /* This is a comment */

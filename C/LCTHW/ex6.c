@@ -1,4 +1,4 @@
-// Code from exercise 6 of LCTHW
+// Exercise 6 of LCTHW
 
 #include <stdio.h>
 

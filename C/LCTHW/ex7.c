@@ -1,3 +1,5 @@
+// Exercise 7 of LCTHW
+
 #include <stdio.h>
 
 int main(int argc, char *argv[])

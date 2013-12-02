@@ -1,4 +1,4 @@
-/* Exercise 4 from LCTHW, note that it is wrong purpose
+/* Exercise 4 from LCTHW, note that it the following code is wrong on purpose
 
 int main()
 {
