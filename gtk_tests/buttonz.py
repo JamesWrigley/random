@@ -77,6 +77,30 @@ class HelloWindow(Gtk.Window):
         self.radio_button3.connect("toggled", self.radio_button_toggle, "3")
         hbox.pack_start(self.radio_button3, False, False, 0)
 
+        link = Gtk.LinkButton("https://github.com/JamesWrigley", "Bad Code Example")
+        vbox.pack_start(link, False, False, 0)
+
+        label = Gtk.Label(label="SpinButton Demonstration")
+        vbox.pack_start(label, True, True, 15)
+
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, True, True, 0)
+
+        self.adjustment = Gtk.Adjustment(4, 0, 100, 2, 10, 0)
+        self.spinbutton = Gtk.SpinButton()
+        self.spinbutton.set_adjustment(self.adjustment)
+        self.spinbutton.set_digits(2)
+        hbox.pack_start(self.spinbutton, True, True, 0)
+
+        self.check_numeric = Gtk.CheckButton("Numeric")
+        self.check_numeric.connect("toggled", self.on_numeric_toggled)
+        hbox.pack_start(self.check_numeric, True, True, 0)
+
+        self.check_valid = Gtk.CheckButton("If Valid")
+        self.check_valid.connect("toggled", self.check_valid_toggled)
+        hbox.pack_start(self.check_valid, True, True, 0)
+
+
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")
         
@@ -98,6 +122,16 @@ class HelloWindow(Gtk.Window):
     def radio_button_toggle(self, button, name):
         if button.get_active() == True:
             print("Button " + name + " is now active")
+
+    def on_numeric_toggled(self, button):
+        self.spinbutton.set_numeric(button.get_active())
+
+    def check_valid_toggled(self, button):
+        if button.get_active():
+            policy = Gtk.SpinButtonUpdatePolicy.IF_VALID
+        else:
+            policy = Gtk.SpinButtonUpdatePolicy.ALWAYS
+        self.spinbutton.set_update_policy(policy)
 
         
 win = HelloWindow()
