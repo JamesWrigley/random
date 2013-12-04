@@ -83,23 +83,39 @@ class HelloWindow(Gtk.Window):
         label = Gtk.Label(label="SpinButton Demonstration")
         vbox.pack_start(label, True, True, 15)
 
-        hbox = Gtk.Box()
+        hbox = Gtk.Box(spacing=20)
         vbox.pack_start(hbox, True, True, 0)
 
         self.adjustment = Gtk.Adjustment(4, 0, 100, 2, 10, 0)
         self.spinbutton = Gtk.SpinButton()
         self.spinbutton.set_adjustment(self.adjustment)
         self.spinbutton.set_digits(2)
-        hbox.pack_start(self.spinbutton, True, True, 0)
+        hbox.pack_start(self.spinbutton, True, True, 20)
 
         self.check_numeric = Gtk.CheckButton("Numeric")
         self.check_numeric.connect("toggled", self.on_numeric_toggled)
         hbox.pack_start(self.check_numeric, True, True, 0)
 
-        self.check_valid = Gtk.CheckButton("If Valid")
-        self.check_valid.connect("toggled", self.check_valid_toggled)
-        hbox.pack_start(self.check_valid, True, True, 0)
+        label = Gtk.Label(label="A switch button example")
+        vbox.pack_start(label, True, True, 15)
 
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, True, True, 0)
+
+        self.switch_button1 = Gtk.Switch()
+        self.switch_button1.set_active(True)
+        self.switch_button1.connect("notify::active", self.on_switched)
+        hbox.pack_start(self.switch_button1, True, True, 0)
+
+        self.switch_button1_text = Gtk.Label(label="Switch One")
+        hbox.pack_start(self.switch_button1_text, True, True, 10)
+
+        self.switch_button2 = Gtk.Switch()
+        self.switch_button2.set_active(False)
+        hbox.pack_start(self.switch_button2, True, True, 0)
+
+        self.switch_button2_text = Gtk.Label(label="Switch Two")
+        hbox.pack_start(self.switch_button2_text, True, True, 10)
 
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")
@@ -126,14 +142,14 @@ class HelloWindow(Gtk.Window):
     def on_numeric_toggled(self, button):
         self.spinbutton.set_numeric(button.get_active())
 
-    def check_valid_toggled(self, button):
+    def on_switched(self, button, gparam):
         if button.get_active():
-            policy = Gtk.SpinButtonUpdatePolicy.IF_VALID
+            state = "on"
         else:
-            policy = Gtk.SpinButtonUpdatePolicy.ALWAYS
-        self.spinbutton.set_update_policy(policy)
+            state = "off"
+        print(str(gparam) + " is set " + state)
 
-        
+
 win = HelloWindow()
 win.connect("delete-event", Gtk.main_quit)
 win.show_all()
