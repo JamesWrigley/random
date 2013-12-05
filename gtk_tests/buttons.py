@@ -102,20 +102,53 @@ class HelloWindow(Gtk.Window):
         hbox = Gtk.Box()
         vbox.pack_start(hbox, True, True, 0)
 
-        self.switch_button1 = Gtk.Switch()
-        self.switch_button1.set_active(True)
-        self.switch_button1.connect("notify::active", self.on_switched)
-        hbox.pack_start(self.switch_button1, True, True, 0)
-
         self.switch_button1_text = Gtk.Label(label="Switch One")
         hbox.pack_start(self.switch_button1_text, True, True, 10)
 
-        self.switch_button2 = Gtk.Switch()
-        self.switch_button2.set_active(False)
-        hbox.pack_start(self.switch_button2, True, True, 0)
+        self.switch_button1 = Gtk.Switch()
+        self.switch_button1.set_active(True)
+        self.switch_button1.connect("notify::active", self.on_switched, self.switch_button1_text.get_text())
+        hbox.pack_start(self.switch_button1, True, True, 0)
 
         self.switch_button2_text = Gtk.Label(label="Switch Two")
         hbox.pack_start(self.switch_button2_text, True, True, 10)
+
+        self.switch_button2 = Gtk.Switch()
+        self.switch_button2.set_active(False)
+        self.switch_button2.connect("notify::active", self.on_switched, self.switch_button2_text.get_text())
+        hbox.pack_start(self.switch_button2, True, True, 0)
+
+        label = Gtk.Label(label="Some spinning action")
+        vbox.pack_start(label, True, True, 15)
+
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, True, True, 0)
+
+        vbox_spinner1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        hbox.pack_start(vbox_spinner1, True, True, 0)
+
+        # Have to declare this here and pack later, so spinner1.switch sees it
+        self.spinner1 = Gtk.Spinner()
+
+        self.spinner1_switch = Gtk.Switch()
+        self.spinner1_switch.connect("notify::active", self.spinner_toggle, self.spinner1)
+        vbox_spinner1.pack_start(self.spinner1_switch, True, True, 0)
+
+        # Pack the spinner
+        vbox_spinner1.pack_start(self.spinner1, True, True, 20)
+
+        vbox_spinner2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        hbox.pack_start(vbox_spinner2, True, True, 0)
+
+        # Declare second spinner here
+        self.spinner2 = Gtk.Spinner()
+
+        self.spinner2_switch = Gtk.Switch()
+        self.spinner2_switch.connect("notify::active", self.spinner_toggle, self.spinner2)
+        vbox_spinner2.pack_start(self.spinner2_switch, True, True, 0)
+
+        # And pack second spinner
+        vbox_spinner2.pack_start(self.spinner2, True, True, 20)
 
     def click_button_clicked(self, button):
         print("\"Click Me\" button was clicked")
@@ -142,12 +175,18 @@ class HelloWindow(Gtk.Window):
     def on_numeric_toggled(self, button):
         self.spinbutton.set_numeric(button.get_active())
 
-    def on_switched(self, button, gparam):
+    def on_switched(self, button, gparam, name):
         if button.get_active():
             state = "on"
         else:
             state = "off"
-        print(str(gparam) + " is set " + state)
+        print(str(name) + " is set " + state)
+
+    def spinner_toggle(self, button, gparam, name):
+        if button.get_active():
+            name.start()
+        else:
+            name.stop()
 
 
 win = HelloWindow()
