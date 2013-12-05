@@ -1,2 +1,4 @@
-# Ignore the autosave stuff
+# Ignore the autosave stuff, Java .class files and ABRT logs
 *~
+*.class
+*.log
