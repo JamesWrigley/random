@@ -5,9 +5,13 @@ all:
 	make -j4 hello_world
 	make -j4 mult
 	make -j4 while_loop
+	make -j4 sum_of_x
+	make -j4 print_to_zero
 
 clean:
 	rm -f sum
 	rm -f hello_world
 	rm -f mult
 	rm -f while_loop
+	rm -f sum_of_x
+	rm -f print_to_zero
