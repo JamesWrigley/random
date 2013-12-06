@@ -2,15 +2,12 @@
 
 #include <iostream>
 
+int sum = 0;
+
 int main()
 {
-    int sum = 0;
-    int val = 50;
-    // Keep executing till the val is at number
-    while (val <= 100) {
+    for (int val = 50; val <= 100; ++val)
 	sum += val;
-	++val;
-    }
 
     std::cout << "Sum of 50 to 100 inclusive is " << sum << std::endl;
 
