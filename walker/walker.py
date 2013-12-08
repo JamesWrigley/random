@@ -19,16 +19,16 @@ def delete_files(keyword):
         print("You must enter a keyword!")
         quit()
     else:
-        keyword = keyword[1]
+        keyword = keyword[1:]
 
     # Initializes a list that will store the file paths of files to be deleted
     file_match_list = []
 
-    # Search in and under CWD for files with keyword in their name, then append
-    # to file_match_list
+    # Search in and under CWD for files with all keyword in their name, then
+    # append to file_match_list
     for root, dirs, files in os.walk(os.getcwd()):
         for file in files:
-            if keyword in file:
+            if keyword[0] in file and keyword[1] in file:
                 print(root + slash + file)
                 file_match_list.append(root + slash + file)
 

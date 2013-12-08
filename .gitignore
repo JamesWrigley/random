@@ -1,4 +1,11 @@
 # Ignore the autosave stuff, Java .class files and ABRT logs
 *~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
 *.class
 *.log
