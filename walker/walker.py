@@ -15,9 +15,10 @@ else:
 def delete_files():
 
     keyword = input("Enter a keyword (or two): ")
+    keyword = str.split(keyword)	# Split string into individual keywords
 
     # Checking for empty keyword input from the user
-    if len(keyword) == 1:
+    if len(keyword) == 0:
         print("You must enter a keyword!")
         quit()
 
@@ -37,9 +38,8 @@ def delete_files():
         print("No matches found")
     else:
         if input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ") in "yY":
-            print("Coward! " * len(file_match_list))
-#            for file in file_match_list:
-#                os.remove(file)
+            for file in file_match_list:
+                os.remove(file)
         else:
             print("Coward! " * len(file_match_list))
 
@@ -47,9 +47,10 @@ def delete_files():
 def search():
 
     keyword = input("Enter a keyword (or two): ")
+    keyword = str.split(keyword)	# Split string into individual keywords
 
     # Checking for empty keyword input from the user
-    if len(keyword) == 1:
+    if len(keyword) == 0:
         print("You must enter a keyword!")
         quit()
 
