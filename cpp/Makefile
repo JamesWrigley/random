@@ -7,6 +7,8 @@ all:
 	make -j4 sum_of_x
 	make -j4 print_to_zero
 	make -j4 print_range
+	make -j4 sum_dynamic
+	make -j4 matches
 
 clean:
 	rm -f sum
@@ -15,3 +17,5 @@ clean:
 	rm -f sum_of_x
 	rm -f print_to_zero
 	rm -f print_range
+	rm -f sum_dynamic
+	rm -f matches
