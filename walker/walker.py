@@ -6,22 +6,7 @@
 import sys
 import os
 
-# Windows compatability
-if sys.platform == 'linux':
-    slash = "/"
-else:
-    slash = "\\"
-
-def delete_files():
-
-    keyword = input("Enter a keyword (or two): ")
-    keyword = str.split(keyword)	# Split string into individual keywords
-
-    # Checking for empty keyword input from the user
-    if len(keyword) == 0:
-        print("You must enter a keyword!")
-        quit()
-
+def search_base(keyword_list):
     # Initializes a list that will store the file paths of files to be deleted
     file_match_list = []
 
@@ -29,43 +14,52 @@ def delete_files():
     # append to file_match_list
     for root, dirs, files in os.walk(os.getcwd()):
         for file in files:
-            if keyword[0] in file and keyword[1] in file:
-                print(root + slash + file)
-                file_match_list.append(root + slash + file)
+            if all(i in file for i in keyword_list):
+                file_match_list.append(os.path.join(root, file))
 
+    return file_match_list
+
+
+def search(keyword_list):
+    search_result = search_base(keyword_list)
+
+    if search_result == []:
+        print("No matches found")
+    else:
+        for i in search_result: print(i)
+
+def delete_files(keyword_list):
+    file_match_list = search_base(keyword_list)
+    
     # Prompts user to confirm delete as long as matches have been found
     if file_match_list == []:
         print("No matches found")
     else:
-        if input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ") in "yY":
+        for i in file_match_list: print(i)
+        user_choice = input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ")
+
+        if user_choice in "yY":
             for file in file_match_list:
                 os.remove(file)
-        else:
-            print("Coward! " * len(file_match_list))
+            print(str(len(file_match_list)) + " files deleted")
+        elif user_choice in "nN":
+            print("No files deleted")
 
-
-def search():
-
-    keyword = input("Enter a keyword (or two): ")
-    keyword = str.split(keyword)	# Split string into individual keywords
-
-    # Checking for empty keyword input from the user
-    if len(keyword) == 0:
-        print("You must enter a keyword!")
-        quit()
-
-    # Search in and under CWD for files with all keyword in their name, then
-    # append to file_match_list
-    for root, dirs, files in os.walk(os.getcwd()):
-        for file in files:
-            if keyword[0] in file and keyword[1] in file:
-                print(root + slash + file)
 
 
 if __name__ == '__main__':
+    def initiate():
+        option = input("Press 1 if you want to search, 2 if you want to search and delete: ")
 
-    option = input("Press 1 if you want to search, 2 if you want to search and delete: ")
-    if option == "1":
-        search()
-    else:
-        delete_files()
+        if option == "1":
+            keyword_list = str.split(input("Enter a keyword (or two): "))
+            search(keyword_list)
+        elif option == "2":
+            keyword_list = str.split(input("Enter a keyword (or two): "))
+            delete_files(keyword_list)
+        else:
+            print("You must select an option")
+            initiate()
+    
+    initiate()
+            
