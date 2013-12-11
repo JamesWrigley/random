@@ -30,7 +30,7 @@ def search(keyword_list):
 
 def delete_files(keyword_list):
     file_match_list = search_base(keyword_list)
-
+    
     # Prompts user to confirm delete as long as matches have been found
     if file_match_list == []:
         print("No matches found")
@@ -48,7 +48,6 @@ def delete_files(keyword_list):
 
 
 if __name__ == '__main__':
-
     def initiate():
         option = input("Press 1 if you want to search, 2 if you want to search and delete: ")
 
