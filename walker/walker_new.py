@@ -5,59 +5,45 @@
 
 import sys
 import os
-import re
-
-# Windows compatability
-if sys.platform == 'linux':
-    slash = "/"
-else:
-    slash = "\\"
 
 def search_base(keyword_list):
-
-    # Checking for empty keyword input from the user
-    if len(keyword_list) == 0:
-        print("You must enter a keyword!")
-        initiate()
-
     # Initializes a list that will store the file paths of files to be deleted
     file_match_list = []
-    regex_match = re.compile('|'.join(keyword_list), flags=re.I)
-#    regex_match = re.compile(re.escape('|'.join(keyword_list)), flags=re.I)
 
     # Search in and under CWD for files with all keyword in their name, then
     # append to file_match_list
     for root, dirs, files in os.walk(os.getcwd()):
         for file in files:
-            if regex_match.search(file):
+            if all(i in file for i in keyword_list):
                 file_match_list.append(os.path.join(root, file))
 
     return file_match_list
 
 
 def search(keyword_list):
+    search_result = search_base(keyword_list)
 
-    if search_base(keyword_list) == []:
+    if search_result == []:
         print("No matches found")
     else:
-        for i in search_base(keyword_list): print(i)
+        for i in search_result: print(i)
 
 def delete_files(keyword_list):
-
-    search_base(keyword_list)
+    file_match_list = search_base(keyword_list)
 
     # Prompts user to confirm delete as long as matches have been found
     if file_match_list == []:
         print("No matches found")
     else:
-        print(file_match_list)
-        if input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ") in "yY":
-            print("Coward! " * len(file_match_list))
-#            for file in file_match_list:
-#                os.remove(file)
-        else:
-            print("Coward! " * len(file_match_list))
+        for i in file_match_list: print(i)
+        user_choice = input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ")
 
+        if user_choice in "yY":
+            for file in file_match_list:
+                os.remove(file)
+            print(str(len(file_match_list)) + " files deleted")
+        elif user_choice in "nN":
+            print("No files deleted")
 
 
 
@@ -75,4 +61,6 @@ if __name__ == '__main__':
         else:
             print("You must select an option")
             initiate()
+    
     initiate()
+            
