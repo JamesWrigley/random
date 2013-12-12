@@ -16,7 +16,6 @@ def search_base(keyword_list):
         for file in files:
             if all(i in file for i in keyword_list):
                 file_match_list.append(os.path.join(root, file))
-
     return file_match_list
 
 
@@ -27,6 +26,7 @@ def search(keyword_list):
         print("No matches found")
     else:
         for i in search_result: print(i)
+
 
 def delete_files(keyword_list):
     file_match_list = search_base(keyword_list)
@@ -46,7 +46,6 @@ def delete_files(keyword_list):
             print("No files deleted")
 
 
-
 if __name__ == '__main__':
     def initiate():
         option = input("Press 1 if you want to search, 2 if you want to search and delete: ")
@@ -60,6 +59,5 @@ if __name__ == '__main__':
         else:
             print("You must select an option")
             initiate()
-    
     initiate()
             
