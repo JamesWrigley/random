@@ -19,6 +19,8 @@ public class Math {
             multiply();
         } else if (input == 3) {
             subtract();
+        } else if (input == 4) {
+            divide();
         } else {
             System.out.println("NIH");
         }
@@ -82,6 +84,28 @@ public class Math {
         int i = 1;
         while (i < int_values.length) {
             sum -= int_values[i];
+            ++i;
+        }
+        System.out.println(sum);
+    }
+
+    public static void divide()
+        throws Exception
+    {
+        System.out.print("Enter the numbers to be divided (one after the other, in order of entry): ");
+        
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        String[] values = read.readLine().split("\\s+");
+        int[] int_values = new int[values.length];
+        
+        for (int i = 0; i < values.length; ++i) {
+            int_values[i] = Integer.parseInt(values[i]);
+        }
+        
+        int sum = int_values[0];
+        int i = 1;
+        while (i < int_values.length) {
+            sum /= int_values[i];
             ++i;
         }
         System.out.println(sum);
