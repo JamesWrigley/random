@@ -27,7 +27,7 @@ public class Math {
     }
 
 
-    public static void add() 
+    public static void add()
         throws Exception
     {
         System.out.print("Enter the numbers to be added: ");

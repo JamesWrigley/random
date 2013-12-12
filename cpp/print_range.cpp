@@ -7,8 +7,19 @@ int val2 = 0;
 
 int main()
 {
-    std::cout << "Enter 2 numbers, the second larger than the first: ";
-    for (std::cin >> val1 >> val2; val2 >= val1; ++val1) {
-	std::cout << val1 << std::endl;
+    std::cout << "Enter 2 numbers, the range between them will be printed: ";
+    std::cin >> val1 >> val2;
+
+    if (val1 < val2) {
+        while (val1 <= val2) {
+            std::cout << val1 << std::endl;
+            ++val1; }
+    }
+    else if (val1 > val2) {
+        while (val1 >= val2) {
+            std::cout << val1 << std::endl;
+            --val1;
+        }
     }
 }
+
