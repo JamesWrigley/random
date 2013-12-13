@@ -1,5 +1,4 @@
 #! /usr/bin/python3
-
 # A truly disgusting PyGTK button conglomeration, will try and clean this
 # up sometime
 
