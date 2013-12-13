@@ -23,14 +23,17 @@ public class Math {
  
     public static void run() throws IOException {
 
-        System.out.print("Press 1 to add, 2 to multiply, 3 to subtract, or 4 to divide: ");
+        System.out.print("Press 1 to add, 2 to multiply, 3 to subtract, 4 to divide, or 5 to exit: ");
         BufferedReader read = new BufferedReader(new InputStreamReader(System.in));  // Sets up console input
                 
         int input = Integer.parseInt(read.readLine()); // Converts the string input from read to an integer
 
-        if(input != 1 && input != 2 && input != 3 && input != 4) { //Validate input 
-            System.out.println("Incorrect input"); 
-            return;
+        // Quits or continues the program based on the input variable
+        switch (input) {
+        case 1: if (input == 1 || input == 2 || input == 3 || input == 4)
+                break;
+        default: if (input == 5)
+                System.exit(0);
         }
 
         // Gets the input, removes any whitespace, and puts all arguments into an array
@@ -53,13 +56,13 @@ public class Math {
                 total *= floatValue;
             } else if (input == 3) {
                 total -= floatValue;
-            }
-            else if (input == 4) {
+            } else if (input == 4) {
                 total /= floatValue;
             } else { //You should never hide a bug so throw exceptions for invalid states (Notice I throw an Error which doesn't have to be handled with a try catch statement)
                 throw new Error("Unknown input type: " + input);
             }
         }
         System.out.println(total);
+        run();
     }
 }

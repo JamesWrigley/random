@@ -38,6 +38,7 @@ class MainWindow(Gtk.Window):
 
         string_entry_box = Gtk.Entry()
         string_entry_box.connect("activate", methods.hash_string, string_entry_box.get_text())
+        hbox.pack_start(string_entry_box, True, True, 10)
 
 class methods():
     '''
@@ -49,7 +50,19 @@ class methods():
 
     def hash_string(self, text):
         hash_object = hashlib.sha1(text.encode()).hexdigest()
-
+        print(hash_object)
+        
+'''        dialog = Gtk.Dialog()
+        dialog.set_title("Hash Result")
+        dialog.set_transient_for(MainWindow())
+        dialog.set_modal(True)
+        dialog.add_button(button_text="Copy", response_id=Gtk.ResponseType.OK)
+        dialog.connect("response", quit())
+        dialog_content_area = dialog.get_content_area()
+        dialog_content_area_label = Gtk.Label("This is a dialog label")
+        dialog_content_area.add(dialog_content_area_label)
+        dialog.show_all()
+'''
 
 window = MainWindow()
 window.connect("delete-event", Gtk.main_quit)
