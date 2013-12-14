@@ -38,7 +38,7 @@ class MainWindow(Gtk.Window):
         hbox.pack_start(select_object_menu, True, False, 0)
 
         self.string_entry_box = Gtk.Entry()
-        self.string_entry_box.connect("activate", hash_string, self.string_entry_box)
+        self.string_entry_box.connect("activate", hasher, self.string_entry_box)
         hbox.pack_start(self.string_entry_box, True, True, 10)
 
         hbox = Gtk.Box()
@@ -78,22 +78,21 @@ def choose_file(button, window_instance):
 
     dialog.destroy()
 
-def hasher(entry_box):
-    file_path = entry_box.get_text()
-    blocksize = 65536
-    hash_algo = hashlib.sha1()
+def hasher(self, entry_box):
+    if current_object_type == "File":
+        file_path = entry_box.get_text()
+        blocksize = 65536
+        hash_algo = hashlib.sha1()
 
-    with open(file_path, 'rb') as file:
-        buffer = file.read(blocksize)
-        while len(buffer) > 0:
-            hash_algo.update(buffer)
+        with open(file_path, 'rb') as file:
             buffer = file.read(blocksize)
-
-    print(hash_algo.hexdigest())
-        
-def hash_string(self, entry_box):
-    text = entry_box.get_text()
-    hashed_text = hashlib.sha1(text.encode()).hexdigest()
+            while len(buffer) > 0:
+                hash_algo.update(buffer)
+                buffer = file.read(blocksize)
+        hashed_text = hash_algo.hexdigest()
+    elif current_object_type =="String/Text":
+        text = entry_box.get_text()
+        hashed_text = hashlib.sha1(text.encode()).hexdigest()
     
     dialog = Gtk.Dialog()
     dialog.set_size_request(400, 100)
