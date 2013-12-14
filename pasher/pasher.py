@@ -41,6 +41,19 @@ class MainWindow(Gtk.Window):
         self.string_entry_box.connect("activate", hash_string, self.string_entry_box)
         hbox.pack_start(self.string_entry_box, True, True, 10)
 
+        hbox = Gtk.Box()
+        vbox.pack_start(hbox, False, True, 0)
+
+        self.file_button = Gtk.Button(label="Open File")
+        self.file_button.connect("clicked", choose_file, self)
+        self.file_button.set_sensitive(False)
+        hbox.pack_end(self.file_button, False, False, 10)
+        
+
+current_object_type = "String/Text"
+
+def copy_to_clipboard(self, button, hashed_text):
+    clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(hashed_text, -1)
 
 def change_object(self, combo, window_instance):
     tree_iter = combo.get_active_iter()
@@ -48,13 +61,36 @@ def change_object(self, combo, window_instance):
     current_object_type = model.get_value(tree_iter, 0)
     
     if current_object_type == "File":
-        window_instance.string_entry_box.hide()
+        window_instance.string_entry_box.set_editable(False)
+        window_instance.file_button.set_sensitive(True)
     else:
-        window_instance.string_entry_box.show()
-        
-def copy_to_clipboard(self, button, hashed_text):
-    clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(hashed_text, -1)
+        window_instance.string_entry_box.set_editable(True)
+        window_instance.file_button.set_sensitive(False)
 
+def choose_file(button, window_instance):
+    dialog = Gtk.FileChooserDialog("Please choose a file", window_instance, Gtk.FileChooserAction.OPEN,
+                                   (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                                   Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+
+    response = dialog.run()
+    if response == Gtk.ResponseType.OK:
+        window_instance.string_entry_box.set_text(dialog.get_filename())
+
+    dialog.destroy()
+
+def hasher(entry_box):
+    file_path = entry_box.get_text()
+    blocksize = 65536
+    hash_algo = hashlib.sha1()
+
+    with open(file_path, 'rb') as file:
+        buffer = file.read(blocksize)
+        while len(buffer) > 0:
+            hash_algo.update(buffer)
+            buffer = file.read(blocksize)
+
+    print(hash_algo.hexdigest())
+        
 def hash_string(self, entry_box):
     text = entry_box.get_text()
     hashed_text = hashlib.sha1(text.encode()).hexdigest()
