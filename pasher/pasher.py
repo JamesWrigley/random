@@ -34,23 +34,24 @@ class MainWindow(Gtk.Window):
         select_object_menu.pack_start(object_menu_cell, False)
         select_object_menu.add_attribute(object_menu_cell, "text", 0)
         select_object_menu.set_active(0)
-        select_object_menu.connect("changed", change_object, select_object_menu)
+        select_object_menu.connect("changed", change_object, select_object_menu, self)
         hbox.pack_start(select_object_menu, True, False, 0)
 
-        string_entry_box = Gtk.Entry()
-        string_entry_box.connect("activate", hash_string, string_entry_box)
-        hbox.pack_start(string_entry_box, True, True, 10)
+        self.string_entry_box = Gtk.Entry()
+        self.string_entry_box.connect("activate", hash_string, self.string_entry_box)
+        hbox.pack_start(self.string_entry_box, True, True, 10)
 
 
-
-def change_object(self, combo):
+def change_object(self, combo, window_instance):
     tree_iter = combo.get_active_iter()
     model = combo.get_model()
     current_object_type = model.get_value(tree_iter, 0)
     
     if current_object_type == "File":
-        window.string_entry_box.hide()
-            
+        window_instance.string_entry_box.hide()
+    else:
+        window_instance.string_entry_box.show()
+        
 def copy_to_clipboard(self, button, hashed_text):
     clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(hashed_text, -1)
 
