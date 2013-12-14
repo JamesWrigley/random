@@ -39,15 +39,19 @@ class MainWindow(Gtk.Window):
 
         self.string_entry_box = Gtk.Entry()
         self.string_entry_box.connect("activate", hasher, self.string_entry_box)
-        hbox.pack_start(self.string_entry_box, True, True, 10)
+        hbox.pack_start(self.string_entry_box, True, True, 0)
 
         hbox = Gtk.Box()
         vbox.pack_start(hbox, False, True, 0)
 
+        self.hash_button = Gtk.Button(label="Hash")
+        self.hash_button.connect("clicked", hasher, self.string_entry_box)
+        hbox.pack_end(self.hash_button, False, False, 0)
+
         self.file_button = Gtk.Button(label="Open File")
         self.file_button.connect("clicked", choose_file, self)
         self.file_button.set_sensitive(False)
-        hbox.pack_end(self.file_button, False, False, 10)
+        hbox.pack_end(self.file_button, False, False, 0)
         
 
 current_object_type = "String/Text"
