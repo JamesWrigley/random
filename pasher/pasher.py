@@ -57,25 +57,32 @@ class MainWindow(Gtk.Window):
         vbox.pack_start(algo_menu_hbox, False, False, 0)
 
         # Menu for the user to select the hash algorithm
-        object_types = []
+        hash_algos = []
         for i in hashlib.algorithms_available:
-            object_types.append([i])
+            if i.islower() and any(l.isdigit() for l in i):
+                hash_algos.append([i])
         listmodel = Gtk.ListStore(str)
-        for i in range(len(object_types)):
-            listmodel.append(object_types[i])
-        select_object_menu = Gtk.ComboBox(model=listmodel)
-        object_menu_cell = Gtk.CellRendererText()
-        select_object_menu.pack_start(object_menu_cell, False)
-        select_object_menu.add_attribute(object_menu_cell, "text", 0)
-        select_object_menu.set_active(0)
-        select_object_menu.connect("changed", hasher, self.string_entry_box, select_object_menu, self)
-        algo_menu_hbox.pack_start(select_object_menu, False, False, 2)
+        for i in range(len(hash_algos)):
+            listmodel.append(hash_algos[i])
+        self.select_algo_menu = Gtk.ComboBox(model=listmodel)
+        algo_menu_cell = Gtk.CellRendererText()
+        self.select_algo_menu.pack_start(object_menu_cell, False)
+        self.select_algo_menu.add_attribute(object_menu_cell, "text", 0)
+        self.select_algo_menu.set_active(0)
+        self.select_algo_menu.connect("changed", change_algo, self.select_algo_menu, self)
+        algo_menu_hbox.pack_start(self.select_algo_menu, False, False, 2)
         
 
 current_object_type = "String/Text"
+hash_algo = hashlib.sha1
 
 def copy_to_clipboard(self, button, hashed_text):
     clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(hashed_text, -1)
+
+def change_algo(self, combo, window_instance):
+    tree_iter = combo.get_active_iter()
+    model = combo.get_model()
+    hash_algo = eval("hashlib." + model.get_value(tree_iter, 0))
 
 def change_object(self, combo, window_instance):
     tree_iter = combo.get_active_iter()
@@ -101,16 +108,12 @@ def choose_file(button, window_instance):
 
     dialog.destroy()
 
-def hasher(entry_box, combo, window_instance):
+def hasher(button, entry_box, window_instance):
     text = entry_box.get_text()
-
-    tree_iter = combo.get_active_iter()
-    model = combo.get_model()
-    hash_algo = model.get_value(tree_iter, 0)
 
     if current_object_type == "File":
         blocksize = 65536
-        hash_algo = model.get_value(tree_iter, 0).hashlib.sha1()
+#        hash_algo = model.get_value(tree_iter, 0).hashlib.sha1()
 
         with open(file_path, 'rb') as file:
             buffer = file.read(blocksize)
@@ -119,7 +122,7 @@ def hasher(entry_box, combo, window_instance):
                 buffer = file.read(blocksize)
         hashed_text = hash_algo.hexdigest()
     elif current_object_type =="String/Text":
-        hashed_text = hashlib.sha1(text.encode()).hexdigest()
+        hashed_text = hash_algo(text.encode()).hexdigest()
 
     if len(text) > 40:
         text = "..." + text[-37:]
