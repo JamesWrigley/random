@@ -125,7 +125,7 @@ def hasher(button, entry_box, window_instance):
         text = "..." + text[-37:]
     
     dialog = Gtk.Dialog()
-    dialog.set_size_request(400, 100)
+#    dialog.set_size_request(400, 100)
     dialog.set_title("Hash Result")
     dialog.set_transient_for(window_instance)
     dialog.set_modal(True)
@@ -135,7 +135,7 @@ def hasher(button, entry_box, window_instance):
     dialog_content_area_label = Gtk.Label(label="Hash of " + '"' + text + '"' + ":")
     dialog_content_area.add(dialog_content_area_label)
     hashed_text_label = Gtk.Label(label=hashed_text)
-    dialog_content_area.pack_start(hashed_text_label, True, True, 0)
+    dialog_content_area.pack_start(hashed_text_label, True, True, 10)
     dialog.show_all()
 
 
