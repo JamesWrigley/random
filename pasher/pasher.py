@@ -57,10 +57,7 @@ class MainWindow(Gtk.Window):
         vbox.pack_start(algo_menu_hbox, False, False, 0)
 
         # Menu for the user to select the hash algorithm
-        hash_algos = []
-        for i in hashlib.algorithms_available:
-            if i.islower() and any(l.isdigit() for l in i):
-                hash_algos.append([i])
+        hash_algos = [["SHA1"], ["SHA224"], ["SHA256"], ["SHA384"], ["SHA512"], ["MD5"]]
         listmodel = Gtk.ListStore(str)
         for i in range(len(hash_algos)):
             listmodel.append(hash_algos[i])
@@ -76,15 +73,16 @@ class MainWindow(Gtk.Window):
 current_object_type = "String/Text"
 hash_algo = hashlib.sha1
 
-def copy_to_clipboard(self, button, hashed_text):
+def copy_to_clipboard(dialog, button, hashed_text):
     clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(hashed_text, -1)
 
-def change_algo(self, combo, window_instance):
+def change_algo(menu, combo, window_instance):
     tree_iter = combo.get_active_iter()
     model = combo.get_model()
-    hash_algo = eval("hashlib." + model.get_value(tree_iter, 0))
+    global hash_algo
+    hash_algo = eval("hashlib." + model.get_value(tree_iter, 0).lower())
 
-def change_object(self, combo, window_instance):
+def change_object(menu, combo, window_instance):
     tree_iter = combo.get_active_iter()
     model = combo.get_model()
     current_object_type = model.get_value(tree_iter, 0)
@@ -113,7 +111,6 @@ def hasher(button, entry_box, window_instance):
 
     if current_object_type == "File":
         blocksize = 65536
-#        hash_algo = model.get_value(tree_iter, 0).hashlib.sha1()
 
         with open(file_path, 'rb') as file:
             buffer = file.read(blocksize)
