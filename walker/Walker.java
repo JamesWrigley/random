@@ -1,6 +1,10 @@
 // A clone of walker.py, but written in Java
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 public class Walker {
     public static void main(String[] args) throws IOException {
@@ -23,8 +27,15 @@ public class Walker {
     }
 
     public static String[] search_base(String[] args) {
-        String[] matches = args;
-        return matches;
+        File[] files = new File(System.getProperty("user.dir")).listFiles();
+        Path cwd = FileSystems.getDefault().getPath(System.getProperty("user.dir"));
+        DirectoryStream<Path> stream = Files.newDirectoryStream(cwd);
+        
+        for (Path path : stream) {
+            System.out.println(path.getFileName());
+
+        }
+            return matches.toArray();
     }
 
     public static void search(String[] args) {
