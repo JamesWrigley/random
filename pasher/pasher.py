@@ -125,7 +125,6 @@ def hasher(button, entry_box, window_instance):
         text = "..." + text[-37:]
     
     dialog = Gtk.Dialog()
-#    dialog.set_size_request(400, 100)
     dialog.set_title("Hash Result")
     dialog.set_transient_for(window_instance)
     dialog.set_modal(True)
