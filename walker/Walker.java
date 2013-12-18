@@ -1,10 +1,9 @@
 // A clone of walker.py, but written in Java
 
 import java.io.*;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+import java.util.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class Walker {
     public static void main(String[] args) throws IOException {
@@ -27,19 +26,61 @@ public class Walker {
     }
 
     public static String[] search_base(String[] args) {
-        File[] files = new File(System.getProperty("user.dir")).listFiles();
-        Path cwd = FileSystems.getDefault().getPath(System.getProperty("user.dir"));
-        DirectoryStream<Path> stream = Files.newDirectoryStream(cwd);
-        
-        for (Path path : stream) {
-            System.out.println(path.getFileName());
+        final ArrayList<String> file_list = new ArrayList<String>();
 
+        try {
+            Path startPath = Paths.get(System.getProperty("user.dir"));
+            Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+                    @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                        file_list.add(file.toString());
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                        public FileVisitResult visitFileFailed(Path file, IOException e) {
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-            return matches.toArray();
+
+        String[] file_strlist = new String[file_list.size()];
+        for (int i = 0; i < file_list.size(); i++) {
+            file_strlist[i] = file_list.get(i).toString();
+        }
+
+        ArrayList<String> matches_arrylst = new ArrayList<String>();
+        boolean bool = true;
+
+        for (String i : file_strlist) {
+            for (String e : args) {
+                if (i.contains(e)) {
+                    continue;
+                } else {
+                    bool = false;
+                    break;
+                }
+            }
+            if (bool) {
+                matches_arrylst.add(i);
+            }
+        }
+        String[] matches = new String[matches_arrylst.size()];
+        for (int i = 0; i < matches_arrylst.size(); i++) {
+            matches[i] = matches_arrylst.get(i).toString();
+        }
+        return matches;
     }
 
     public static void search(String[] args) {
         String[] matches = search_base(args);
+
+        if (matches.length == 0) {
+            System.out.println("No matches found");
+        }
+
         for (int i = 0; i < matches.length; i++) {
             System.out.println(matches[i]);
         }
@@ -49,6 +90,10 @@ public class Walker {
     public static void delete(String[] args) throws IOException {
         BufferedReader read_choice = new BufferedReader(new InputStreamReader(System.in));
         String[] matches = search_base(args);
+
+        if (matches.length == 0) {
+            System.out.println("No matches found");
+        }
 
         for (int i = 0; i < matches.length; i++) {
             System.out.println(matches[i]);
