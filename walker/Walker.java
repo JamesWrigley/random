@@ -93,6 +93,7 @@ public class Walker {
 
         if (matches.length == 0) {
             System.out.println("No matches found");
+            System.exit(0);
         }
 
         for (int i = 0; i < matches.length; i++) {
