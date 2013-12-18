@@ -5,7 +5,7 @@ import java.util.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class Walker {
+public class Walker { // Prompts user to search or delete, gets keywords and passes them to the correct method
     public static void main(String[] args) throws IOException {
         System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
         BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
@@ -14,7 +14,7 @@ public class Walker {
         if (choice != 1 && choice != 2) {
             throw new Error("Unrecognised option \"" + choice + "\"");
         } else {
-            System.out.print("Enter 1 or more keywords: ");
+            System.out.print("Enter one or more keywords: ");
             String[] keywords = read_keywords.readLine().trim().split("\\s+");
 
             if (choice == 1) {
@@ -46,17 +46,13 @@ public class Walker {
             e.printStackTrace();
         }
 
-        String[] file_strlist = new String[file_list.size()];
-        for (int i = 0; i < file_list.size(); i++) {
-            file_strlist[i] = file_list.get(i).toString();
-        }
-
         ArrayList<String> matches_arrylst = new ArrayList<String>();
-        boolean bool = true;
+        boolean bool;
 
-        for (String i : file_strlist) {
+        for (String i : file_list) {
+            bool = true;
             for (String e : args) {
-                if (i.contains(e)) {
+                if (i.substring(i.lastIndexOf("/") + 1).contains(e)) {
                     continue;
                 } else {
                     bool = false;
