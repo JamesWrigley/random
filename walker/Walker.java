@@ -12,10 +12,7 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         int choice = Integer.parseInt(read_keywords.readLine().trim());
 
         while (true) {
-            if (choice != 1 && choice != 2) {
-                System.out.println("Unrecognised option \"" + choice + "\"");
-                break;
-            } else {
+            if (choice == 1 || choice == 2) {
                 System.out.print("Enter one or more keywords: ");
                 String[] keywords = read_keywords.readLine().trim().split("\\s+");
                 
@@ -25,11 +22,13 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 } else {
                     delete(keywords);
                     break;
-                }
+                } 
+            } else {
+                System.out.println("Unrecognised option \"" + choice + "\"");
+                break;
             }
         }
     }
-
 
     // The actual search functionality, search() and delete() call this method
     public static String[] search_base(String[] args) {
