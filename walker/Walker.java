@@ -10,7 +10,13 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         while (true) {
             System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
             BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
-            int choice = Integer.parseInt(read_keywords.readLine().trim());
+            int choice;
+            try {
+                choice = Integer.parseInt(read_keywords.readLine().trim());
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid option");
+                continue;
+            }
  
             if (choice == 1 || choice == 2) {
                 System.out.print("Enter one or more keywords: ");
@@ -24,7 +30,7 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                     break;
                 }
             } else {
-                System.out.println("Unrecognised option \"" + choice + "\"");
+                System.out.println("Invalid option \"" + choice + "\"");
                 continue;
             }
         }
@@ -84,7 +90,12 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         for (int i = 0; i < matches.length; i++) {
             System.out.println(matches[i]);
         }
-        System.out.println("Found " + matches.length + " matches");
+
+        if (matches.length == 1) {
+            System.out.println("Found 1 match");
+        } else {
+            System.out.println("Found " + matches.length + " matches");
+        }
     }
 
     public static void delete(String[] args) throws IOException {
@@ -101,7 +112,11 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         }
 
         while (true) {
-            System.out.print("Are you sure you want to delete these " + matches.length + " files? [y/N]: ");
+            if (matches.length == 1) {
+                System.out.print("Are you sure you want to delete this file? [y/N]: ");
+            } else {
+                System.out.print("Are you sure you want to delete these " + matches.length + " files? [y/N]: ");
+            }
             String choice = read_choice.readLine().trim();
 
             if ("yY".contains(choice)) {
