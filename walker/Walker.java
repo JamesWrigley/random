@@ -7,11 +7,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class Walker { // Prompts user to search or delete, gets keywords and passes them to the correct method
     public static void main(String[] args) throws IOException {
-        System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
-        BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
-        int choice = Integer.parseInt(read_keywords.readLine().trim());
-
         while (true) {
+            System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
+            BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
+            int choice = Integer.parseInt(read_keywords.readLine().trim());
+ 
             if (choice == 1 || choice == 2) {
                 System.out.print("Enter one or more keywords: ");
                 String[] keywords = read_keywords.readLine().trim().split("\\s+");
@@ -22,10 +22,10 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 } else {
                     delete(keywords);
                     break;
-                } 
+                }
             } else {
                 System.out.println("Unrecognised option \"" + choice + "\"");
-                break;
+                continue;
             }
         }
     }
@@ -52,27 +52,25 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         }
         // ArrayList to store the matches
         ArrayList<String> matches_arrylst = new ArrayList<String>();
-        boolean bool;
+        boolean isMatch;
 
         for (String i : file_list) { // Match against all keywords
-            bool = true;
+            isMatch = true;
             for (String e : args) {
                 if (i.substring(i.lastIndexOf(File.separator) + 1).contains(e)) {
                     continue;
                 } else {
-                    bool = false;
+                    isMatch = false;
                     break;
                 }
             }
-            if (bool) {
+            if (isMatch) {
                 matches_arrylst.add(i);
             }
         }
+
         // Convert to String[] to send back to the caller
-        String[] matches = new String[matches_arrylst.size()];
-        for (int i = 0; i < matches_arrylst.size(); i++) {
-            matches[i] = matches_arrylst.get(i).toString();
-        }
+        String[] matches = matches_arrylst.toArray(new String[0]);
         return matches;
     }
 
