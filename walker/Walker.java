@@ -11,24 +11,31 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
         int choice = Integer.parseInt(read_keywords.readLine().trim());
 
-        if (choice != 1 && choice != 2) {
-            throw new Error("Unrecognised option \"" + choice + "\"");
-        } else {
-            System.out.print("Enter one or more keywords: ");
-            String[] keywords = read_keywords.readLine().trim().split("\\s+");
-
-            if (choice == 1) {
-                search(keywords);
+        while (true) {
+            if (choice != 1 && choice != 2) {
+                System.out.println("Unrecognised option \"" + choice + "\"");
+                break;
             } else {
-                delete(keywords);
+                System.out.print("Enter one or more keywords: ");
+                String[] keywords = read_keywords.readLine().trim().split("\\s+");
+                
+                if (choice == 1) {
+                    search(keywords);
+                    break;
+                } else {
+                    delete(keywords);
+                    break;
+                }
             }
         }
     }
 
+
+    // The actual search functionality, search() and delete() call this method
     public static String[] search_base(String[] args) {
         final ArrayList<String> file_list = new ArrayList<String>();
 
-        try {
+        try { // Get all files in CWD and under and appends them to file_list
             Path startPath = Paths.get(System.getProperty("user.dir"));
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
                     @Override
@@ -36,7 +43,6 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                         file_list.add(file.toString());
                         return FileVisitResult.CONTINUE;
                     }
-
                     @Override
                         public FileVisitResult visitFileFailed(Path file, IOException e) {
                         return FileVisitResult.CONTINUE;
@@ -45,14 +51,14 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        // ArrayList to store the matches
         ArrayList<String> matches_arrylst = new ArrayList<String>();
         boolean bool;
 
-        for (String i : file_list) {
+        for (String i : file_list) { // Match against all keywords
             bool = true;
             for (String e : args) {
-                if (i.substring(i.lastIndexOf("/") + 1).contains(e)) {
+                if (i.substring(i.lastIndexOf(File.separator) + 1).contains(e)) {
                     continue;
                 } else {
                     bool = false;
@@ -63,6 +69,7 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 matches_arrylst.add(i);
             }
         }
+        // Convert to String[] to send back to the caller
         String[] matches = new String[matches_arrylst.size()];
         for (int i = 0; i < matches_arrylst.size(); i++) {
             matches[i] = matches_arrylst.get(i).toString();
@@ -75,8 +82,8 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
 
         if (matches.length == 0) {
             System.out.println("No matches found");
+            System.exit(0);
         }
-
         for (int i = 0; i < matches.length; i++) {
             System.out.println(matches[i]);
         }
@@ -101,11 +108,15 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
             String choice = read_choice.readLine().trim();
 
             if ("yY".contains(choice)) {
+                for (String i : matches) {
+                    File file = new File(i);
+                    file.delete();
+                }
                 System.out.println("Deleted " + matches.length + " files");
-                break;
+                System.exit(0);
             } else if ("nN".contains(choice)) {
                 System.out.println("No files deleted");
-                break;
+                System.exit(0);
             } else {
                 System.out.println("Invalid option");
             }
