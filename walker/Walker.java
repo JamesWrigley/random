@@ -16,25 +16,21 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 if (choice != 1 && choice != 2) {
                     continue;
                 }
+                System.out.print("Enter one or more keywords: ");
+                String[] keywords = read_keywords.readLine().trim().split("\\s+");
+                
+                if (choice == 1) {
+                    search(keywords);
+                    break;
+                } else if (choice ==2) {
+                    delete(keywords);
+                    break;
+                } 
             } catch (NumberFormatException e) {
                 System.out.println("Invalid option \"" + e + "\"");
                 continue;
             }
- 
-            
-            System.out.print("Enter one or more keywords: ");
-            String[] keywords = read_keywords.readLine().trim().split("\\s+");
-                
-            if (choice == 1) {
-                search(keywords);
-                break;
-            } else if (choice ==2) {
-                delete(keywords);
-                break;
-            } else {
-                throw new Error("Invalid option\"" + choice + "\"");
-            }
-        }
+         }
     }
 
     public static String[] getAllFilePathsInCWD() throws IOException {
