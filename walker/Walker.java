@@ -10,10 +10,9 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         while (true) {
             System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
             BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
-            int choice;
 
             try {
-                choice = Integer.parseInt(read_keywords.readLine().trim());
+                int choice = Integer.parseInt(read_keywords.readLine().trim());
                 if (choice != 1 && choice != 2) {
                     continue;
                 }
