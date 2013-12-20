@@ -26,13 +26,12 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 if (choice == 1) {
                     search(keywords);
                     break;
-                } else {
+                } else if (choice ==2) {
                     delete(keywords);
                     break;
+                } else {
+                    throw new Error("Invalid option\"" + choice + "\"");
                 }
-            } else {
-                System.out.println("Invalid option \"" + choice + "\"");
-                continue;
             }
         }
     }
