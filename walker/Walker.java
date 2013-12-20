@@ -14,24 +14,26 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
 
             try {
                 choice = Integer.parseInt(read_keywords.readLine().trim());
+                if (choice != 1 && choice != 2) {
+                    continue;
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid option \"" + e + "\"");
                 continue;
             }
  
-            if (choice == 1 || choice == 2) {
-                System.out.print("Enter one or more keywords: ");
-                String[] keywords = read_keywords.readLine().trim().split("\\s+");
+            
+            System.out.print("Enter one or more keywords: ");
+            String[] keywords = read_keywords.readLine().trim().split("\\s+");
                 
-                if (choice == 1) {
-                    search(keywords);
-                    break;
-                } else if (choice ==2) {
-                    delete(keywords);
-                    break;
-                } else {
-                    throw new Error("Invalid option\"" + choice + "\"");
-                }
+            if (choice == 1) {
+                search(keywords);
+                break;
+            } else if (choice ==2) {
+                delete(keywords);
+                break;
+            } else {
+                throw new Error("Invalid option\"" + choice + "\"");
             }
         }
     }
