@@ -10,16 +10,12 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
         while (true) {
             System.out.print("Press 1 if you want to search, 2 if you want to search and delete: ");
             BufferedReader read_keywords = new BufferedReader(new InputStreamReader(System.in));
-            int choice;
 
             try {
-                choice = Integer.parseInt(read_keywords.readLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid option \"" + e + "\"");
-                continue;
-            }
- 
-            if (choice == 1 || choice == 2) {
+                int choice = Integer.parseInt(read_keywords.readLine().trim());
+                if (choice != 1 && choice != 2) {
+                    continue;
+                }
                 System.out.print("Enter one or more keywords: ");
                 String[] keywords = read_keywords.readLine().trim().split("\\s+");
                 
@@ -29,11 +25,12 @@ public class Walker { // Prompts user to search or delete, gets keywords and pas
                 } else if (choice ==2) {
                     delete(keywords);
                     break;
-                } else {
-                    throw new Error("Invalid option\"" + choice + "\"");
-                }
+                } 
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid option \"" + e + "\"");
+                continue;
             }
-        }
+         }
     }
 
     public static String[] getAllFilePathsInCWD() throws IOException {
