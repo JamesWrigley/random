@@ -17,7 +17,7 @@ class jamesie(pyrc.Bot):
         else:
             self.message(sender, kwargs["msg"])
 
-    @hooks.privmsg("(.fail|.lamb|.help)")
+    @hooks.privmsg("(^.fail|^.lamb|^.help|^.success|^.laugh)")
     def runCommand(self, target, sender, *args):
         commands = [".tell", ".fail", ".repeat", ".lamb", ".help"]
 
@@ -26,12 +26,16 @@ class jamesie(pyrc.Bot):
                 self.message(target, "Abject, miserable, despondent, failure.")
             elif args[0] == ".lamb":
                 self.message(target, "LAAAYUUMBB")
+            elif args[0] == ".laugh":
+                self.message(target, "MOOHAHAHAH!! http://goo.gl/nDgijf")
             elif args[0] == ".help":
                 self.message(target, "{0}: I am a weird chap. Current commands are {1}.".format(sender, ", ".join(commands)))
+            elif args[0] == ".success":
+                self.message(target, "ZOMG HALLELUJAH IM A GENIUS")
             else:
                 self.message(target, "Unrecognised command")
 
 
 if __name__ == '__main__':
-    bot = jamesie("irc.freenode.net", channels = ["#jamesie"])
+    bot = jamesie("irc.freenode.net", channels = ["#jamesie", "#coursera-androidapps"])
     bot.connect()
