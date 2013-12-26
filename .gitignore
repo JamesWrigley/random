@@ -9,3 +9,4 @@ tramp
 .\#*
 *.class
 *.log
+*.save
