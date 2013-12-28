@@ -27,8 +27,8 @@ public class Hasher {
                         System.out.println(user_text);
                     } catch (java.security.NoSuchAlgorithmException ex) {
                         throw new java.security.NoSuchAlgorithmException("HOOO");
-                        //System.out.println("Could not initialize MessageDigest");
-                        //System.exit(1);
+                        System.out.println("Could not initialize MessageDigest");
+                        System.exit(1);
                     }
                 }
             });
