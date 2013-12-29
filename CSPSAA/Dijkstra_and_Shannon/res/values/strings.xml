@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Shannon &amp; Dijkstra</string>
+    <string name="action_settings">Settings</string>
+    <string name="shannon_title">Claude Shannon</string>
+    <string name="shannon_info">Claude Shannon was an American mathematician, electrical engineer, and cryptographer known as "the father of information theory".
+                                Born in 1916, Shannon graduated from the University of Michigan in 1936 with two bachelor\'s degrees in electrical engineering 
+                                and mathematics. He then began his graduate studies in electrical engineering at MIT, where his master\'s degree thesis won him 
+                                the Alfred Noble American Institute of American Engineers Award in 1939. Howard Gardner also praised his thesis, saying that it 
+                                was \"possibly the most important, and also the most famous, master\'s thesis of the century". \n \n
+                                
+                                During WWII Shannon undertook important studies into what would become the field of Information Theory, fire-control systems, 
+                                and cryptography (where he worked with Alan Turing for some months in Washington). A notable achievement of his was proving that 
+                                the cryptographic one-time pad is unbreakable, and that any unbreakable system must have certain characteristics (such as a truly 
+                                random key, etc). \n \n
+                                
+                                He also founded the field of Information Theory, where he made massive contributions to natural language processing and digital 
+                                signal transmission. \n \n 
+                                
+                                His interests were not limited to his work however. Among other things he invented the \'Theseus\' (as seen in the above image), 
+                                an electromechanical mouse that could navigate different mazes and learn from it\'s experience. It is considered to be the first 
+                                artificial learning device of it\'s kind. \n \n
+                                
+                                He developed Alzheimer\'s disease as he got older, and spent his last years in a nursing home Massachusetts. He died in 2001, 
+                                leaving behind a rich legacy.\nNeil Sloane has stated that \"He\'s one of the great men of the century. Without him, none of the 
+                                things we know today would exist. The whole digital revolution started with him\".</string>
+                                
+    <string name="dijkstra_title">Edsger Dijkstra</string>
+    <string name="dijkstra_info">Edsger Dijkstra was a Dutch computer scientist. He was born in Rotterdam in 1930, and originally studied theoretical physics at Leiden 
+                                 University but soon switched to computer science. He held positions at the Mathematisch Centrum, Eindhoven University of Technology, 
+                                 Burroughs Corporation, and the University of Texas at Austin. \n \n
+                                 
+                                 Among his contributions to computer science are a shortest path algorithm (also know as Dijkstra\'s algorithm), the Shunting yard 
+                                 algorithm, the THE multiprogramming system, the Banker\'s algorithm, and the semaphore construct for coordinating multiple processors 
+                                 and programs. Another concept due to Dijkstra in the field of distributed computing is that of self-stabilization – an alternative 
+                                 way to ensure the reliability of the system. Dijkstra\'s algorithm is used in SPF, Shortest Path First, which is used in the routing 
+                                 protocols OSPF and IS-IS. \n \n
+                                 
+                                 On a more humorous note, Dijkstra was also responsible for the introduction of the term \'Considered Harmful\' into the field of 
+                                 computer science. He started it by writing a paper critizizing excessive use of the GOTO statement, and it was published by the 
+                                 ACM as "Go To Statement Considered Harmful"; a response to this paper was entitled "\'Go To Statement Considered Harmful\' Considered 
+                                 Harmful", and the response to that paper was entitled ""\'Go To Statement Considered Harmful\' Considered Harmful" Considered Harmful?"
+                                 
+                                 He died in Nuenen on 6 August 2002 after a long struggle with cancer. The following year, the ACM PODC Influential Paper Award in 
+                                 distributed computing was renamed the Dijkstra Prize in his honor.</string>
+
+</resources>

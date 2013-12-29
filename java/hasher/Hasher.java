@@ -20,16 +20,15 @@ public class Hasher {
         hash.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    try {
-                        MessageDigest md = MessageDigest.getInstance("SHA");
-                        byte[] user_text = text.getText().getBytes();
-                        md.update(user_text);                    
-                        System.out.println(user_text);
-                    } catch (java.security.NoSuchAlgorithmException ex) {
-                        throw new java.security.NoSuchAlgorithmException("HOOO");
-                        System.out.println("Could not initialize MessageDigest");
-                        System.exit(1);
+                    MessageDigest md = null;
+                    try{
+                        md = MessageDigest.getInstance("SHA");
+                    } catch (Exception NoSuchAlgorithmException) {
+                        throw new Error("NoSuchAlgorithmException");
                     }
+                    byte[] user_text = text.getText().getBytes();
+                    md.update(user_text);
+                    System.out.println(user_text);
                 }
             });
 
