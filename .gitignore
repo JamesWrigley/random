@@ -1,5 +1,3 @@
-*.log 
-
 ## Eclipse ###
 *.pydevproject
 .project
@@ -84,3 +82,6 @@ tramp
 Session.vim
 .netrwhist
 *~
+
+### ABRT log ###
+*.log

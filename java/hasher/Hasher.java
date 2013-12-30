@@ -1,13 +1,20 @@
-import java.security.MessageDigest;
+import java.io.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 
 public class Hasher {
     public static void main (String [] args) {
 	Display display = new Display ();
 	Shell shell = new Shell(display);
+        RowLayout layout = new RowLayout(SWT.HORIZONTAL);
+        layout.wrap = true;
+        layout.fill = false;
+        layout.justify = true;
+        shell.setLayout(layout);
 
         Label label = new Label(shell, SWT.CENTER);
         label.setText("Enter a string to be hashed: ");
@@ -22,27 +29,26 @@ public class Hasher {
                 public void widgetSelected(SelectionEvent e) {
                     MessageDigest md = null;
                     try{
-                        md = MessageDigest.getInstance("SHA");
-                    } catch (Exception NoSuchAlgorithmException) {
-                        throw new Error("NoSuchAlgorithmException");
+                        md = MessageDigest.getInstance("SHA-256");
+                    } catch (java.security.NoSuchAlgorithmException ex) {
+                        throw new Error("Algorithm not found");
                     }
-                    byte[] user_text = text.getText().getBytes();
-                    md.update(user_text);
-                    System.out.println(user_text);
+                    byte[] user_text = md.digest(text.getText().getBytes());
+                    String user_text_str = DatatypeConverter.printHexBinary(user_text);
+                    System.out.println(user_text_str);
                 }
             });
 
         Button cancel = new Button(shell, SWT.PUSH);
-        cancel.setText("Cancel");
+        cancel.setText("Exit");
         cancel.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    System.out.println("Cancel");
+                    System.exit(0);
                 }
             });
 
-        shell.setDefaultButton(cancel);
-        shell.setLayout(new RowLayout());
+        shell.setDefaultButton(hash);
         shell.pack();
         shell.open ();
         while (!shell.isDisposed ()) {
