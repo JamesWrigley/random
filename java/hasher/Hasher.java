@@ -1,4 +1,3 @@
-import java.io.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.events.*;
@@ -9,12 +8,22 @@ import java.security.MessageDigest;
 public class Hasher {
     public static void main (String [] args) {
 	Display display = new Display ();
-	Shell shell = new Shell(display);
+	final Shell shell = new Shell(display);
+
         RowLayout layout = new RowLayout(SWT.HORIZONTAL);
         layout.wrap = true;
         layout.fill = false;
         layout.justify = true;
         shell.setLayout(layout);
+
+        Combo algo_combo_box = new Combo(shell, SWT.NONE);
+        algo_combo_box.setItems(new String[] {"SHA", "SHA-256"});
+        algo_combo_box.addListener(SWT.DefaultSelection, new Listener () {
+                @Override
+                public void handleEvent (Event e) {
+                    System.out.println(e.widget + " - Default Selection");
+                }
+            });
 
         Label label = new Label(shell, SWT.CENTER);
         label.setText("Enter a string to be hashed: ");
@@ -29,13 +38,18 @@ public class Hasher {
                 public void widgetSelected(SelectionEvent e) {
                     MessageDigest md = null;
                     try{
-                        md = MessageDigest.getInstance("SHA-256");
+                        md = MessageDigest.getInstance("SHA");
                     } catch (java.security.NoSuchAlgorithmException ex) {
                         throw new Error("Algorithm not found");
                     }
                     byte[] user_text = md.digest(text.getText().getBytes());
                     String user_text_str = DatatypeConverter.printHexBinary(user_text);
                     System.out.println(user_text_str);
+
+                    MessageBox digest_dialog = new MessageBox(shell, SWT.OK | SWT.CLOSE);
+                    digest_dialog.setText("Hash Output");
+                    digest_dialog.setMessage(user_text_str);
+                    digest_dialog.open();
                 }
             });
 
