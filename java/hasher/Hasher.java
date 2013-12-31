@@ -9,27 +9,25 @@ public class Hasher {
     public static void main (String [] args) {
 	Display display = new Display ();
 	final Shell shell = new Shell(display);
+        shell.setSize(435, 100);
 
-        RowLayout layout = new RowLayout(SWT.HORIZONTAL);
-        layout.wrap = true;
-        layout.fill = false;
-        layout.justify = true;
+        GridLayout layout = new GridLayout(4, false);
         shell.setLayout(layout);
+        GridData grid_data = new GridData();
+        grid_data.horizontalAlignment = SWT.FILL;
 
-        Combo algo_combo_box = new Combo(shell, SWT.NONE);
-        algo_combo_box.setItems(new String[] {"SHA", "SHA-256"});
-        algo_combo_box.addListener(SWT.DefaultSelection, new Listener () {
-                @Override
-                public void handleEvent (Event e) {
-                    System.out.println(e.widget + " - Default Selection");
-                }
-            });
+        final Combo algo_combo_box = new Combo(shell, SWT.READ_ONLY);
+        algo_combo_box.setItems(new String[] {"MD2", "MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512"});
+        algo_combo_box.select(2);
+        algo_combo_box.setLayoutData(grid_data);
 
         Label label = new Label(shell, SWT.CENTER);
         label.setText("Enter a string to be hashed: ");
+        label.setLayoutData(new GridData());
 
         final Text text = new Text(shell, SWT.BORDER);
         text.setLayoutData(new RowData(100, SWT.DEFAULT));
+        text.setLayoutData(grid_data);
 
         Button hash = new Button(shell, SWT.PUSH);
         hash.setText("Hash Text");
@@ -38,36 +36,35 @@ public class Hasher {
                 public void widgetSelected(SelectionEvent e) {
                     MessageDigest md = null;
                     try{
-                        md = MessageDigest.getInstance("SHA");
+                        md = MessageDigest.getInstance(algo_combo_box.getText());
                     } catch (java.security.NoSuchAlgorithmException ex) {
                         throw new Error("Algorithm not found");
                     }
-                    byte[] user_text = md.digest(text.getText().getBytes());
-                    String user_text_str = DatatypeConverter.printHexBinary(user_text);
-                    System.out.println(user_text_str);
+                    String user_text_digest = DatatypeConverter.printHexBinary(md.digest(text.getText().getBytes()));
 
                     MessageBox digest_dialog = new MessageBox(shell, SWT.OK | SWT.CLOSE);
                     digest_dialog.setText("Hash Output");
-                    digest_dialog.setMessage(user_text_str);
+                    digest_dialog.setMessage(user_text_digest.toLowerCase());
                     digest_dialog.open();
                 }
             });
+        hash.setLayoutData(new GridData());
 
-        Button cancel = new Button(shell, SWT.PUSH);
-        cancel.setText("Exit");
-        cancel.addSelectionListener(new SelectionAdapter() {
+        Button exit_button = new Button(shell, SWT.PUSH);
+        exit_button.setText("Exit");
+        exit_button.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     System.exit(0);
                 }
             });
+        exit_button.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 4, 1));
 
         shell.setDefaultButton(hash);
-        shell.pack();
-        shell.open ();
-        while (!shell.isDisposed ()) {
-            if (!display.readAndDispatch ()) display.sleep ();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
         }
-        display.dispose ();
+        display.dispose();
     }
 }
