@@ -9,6 +9,7 @@ all:
 	make -j4 print_range
 	make -j4 sum_dynamic
 	make -j4 matches
+	make -j4 factorial
 
 clean:
 	rm -f sum
@@ -19,3 +20,4 @@ clean:
 	rm -f print_range
 	rm -f sum_dynamic
 	rm -f matches
+	rm -f factorial

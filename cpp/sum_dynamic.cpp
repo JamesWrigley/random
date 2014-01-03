@@ -7,7 +7,7 @@ int main()
     int value = 0;
 
     while (std::cin >> value)
-	sum += value;
+    sum += value;
     std::cout << "Sum of values is: " << sum << std::endl;
     return 0;
 }
