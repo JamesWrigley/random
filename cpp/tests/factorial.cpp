@@ -12,7 +12,7 @@ int main()
     if (number == 0)
         std::cout << "Factorial of 0 is 1" << std::endl;
     else {
-        float sum = 1;
+        unsigned long long sum = 1;
         int i = 1;
         while (i <= number) {
             sum *= i;

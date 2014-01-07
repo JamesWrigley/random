@@ -1,4 +1,4 @@
-CPPFLAGS= -Wall -g
+CPPFLAGS= -Wall -g -std=c++11
 
 all:
 	make -j4 sum
@@ -10,6 +10,7 @@ all:
 	make -j4 sum_dynamic
 	make -j4 matches
 	make -j4 factorial
+	make -j4 calculator
 
 clean:
 	rm -f sum
@@ -21,3 +22,4 @@ clean:
 	rm -f sum_dynamic
 	rm -f matches
 	rm -f factorial
+	rm -f calculator
