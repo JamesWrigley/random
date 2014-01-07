@@ -1,8 +1,10 @@
 // A little calculator test
 
 #include <boost/algorithm/string.hpp>
+#include <functional>
+#include <algorithm>
 #include <iostream>
-#include <numeric>
+#include <sstream>
 #include <vector>
 
 using std::cout;
@@ -16,10 +18,11 @@ int main()
   cin >> input;
   std::cin.ignore();
 
-  if (input != 5)
+  if (5 > input)
     {
       // Some variable declarations
       std::string numbers_str;
+      std::vector<int> numbers_int;
       std::vector<std::string> numbers_vect;
       std::string op_names[] = {"added", "multiplied", "subtracted", "divided"};
 
@@ -27,41 +30,39 @@ int main()
       std::getline(cin, numbers_str);
 
       boost::split(numbers_vect, numbers_str, boost::is_any_of("\t "));
-      std::vector<int> numbers_int(numbers_str.size());
 
-      for (int i; i < numbers_vect.size(); ++i)
-        numbers_int.push_back(std::stoi(numbers_vect[i]));
+      // for (unsigned int i = 0; i < numbers_vect.size(); i++)
+      //   {
+      //     numbers_int.push_back(std::stoi(numbers_vect[i]));
+      //   }
 
-      if (input == 1)
+      std::transform(begin(numbers_vect), end(numbers_vect), std::back_inserter(numbers_int), [](const std::string& val) { return std::stoi(val); });
+
+      if (1 == input)
         {
           int sum = std::accumulate(numbers_int.begin(), numbers_int.end(), 0);
           cout << sum << std::endl;
         }
-      else if (input == 2)
+      else if (2 == input)
         {
-          //          int multiply_ans = std::accumulate(numbers_int.begin(), numbers_int.end(), numbers_int[0], std::multiplies<int>());
-          cout << "FOO" << std::endl;
-          int multiply_ans = 1;
-          for (int i; i < numbers_int.size(); i++)
-            {
-              cout << multiply_ans << std::endl;
-              multiply_ans *= numbers_int[i];
-            }
+          int multiply_ans = std::accumulate(numbers_int.begin(), numbers_int.end(), 1, std::multiplies<int>());
           cout << multiply_ans << std::endl;
         }
-      else if (input == 3)
+      else if (3 == input)
         {
-          //          int subtract_ans = std::accumulate(numbers_int.begin(), numbers_int.end(), numbers_int[0], std::minus<int>());
-          int subtract_ans = numbers_int[0];
-          for (int i = 1; i < numbers_int.size(); ++i)
-            subtract_ans -= numbers_int[i];
+          int subtract_ans = std::accumulate(numbers_int.begin() + 1, numbers_int.end(), numbers_int[0], std::minus<int>());
           cout << subtract_ans << std::endl;
         }
-      else
+      else if (4 == input)
         {
           cout << "NIY" << std::endl;
         }
     }
+  else if (5 == input)
+    {
+      return 0;
+    }
+
   else
     {
       cout << "Invalid option \"" << input << "\"" << std::endl;
