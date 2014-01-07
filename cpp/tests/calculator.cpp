@@ -1,11 +1,6 @@
 // A little calculator test
 
 #include <boost/algorithm/string.hpp>
-#include <functional>
-#include <algorithm>
-#include <iostream>
-#include <sstream>
-#include <vector>
 
 using std::cout;
 using std::cin;
@@ -18,7 +13,7 @@ int main()
   cin >> input;
   std::cin.ignore();
 
-  if (5 > input)
+  if (input < 5)
     {
       // Some variable declarations
       std::string numbers_str;
@@ -29,15 +24,11 @@ int main()
       cout << "Enter 2 or more numbers to be " << op_names[input - 1] << ": ";
       std::getline(cin, numbers_str);
 
+      // Splits numbers_str by whitespace, then converts the string vector into an int vector
       boost::split(numbers_vect, numbers_str, boost::is_any_of("\t "));
-
-      // for (unsigned int i = 0; i < numbers_vect.size(); i++)
-      //   {
-      //     numbers_int.push_back(std::stoi(numbers_vect[i]));
-      //   }
-
       std::transform(begin(numbers_vect), end(numbers_vect), std::back_inserter(numbers_int), [](const std::string& val) { return std::stoi(val); });
 
+      // The math part
       if (1 == input)
         {
           int sum = std::accumulate(numbers_int.begin(), numbers_int.end(), 0);
@@ -55,14 +46,14 @@ int main()
         }
       else if (4 == input)
         {
-          cout << "NIY" << std::endl;
+          int division_ans = std::accumulate(numbers_int.begin() + 1, numbers_int.end(), numbers_int[0], std::divides<int>());
+          cout << division_ans << std::endl;
         }
     }
   else if (5 == input)
     {
       return 0;
     }
-
   else
     {
       cout << "Invalid option \"" << input << "\"" << std::endl;
