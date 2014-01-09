@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hasher</string>
+    <string name="hasher_info">Welcome to Hasher!\n\n
+                               Hasher is an application that creates a cryptographic hash for a string
+                               of your choice. The string may be of any size and contain any character.
+                               For the best mix of security and ease of communication, we recommend using
+                               the SHA-1 algorithm (though of course you may choose another if you wish).
+                               </string>
+    <string name="button_text">Hash Text</string>
+    <string name="alertFragment_close_text">Close</string>
+    <string name="alertFragment_copy_text">Copy to Clipboard</string>
+
+</resources>
