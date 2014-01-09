@@ -11,7 +11,7 @@ all:
 	make -j4 matches
 	make -j4 factorial
 	make -j4 calculator
-	make -j4 caclulator2
+	make -j4 temp_convert_and_step
 
 clean:
 	rm -f sum
@@ -24,4 +24,4 @@ clean:
 	rm -f matches
 	rm -f factorial
 	rm -f calculator
-	rm -f calculator2
+	rm -f temp_convert_and_step
