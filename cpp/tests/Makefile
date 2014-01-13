@@ -1,4 +1,4 @@
-CPPFLAGS= -Wall -g -std=c++11
+CPPFLAGS= -Wall -g -std=c++11 -lboost_filesystem -lboost_system
 
 all:
 	make -j4 sum
@@ -12,6 +12,7 @@ all:
 	make -j4 factorial
 	make -j4 calculator
 	make -j4 temp_convert_and_step
+	make -j4 walker
 
 clean:
 	rm -f sum
@@ -25,3 +26,4 @@ clean:
 	rm -f factorial
 	rm -f calculator
 	rm -f temp_convert_and_step
+	rm -f walker
