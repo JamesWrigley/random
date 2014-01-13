@@ -85,3 +85,5 @@ Session.vim
 
 ### ABRT log ###
 *.log
+
+*.xyz
