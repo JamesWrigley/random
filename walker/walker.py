@@ -36,7 +36,7 @@ def delete_files(keyword_list, start_walk_location):
         print("No matches found")
     else:
         for i in file_match_list: print(i)
-        user_choice = input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [y/N]: ")
+        user_choice = input("Are you sure you wish to delete these " + str(len(file_match_list)) + " files? [Y/n]: ")
 
         if user_choice in "yY":
             for file in file_match_list:
