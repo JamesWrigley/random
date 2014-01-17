@@ -17,18 +17,14 @@ vector<path> get_all_files_under_path(path path_to_search, const vector<string>&
   */
   vector<path> files;
   sys::error_code err_code;
-  //  recursive_directory_iterator dir(path_to_search, err_code);
+  recursive_directory_iterator dir(path_to_search);
 
+ try_block:
   try
     {
-      for (recursive_directory_iterator dir(path_to_search, err_code), end; dir != end; dir.increment(err_code))
+      for (recursive_directory_iterator end; dir != end; dir++)
         {
-          if (err_code)
-            {
-              dir.pop();
-              continue;
-            }
-          else if (is_regular_file(*dir)) // So we don't check the folders
+          if (is_regular_file(*dir)) // So we don't check the folders
             {
               bool does_match = true;
               for (unsigned int i = 0; i < keywords.size(); i++)
@@ -49,7 +45,9 @@ vector<path> get_all_files_under_path(path path_to_search, const vector<string>&
     }
   catch (const filesystem_error& error)
     {
-      cout << "Skipped " << error.what() << endl;
+      cout << "skipped before " << dir->path() << endl;
+      dir++;
+      goto try_block;
     }
   return files;
 }
