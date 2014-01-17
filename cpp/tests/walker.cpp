@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
+namespace sys = boost::system;
 using namespace boost::filesystem;
 using namespace std;
 
@@ -15,26 +16,40 @@ vector<path> get_all_files_under_path(path path_to_search, const vector<string>&
      It then returns all the matches.
   */
   vector<path> files;
+  sys::error_code err_code;
+  //  recursive_directory_iterator dir(path_to_search, err_code);
 
-  for (recursive_directory_iterator end, dir(path_to_search); dir != end; ++dir)
+  try
     {
-      if (is_regular_file(*dir)) // So we don't print the folders
+      for (recursive_directory_iterator dir(path_to_search, err_code), end; dir != end; dir.increment(err_code))
         {
-          bool does_match = true;
-          for (unsigned int i = 0; i < keywords.size(); i++)
+          if (err_code)
             {
-              const char *keyword_char = keywords[i].c_str();
-              const char *filename_char = dir->path().filename().c_str();
-              if (!strcasestr(filename_char, keyword_char))
+              dir.pop();
+              continue;
+            }
+          else if (is_regular_file(*dir)) // So we don't check the folders
+            {
+              bool does_match = true;
+              for (unsigned int i = 0; i < keywords.size(); i++)
                 {
-                  does_match = false;
+                  const char *keyword_char = keywords[i].c_str();
+                  const char *filename_char = dir->path().filename().c_str();
+                  if (!strcasestr(filename_char, keyword_char))
+                    {
+                      does_match = false;
+                    }
+                }
+              if (does_match)
+                {
+                  files.push_back(*dir);
                 }
             }
-          if (does_match)
-            {
-              files.push_back(*dir);
-            }
         }
+    }
+  catch (const filesystem_error& error)
+    {
+      cout << "Skipped " << error.what() << endl;
     }
   return files;
 }
@@ -56,7 +71,7 @@ int main(int argc, char *argv[])
 
       if (option == "1" || option == "2")
         {
-         break;
+          break;
         }
       else
         {
@@ -104,7 +119,8 @@ int main(int argc, char *argv[])
             {
               for (unsigned int i = 0; i < file_list.size(); i++)
                 {
-                  remove(file_list[i]);
+                  //remove(file_list[i]);
+                  cout << "Deleted" << endl;
                 }
               cout << file_list.size() << " files deleted" << endl;
               return 0;
