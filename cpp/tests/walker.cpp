@@ -4,7 +4,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
-namespace sys = boost::system;
 using namespace boost::filesystem;
 using namespace std;
 
@@ -16,7 +15,6 @@ vector<path> get_all_files_under_path(path path_to_search, const vector<string>&
      It then returns all the matches.
   */
   vector<path> files;
-  sys::error_code err_code;
   recursive_directory_iterator dir(path_to_search);
 
  try_block:
