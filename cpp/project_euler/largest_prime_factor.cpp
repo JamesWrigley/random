@@ -21,7 +21,7 @@ int main()
 
   for (unsigned int i = 0; i < factors.size(); i++)
     {
-      bool is_prime = true;
+      bool is_prime = false;
 
       if (fmod(factors[i], 2) == 0)
         {
