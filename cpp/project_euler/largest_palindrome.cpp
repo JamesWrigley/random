@@ -20,10 +20,8 @@ int main()
 
   for (int n1 = min_number; n1 < max_number; n1++)
     {
-      //      std::cout << "Got to n1 for " << n1 << std::endl;
       for (int n2 = min_number; n2 < n1; n2++)
         {
-          //          std::cout << "Got to n2 for " << n2 << std::endl;
           int product = n1 * n2;
           if (reverse_number(product) == product)
             {
@@ -31,7 +29,6 @@ int main()
                 {
                   largest_palindrome = product;
                 }
-              std::cout << largest_palindrome << std::endl;
             }
         }
     }
