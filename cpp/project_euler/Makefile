@@ -1,15 +1,17 @@
 CPPFLAGS= -Wall -g -std=c++11
 
 all:
-	make -j4 multiples_of_3_and_5
-	make -j4 even_fibonacci_numbers
-	make -j4 largest_prime_factor
-	make -j4 largest_palindrome
-	make -j4 smallest_multiple
+	make -j4 1-multiples_of_3_and_5
+	make -j4 2-even_fibonacci_numbers
+	make -j4 3-largest_prime_factor
+	make -j4 4-largest_palindrome
+	make -j4 5-smallest_multiple
+	make -j4 6-sum_square_difference
 
 clean:
-	rm -f multiples_of_3_and_5
-	rm -f even_fibonacci_numbers
-	rm -f largest_prime_factor
-	rm -f largest_palindrome
-	rm -f smallest_multiple
+	rm -f 1-multiples_of_3_and_5
+	rm -f 2-even_fibonacci_numbers
+	rm -f 3-largest_prime_factor
+	rm -f 4-largest_palindrome
+	rm -f 5-smallest_multiple
+	rm -f 6-sum_square_difference
