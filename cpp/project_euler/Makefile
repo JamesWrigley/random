@@ -7,6 +7,7 @@ all:
 	make -j4 4-largest_palindrome
 	make -j4 5-smallest_multiple
 	make -j4 6-sum_square_difference
+	make -j4 7-10001st_prime
 
 clean:
 	rm -f 1-multiples_of_3_and_5
@@ -15,3 +16,4 @@ clean:
 	rm -f 4-largest_palindrome
 	rm -f 5-smallest_multiple
 	rm -f 6-sum_square_difference
+	rm -f 7-10001st_prime
