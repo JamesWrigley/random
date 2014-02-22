@@ -19,7 +19,7 @@ int main()
               continue;
             }
 
-          for (unsigned int i = 2; i <= 20; i++)
+          for (unsigned int i = 3; i <= 19; i++)
             {
               if (n % i != 0)
                 {
