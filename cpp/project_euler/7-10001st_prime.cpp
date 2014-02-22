@@ -38,7 +38,6 @@ int main()
         {
           prime_index_number++;
           prime_number = n;
-          //          std::cout << n << std::endl;
         }
     }
 

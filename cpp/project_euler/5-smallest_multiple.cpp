@@ -1,5 +1,5 @@
-// Problem 2 from Project Euler
-// http://projecteuler.net/problem=2
+// Problem 5 from Project Euler
+// http://projecteuler.net/problem=5
 
 #include <iostream>
 #include <math.h>
@@ -7,20 +7,32 @@
 
 int main()
 {
-  for (int n = 1; n < std::numeric_limits<int>::max(); n++)
+  bool is_multiple;
+
+  while (!is_multiple)
     {
-      bool is_multiple = true;
-      for (int i = 1; i < 20; i++)
+      for (unsigned int n = 0; n < std::numeric_limits<unsigned int>::max(); n += 80)
         {
-          if (n % i != 0)
+          is_multiple = true;
+
+          if (n == 0)
             {
-              is_multiple = false;
+              continue;
             }
-        }
-      if (is_multiple)
-        {
-          std::cout << "The answer is " << n << std::endl;
-          exit(0);
+
+          for (unsigned int i = 2; i <= 20; i++)
+            {
+              if (n % i != 0)
+                {
+                  is_multiple = false;
+                  break;
+                }
+            }
+          if (is_multiple)
+            {
+              std::cout << "The answer is " << n << std::endl;
+              exit(0);
+            }
         }
     }
 }
