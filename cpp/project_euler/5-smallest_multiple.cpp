@@ -2,7 +2,6 @@
 // http://projecteuler.net/problem=5
 
 #include <iostream>
-#include <math.h>
 #include <limits>
 
 int main()
