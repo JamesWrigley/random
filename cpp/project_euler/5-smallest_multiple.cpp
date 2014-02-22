@@ -7,10 +7,14 @@
 int main()
 {
   bool is_multiple;
+  unsigned int divisible_range;
+
+  std::cout << "Enter a number (r) representing the highest in a range from 0 to r, and I will spit out the smallest number divisible by all in that range: ";
+  std::cin >> divisible_range;
 
   while (!is_multiple)
     {
-      for (unsigned int n = 0; n < std::numeric_limits<unsigned int>::max(); n += 80)
+      for (unsigned int n = 0; n < std::numeric_limits<unsigned int>::max(); n++)
         {
           is_multiple = true;
 
@@ -19,7 +23,7 @@ int main()
               continue;
             }
 
-          for (unsigned int i = 3; i <= 19; i++)
+          for (unsigned int i = 2; i <= divisible_range; i++)
             {
               if (n % i != 0)
                 {
