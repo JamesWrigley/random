@@ -92,6 +92,7 @@ def change_object(menu, combo, window_instance):
         window_instance.string_entry_box.set_editable(False)
         window_instance.file_button.set_sensitive(True)
     else:
+        window_instance.string_entry_box.set_text("")
         window_instance.string_entry_box.set_editable(True)
         window_instance.file_button.set_sensitive(False)
 

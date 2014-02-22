@@ -2,36 +2,46 @@
 // http://projecteuler.net/problem=7
 
 #include <iostream>
-#include <limits>
 
 int main()
-{
-  int prime_index_number = 0;
-  int prime;
-  //  int n = 4;
 
-  for (int pin = 0; prime_index_number <= 6; pin++)
+{
+  unsigned int prime_index_number = 0;
+  unsigned int prime_number;
+
+  for (unsigned int n = 0; prime_index_number < 10001; n++)
     {
       bool is_prime = true;
 
-      int divisor = 2;
-      while (divisor < (pin / 2))
+      unsigned int divisor = 2;
+      if (n < 2)
         {
-          if (pin % divisor == 0)
-            {
-              is_prime = false;
-              divisor++;
-              break;
-            }
-          divisor++;
+          continue;
         }
+      else if (n > 2 && (n % 2 == 0))
+        {
+          continue;
+        }
+      else{
+        while (divisor < (n / 2))
+          {
+            if (n % divisor == 0)
+              {
+                is_prime = false;
+                break;
+              }
+            divisor++;
+          }
+      }
 
       if (is_prime)
         {
           prime_index_number++;
-          std::cout << pin << std::endl;
+          prime_number = n;
+          //          std::cout << n << std::endl;
         }
     }
 
-  std::cout << prime << std::endl;
+  std::cout << "Index is " << prime_index_number << std::endl;
+  std::cout << "Prime is " << prime_number << std::endl;
 }
