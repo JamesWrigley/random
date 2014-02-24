@@ -13,6 +13,7 @@ all:
 	make -j4 calculator
 	make -j4 temp_convert_and_step
 	make -j4 walker
+	make -j4 stats
 
 clean:
 	rm -f sum
@@ -27,3 +28,4 @@ clean:
 	rm -f calculator
 	rm -f temp_convert_and_step
 	rm -f walker
+	rm -f stats

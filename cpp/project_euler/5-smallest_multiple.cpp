@@ -14,7 +14,7 @@ int main()
 
   while (!is_multiple)
     {
-      for (unsigned int n = 0; n < std::numeric_limits<unsigned int>::max(); n++)
+      for (unsigned int n = 0; n < std::numeric_limits<unsigned int>::max(); n += divisible_range * 3)
         {
           is_multiple = true;
 
