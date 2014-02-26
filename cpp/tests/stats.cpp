@@ -4,10 +4,7 @@
   quartiles is coming.
 */
 
-// IMPORTANT:
-// To get the first and third quatiles, get the median of the upper and lower parts of the median
-
-
+#include <math.h>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 
@@ -37,9 +34,29 @@ float mean(std::vector<float> numbers)
 float lower_quartile(std::vector<float> numbers)
 {
   std::vector<float> lower_half;
-  std::copy_n(numbers.begin(), median(numbers), lower_half.begin());
+  for (float n; n < median(numbers); n++)
+    {
+      lower_half.push_back(numbers[n]);
+    }
 
-  return 42.0;
+  float lower_quartile_value;
+  float index = .25 * (numbers.size() + 1);
+
+  if (fmod(index, 1) == 0)
+    {
+      lower_quartile_value = lower_half[index];
+    }
+  else
+    {
+      double integer_part;
+
+      float fraction = modf(index, &integer_part);
+
+      lower_quartile_value = (lower_half[floor(index) - 1] + lower_half[ceil(index) - 1]) / 2;
+      std::cout << median(lower_half) << " Med" << std::endl;
+    }
+
+  return lower_quartile_value;
 }
 
 int main()
@@ -60,4 +77,5 @@ int main()
 
   std::cout << "Mean: " << mean(numbers_vect) << std::endl;
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
+  std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl; // This ain't working yet
 }
