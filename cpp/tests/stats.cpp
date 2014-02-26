@@ -1,8 +1,12 @@
 /*
   A program that generates various statistical data from a user inputted bunch
-  of numbers. Specifically, this calculates the mean, mode, range, median,
-  and the various quartiles.
+  of numbers. Specifically, it calculates the mean and median. Support for the
+  quartiles is coming.
 */
+
+// IMPORTANT:
+// To get the first and third quatiles, get the median of the upper and lower parts of the median
+
 
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
@@ -32,6 +36,10 @@ float mean(std::vector<float> numbers)
 
 float lower_quartile(std::vector<float> numbers)
 {
+  std::vector<float> lower_half;
+  std::copy_n(numbers.begin(), median(numbers), lower_half.begin());
+
+  return 42.0;
 }
 
 int main()
