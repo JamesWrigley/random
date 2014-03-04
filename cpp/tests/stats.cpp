@@ -34,30 +34,59 @@ float mean(std::vector<float> numbers)
 float lower_quartile(std::vector<float> numbers)
 {
   std::vector<float> lower_half;
-  for (float n; n < median(numbers); n++)
-    {
-      lower_half.push_back(numbers[n]);
-    }
-
+  float numbers_median = median(numbers); // So we don't have recompute it often
   float lower_quartile_value;
-  float index = .25 * (numbers.size() + 1);
 
-  if (fmod(index, 1) == 0)
+  // If the median is in the numbers vector, then include it in the lower_half
+  // vector, else don't include it.
+  if (std::find(numbers.begin(), numbers.end(), numbers_median) != numbers.end())
     {
-      lower_quartile_value = lower_half[index];
+      for (int n = 0; numbers[n] <= numbers_median; n++)
+        {
+          lower_half.push_back(numbers[n]);
+        }
     }
   else
     {
-      double integer_part;
-
-      float fraction = modf(index, &integer_part);
-
-      lower_quartile_value = (lower_half[floor(index) - 1] + lower_half[ceil(index) - 1]) / 2;
-      std::cout << median(lower_half) << " Med" << std::endl;
+      for (int n = 0; numbers[n] < numbers_median; n++)
+        {
+          lower_half.push_back(numbers[n]);
+        }
     }
+
+  lower_quartile_value = median(lower_half);
 
   return lower_quartile_value;
 }
+
+float upper_quartile(std::vector<float> numbers)
+{
+  std::vector<float> upper_half;
+  float numbers_median = median(numbers); // So we don't have recompute it often
+  float upper_quartile_value;
+
+  // If the median is in the numbers vector, then include it in the upper_half
+  // vector, else don't include it.
+  if (std::find(numbers.begin(), numbers.end(), numbers_median) != numbers.end())
+    {
+      for (int n = 0; numbers[n] >= numbers_median; n++)
+        {
+          upper_half.push_back(numbers[n]);
+        }
+    }
+  else
+    {
+      for (int n = 0; numbers[n] > numbers_median; n++)
+        {
+          upper_half.push_back(numbers[n]);
+        }
+    }
+
+  upper_quartile_value = median(upper_half);
+
+  return upper_quartile_value;
+}
+
 
 int main()
 {
@@ -77,5 +106,6 @@ int main()
 
   std::cout << "Mean: " << mean(numbers_vect) << std::endl;
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
-  std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl; // This ain't working yet
+  std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl;
+  std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
 }
