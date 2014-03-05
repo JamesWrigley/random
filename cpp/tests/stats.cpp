@@ -34,7 +34,7 @@ float mean(std::vector<float> numbers)
 float lower_quartile(std::vector<float> numbers)
 {
   std::vector<float> lower_half;
-  float numbers_median = median(numbers); // So we don't have recompute it often
+  float numbers_median = median(numbers); // So we don't have to recompute it often
   float lower_quartile_value;
 
   // If the median is in the numbers vector, then include it in the lower_half
@@ -62,23 +62,38 @@ float lower_quartile(std::vector<float> numbers)
 float upper_quartile(std::vector<float> numbers)
 {
   std::vector<float> upper_half;
-  float numbers_median = median(numbers); // So we don't have recompute it often
+  float numbers_median = median(numbers); // So we don't have to recompute it often
   float upper_quartile_value;
+
 
   // If the median is in the numbers vector, then include it in the upper_half
   // vector, else don't include it.
   if (std::find(numbers.begin(), numbers.end(), numbers_median) != numbers.end())
     {
-      for (int n = 0; numbers[n] >= numbers_median; n++)
+      for (unsigned int n = 0; n < numbers.size(); n++)
         {
-          upper_half.push_back(numbers[n]);
+          if (numbers[n] >= numbers_median)
+            {
+              upper_half.push_back(numbers[n]);
+            }
+          else
+            {
+              continue;
+            }
         }
     }
   else
     {
-      for (int n = 0; numbers[n] > numbers_median; n++)
+      for (unsigned int n = 0; n < numbers.size(); n++)
         {
-          upper_half.push_back(numbers[n]);
+          if (numbers[n] > numbers_median)
+            {
+              upper_half.push_back(numbers[n]);
+            }
+          else
+            {
+              continue;
+            }
         }
     }
 
