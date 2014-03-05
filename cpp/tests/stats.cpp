@@ -1,16 +1,24 @@
 /*
-  A program that generates various statistical data from a user inputted bunch
-  of numbers. Specifically, it calculates the mean and median. Support for the
-  quartiles is coming.
+  A program that generates various statistical data from a user in-putted bunch
+  of numbers. Specifically, it calculates the mean, median (AKA middle quartile),
+  lower quartile and upper quartile. Support for the mode is coming.
 */
 
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 
+float mean(std::vector<float> numbers)
+{
+  // Self-explanatory, this calculates the mean of the numbers
+  float mean_value = std::accumulate(numbers.begin(), numbers.end(), 0.0) / numbers.size();
+  return mean_value;
+}
+
+
 float median(std::vector<float> numbers)
 {
-  int vector_size = numbers.size();
+  int vector_size = numbers.size(); // So we don't have to recompute it often
 
   // Cases for where the vector size is odd and even, respectively
   if (vector_size % 2 != 0)
@@ -24,12 +32,39 @@ float median(std::vector<float> numbers)
     }
 }
 
-float mean(std::vector<float> numbers)
+
+std::vector<float> mode(std::vector<float> numbers)
 {
-  // Self-explanatory, this calculates the mean of the numbers
-  float mean_value = std::accumulate(numbers.begin(), numbers.end(), 0.0) / numbers.size();
-  return mean_value;
+  std::vector<float> mode_values; // What the mode(s) will be put into
+  unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
+
+  for (unsigned int n = 0; n < numbers.size(); n++)
+    {
+      unsigned int n_occurrences;
+      for (unsigned int f; f < numbers.size(); f++)
+        {
+          if (numbers[n] == numbers[f])
+            {
+              n_occurrences++;
+            }
+        }
+
+      std::cout << n_occurrences << std::endl;
+      if (n_occurrences > last_N_occurrences)
+        {
+          last_N_occurrences = n_occurrences;
+          mode_values.clear();
+          mode_values.push_back(numbers[n]);
+        }
+      else if (n_occurrences == last_N_occurrences)
+        {
+          mode_values.push_back(numbers[n]);
+        }
+    }
+
+  return mode_values;
 }
+
 
 float lower_quartile(std::vector<float> numbers)
 {
@@ -58,6 +93,7 @@ float lower_quartile(std::vector<float> numbers)
 
   return lower_quartile_value;
 }
+
 
 float upper_quartile(std::vector<float> numbers)
 {
@@ -120,8 +156,27 @@ int main()
   // Sorts the numbers numerically
   std::sort(numbers_vect.begin(), numbers_vect.end());
 
+  std::vector<float> mode_vector = mode(numbers_vect);
+
   std::cout << "Mean: " << mean(numbers_vect) << std::endl;
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
   std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl;
   std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
+
+  if (mode_vector.size() == 0)
+    {
+      std::cout << "No mode found!" << std::endl;
+    }
+  else if (mode_vector.size() == 1)
+    {
+      std::cout << "Mode: " << mode_vector[0] << std::endl;
+    }
+  else
+    {
+      for (float n = 0; n < (mode_vector.size() - 1); n++)
+        {
+          std::cout << mode_vector[n] << ", ";
+        }
+      std::cout << mode_vector.back() << std::endl;
+    }
 }
