@@ -70,11 +70,11 @@ float upper_quartile(std::vector<float> numbers)
   // vector, else don't include it.
   if (std::find(numbers.begin(), numbers.end(), numbers_median) != numbers.end())
     {
-      for (unsigned int n = 0; n < numbers.size(); n++)
+      for (float n : numbers)
         {
-          if (numbers[n] >= numbers_median)
+          if (n >= numbers_median)
             {
-              upper_half.push_back(numbers[n]);
+              upper_half.push_back(n);
             }
           else
             {
@@ -84,11 +84,11 @@ float upper_quartile(std::vector<float> numbers)
     }
   else
     {
-      for (unsigned int n = 0; n < numbers.size(); n++)
+      for (float n : numbers)
         {
-          if (numbers[n] > numbers_median)
+          if (n > numbers_median)
             {
-              upper_half.push_back(numbers[n]);
+              upper_half.push_back(n);
             }
           else
             {
@@ -109,12 +109,13 @@ int main()
   std::string raw_input;
   std::vector<std::string> raw_input_vect;
 
+  // Input section
   std::cout << "Enter the list of numbers separated by spaces: ";
   std::getline(std::cin, raw_input);
-
   // Split numbers_str by whitespace, then converts the string vector into an float vector
   boost::split(raw_input_vect, raw_input, boost::is_any_of("\t "));
   std::transform(raw_input_vect.begin(), raw_input_vect.end(), std::back_inserter(numbers_vect), [](const std::string& val) { return std::stof(val); });
+
 
   // Sorts the numbers numerically
   std::sort(numbers_vect.begin(), numbers_vect.end());
