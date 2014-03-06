@@ -6,6 +6,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <unordered_map>
 #include <boost/algorithm/string.hpp>
 
 float mean(std::vector<float> numbers)
@@ -33,38 +34,54 @@ float median(std::vector<float> numbers)
 }
 
 
-std::vector<float> mode(std::vector<float> numbers)
+// std::vector<float> mode(std::vector<float> numbers)
+// {
+//   std::vector<float> mode_values; // What the mode(s) will be put into
+//   unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
+
+//   for (unsigned int n = 0; n < numbers.size(); n++)
+//     {
+//       unsigned int n_occurrences = 0; // The number of occurrences for the current n
+//       for (unsigned int f = 0; f < numbers.size(); f++)
+//         {
+//           if (numbers[n] == numbers[f])
+//             {
+//               n_occurrences++;
+//               //              std::cout << "Got to 49" << std::endl;
+//             }
+//         }
+
+//       //      std::cout << n_occurrences << std::endl;
+//       if (n_occurrences > last_N_occurrences)
+//         {
+//           last_N_occurrences = n_occurrences;
+//           mode_values.clear();
+//           mode_values.push_back(numbers[n]);
+//         }
+//       else if (n_occurrences == last_N_occurrences)
+//         {
+//           mode_values.push_back(numbers[n]);
+//         }
+//     }
+
+//   return mode_values;
+// }
+std::unordered_map<float, int> mode(std::vector<float> nums)
 {
-  std::vector<float> mode_values; // What the mode(s) will be put into
-  unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
+  std::unordered_map<float, int> mode_values;
 
-  for (unsigned int n = 0; n < numbers.size(); n++)
-    {
-      unsigned int n_occurrences;
-      for (unsigned int f; f < numbers.size(); f++)
-        {
-          if (numbers[n] == numbers[f])
-            {
-              n_occurrences++;
-            }
-        }
-
-      std::cout << n_occurrences << std::endl;
-      if (n_occurrences > last_N_occurrences)
-        {
-          last_N_occurrences = n_occurrences;
-          mode_values.clear();
-          mode_values.push_back(numbers[n]);
-        }
-      else if (n_occurrences == last_N_occurrences)
-        {
-          mode_values.push_back(numbers[n]);
-        }
-    }
-
-  return mode_values;
+  for (auto num : nums) {
+    if (mode_values.find(num) == mode_values.end())
+      {
+        mode_values[num] = 1;
+      }
+    else
+      {
+        mode_values[num] += 1;
+      }
+  }
+  return m;
 }
-
 
 float lower_quartile(std::vector<float> numbers)
 {
@@ -156,27 +173,35 @@ int main()
   // Sorts the numbers numerically
   std::sort(numbers_vect.begin(), numbers_vect.end());
 
-  std::vector<float> mode_vector = mode(numbers_vect);
+  //  std::vector<float> mode_vector = mode(numbers_vect);
+  std::unordered_map<float, int> mode_vector = mode(numbers_vect);
 
   std::cout << "Mean: " << mean(numbers_vect) << std::endl;
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
   std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl;
   std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
 
-  if (mode_vector.size() == 0)
+  std::cout << "Mode(s): " << std::endl;
+  for (auto kv : mode_vector)
     {
-      std::cout << "No mode found!" << std::endl;
+      printf("%f shows up %d times.\n", kv.first, kv.second);
     }
-  else if (mode_vector.size() == 1)
-    {
-      std::cout << "Mode: " << mode_vector[0] << std::endl;
-    }
-  else
-    {
-      for (float n = 0; n < (mode_vector.size() - 1); n++)
-        {
-          std::cout << mode_vector[n] << ", ";
-        }
-      std::cout << mode_vector.back() << std::endl;
-    }
+  std::cout << std::endl;
+
+  // if (mode_vector.size() == 0)
+  //   {
+  //     std::cout << "No mode found!" << std::endl;
+  //   }
+  // else if (mode_vector.size() == 1)
+  //   {
+  //     std::cout << "Mode: " << mode_vector[0] << std::endl;
+  //   }
+  // else
+  //   {
+  //     for (float n = 0; n < (mode_vector.size() - 1); n++)
+  //       {
+  //         std::cout << mode_vector[n] << ", ";
+  //       }
+  //     std::cout << mode_vector.back() << std::endl;
+  //   }
 }
