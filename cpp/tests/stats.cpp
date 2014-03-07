@@ -1,10 +1,11 @@
 /*
   A program that generates various statistical data from a user in-putted bunch
   of numbers. Specifically, it calculates the mean, median (AKA middle quartile),
-  lower quartile and upper quartile. Support for the mode is coming.
+  mode, lower quartile and upper quartile.
 */
 
 #include <cmath>
+#include <iostream>
 #include <algorithm>
 #include <unordered_map>
 #include <boost/algorithm/string.hpp>
@@ -34,54 +35,36 @@ float median(std::vector<float> numbers)
 }
 
 
-// std::vector<float> mode(std::vector<float> numbers)
-// {
-//   std::vector<float> mode_values; // What the mode(s) will be put into
-//   unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
-
-//   for (unsigned int n = 0; n < numbers.size(); n++)
-//     {
-//       unsigned int n_occurrences = 0; // The number of occurrences for the current n
-//       for (unsigned int f = 0; f < numbers.size(); f++)
-//         {
-//           if (numbers[n] == numbers[f])
-//             {
-//               n_occurrences++;
-//               //              std::cout << "Got to 49" << std::endl;
-//             }
-//         }
-
-//       //      std::cout << n_occurrences << std::endl;
-//       if (n_occurrences > last_N_occurrences)
-//         {
-//           last_N_occurrences = n_occurrences;
-//           mode_values.clear();
-//           mode_values.push_back(numbers[n]);
-//         }
-//       else if (n_occurrences == last_N_occurrences)
-//         {
-//           mode_values.push_back(numbers[n]);
-//         }
-//     }
-
-//   return mode_values;
-// }
-std::unordered_map<float, int> mode(std::vector<float> nums)
+std::vector<float> mode(std::vector<float> numbers)
 {
-  std::unordered_map<float, int> mode_values;
+  std::vector<float> mode_values; // What the mode(s) will be put into
+  unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
 
-  for (auto num : nums) {
-    if (mode_values.find(num) == mode_values.end())
-      {
-        mode_values[num] = 1;
-      }
-    else
-      {
-        mode_values[num] += 1;
-      }
-  }
-  return m;
+  for (float n : numbers)
+    {
+      unsigned int n_occurrences = std::count(numbers.begin(), numbers.end(), n); // The number of occurrences for the current n
+
+      // Is the number of occurrences more than the last mode? If so, then clear
+      // mode_values and replace with new mode. Else append.
+      if (n_occurrences > last_N_occurrences)
+        {
+          last_N_occurrences = n_occurrences;
+          mode_values.clear();
+          mode_values.push_back(numbers[n]);
+        }
+      else if (n_occurrences == last_N_occurrences)
+        {
+          mode_values.push_back(numbers[n]);
+        }
+    }
+
+  // Remove doubles from mode_values, could be optimized
+  std::vector<float>::iterator rm_doubles = std::unique(mode_values.begin(), mode_values.end());
+  mode_values.resize(std::distance(mode_values.begin(), rm_doubles));
+
+  return mode_values;
 }
+
 
 float lower_quartile(std::vector<float> numbers)
 {
@@ -173,35 +156,27 @@ int main()
   // Sorts the numbers numerically
   std::sort(numbers_vect.begin(), numbers_vect.end());
 
-  //  std::vector<float> mode_vector = mode(numbers_vect);
-  std::unordered_map<float, int> mode_vector = mode(numbers_vect);
-
   std::cout << "Mean: " << mean(numbers_vect) << std::endl;
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
   std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl;
   std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
+  std::cout << "Mode: ";
 
-  std::cout << "Mode(s): " << std::endl;
-  for (auto kv : mode_vector)
+  std::vector<float> mode_vector = mode(numbers_vect);
+  if (mode_vector.size() == numbers_vect.size())
     {
-      printf("%f shows up %d times.\n", kv.first, kv.second);
+      std::cout << "No mode found!" << std::endl;
     }
-  std::cout << std::endl;
-
-  // if (mode_vector.size() == 0)
-  //   {
-  //     std::cout << "No mode found!" << std::endl;
-  //   }
-  // else if (mode_vector.size() == 1)
-  //   {
-  //     std::cout << "Mode: " << mode_vector[0] << std::endl;
-  //   }
-  // else
-  //   {
-  //     for (float n = 0; n < (mode_vector.size() - 1); n++)
-  //       {
-  //         std::cout << mode_vector[n] << ", ";
-  //       }
-  //     std::cout << mode_vector.back() << std::endl;
-  //   }
+  else if (mode_vector.size() == 1)
+    {
+      std::cout << mode_vector[0] << std::endl;
+    }
+  else
+    {
+      for (float n = 0; n < (mode_vector.size() - 1); n++)
+        {
+          std::cout << mode_vector[n] << ", ";
+        }
+      std::cout << mode_vector.back() << std::endl;
+    }
 }
