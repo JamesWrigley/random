@@ -50,11 +50,11 @@ std::vector<float> mode(std::vector<float> numbers)
         {
           last_N_occurrences = n_occurrences;
           mode_values.clear();
-          mode_values.push_back(numbers[n]);
+          mode_values.push_back(n);
         }
       else if (n_occurrences == last_N_occurrences)
         {
-          mode_values.push_back(numbers[n]);
+          mode_values.push_back(n);
         }
     }
 
