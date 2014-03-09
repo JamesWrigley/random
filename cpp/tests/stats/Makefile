@@ -3,6 +3,9 @@ CC = g++
 CFLAGS = -Wall -g -std=c++11
 LDFLAGS = -lboost_system -lboost_filesystem
 
+clean:
+	rm stats_functions.o stats.o stats
+
 stats_functions.o: stats_functions.cpp stats_functions.h
 	${CC} ${CFLAGS} -c stats_functions.cpp
 
