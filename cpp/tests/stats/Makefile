@@ -18,6 +18,6 @@ stats_functions_tests.o:
 stats_tests: stats_functions_tests.o stats_functions.o
 	${CC} ${CFLAGS} stats_functions_tests.o stats_functions.o ${LDFLAGS} -lgtest -o stats_tests
 
-# make clean target
+
 clean:
 	rm stats_functions.o stats.o stats stats_functions_tests.o stats_tests
