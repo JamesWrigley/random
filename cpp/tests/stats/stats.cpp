@@ -34,6 +34,7 @@ int main()
   std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
   std::cout << "Mode: ";
 
+  // Makes the output of mode() a bit prettier based on the length of the return vector
   std::vector<float> mode_vector = mode(numbers_vect);
   if (mode_vector.size() == numbers_vect.size())
     {

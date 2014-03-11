@@ -48,7 +48,19 @@ TEST(StatsTests, LowerQuartileTests)
   std::vector<float> uneven_vector = {-128, -64, 0.349245, 28, 3930, 3931, 4096};
 
   EXPECT_FLOAT_EQ(-0.0293, lower_quartile(even_vector));
+  EXPECT_FLOAT_EQ(-31.825378, lower_quartile(uneven_vector));
 }
+
+
+TEST(StatsTests, UpperQuartileTests)
+{
+  std::vector<float> even_vector = {-1, -.0293, 0, 56, 128, 489};
+  std::vector<float> uneven_vector = {-128, -64, 0.349245, 28, 3930, 3931, 4096};
+
+  EXPECT_FLOAT_EQ(128, upper_quartile(even_vector));
+  EXPECT_FLOAT_EQ(3930.5, upper_quartile(uneven_vector));
+}
+
 
 int main(int argc, char **argv)
 {
