@@ -1,38 +1,37 @@
 #! /usr/bin/python3
 
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui
 
-class MainWindow(QtGui.QWidget):
+class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
 
         self.initUI()
-
+        
     def initUI(self):
-        QtGui.QToolTip.setFont(QtGui.QFont('SansSerif', 10))
+        exitAction = QtGui.QAction(QtGui.QIcon("exit.png"), "&Exit", self)
+        exitAction.setShortcut("Ctrl + Q")
+        exitAction.setStatusTip("Exit Application")
+        exitAction.triggered.connect(QtGui.qApp.quit)
 
-        button = QtGui.QPushButton("Quit", self)
-        button.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        button.setToolTip("Quit Program")
-        button.resize(button.sizeHint())
-        button.move(50, 50)
+        self.statusBar().showMessage("Ready")
 
-        self.setGeometry(300, 300, 250, 150)
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu("&File")
+        fileMenu.addAction(exitAction)
+
         self.setWindowTitle("A Noob's Window")
-
+        self.resize(300, 150)
+        self.center()
         self.show()
 
-    def closeEvent(self, event):
-        reply = QtGui.QMessageBox.question(self, "Message", "Are you sure you wish to quit?",
-                                           QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-
-        if reply == QtGui.QMessageBox.Yes:
-            print("Bye")
-            event.accept()
-        else:
-            event.ignore()
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QtGui.QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 def main():
     app = QtGui.QApplication(sys.argv)
