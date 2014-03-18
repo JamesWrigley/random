@@ -21,20 +21,23 @@ class MainWindow(QtGui.QMainWindow):
         exitAction.setStatusTip("Exit Application")
         exitAction.triggered.connect(self.close)
 
-        saveAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/16x16/actions/document-save.png"), "&Save", self)
+        saveAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/document-save.png"), "&Save", self)
         saveAction.setShortcut("Ctrl+S")
         saveAction.setStatusTip("Save File")
-        saveAction.triggered.connect(self.saveFile())
+        saveAction.triggered.connect(lambda: self.saveFile(textEdit.toPlainText()))
 
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
         self.toolbar = self.addToolBar("Exit")
         self.toolbar.addAction(exitAction)
+        self.toolbar.addAction(saveAction)
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu("&File")
         fileMenu.addAction(exitAction)
+        fileMenu.addAction(saveAction)
 
+        # Window drawing options
         self.setWindowTitle("A Noob's Window")
         self.resize(500, 300)
         self.center()
@@ -46,8 +49,8 @@ class MainWindow(QtGui.QMainWindow):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def saveFile(self):
-        foo # Yes, it isn't finished yet
+    def saveFile(self, documentContents):
+        print(documentContents)
 
 def main():
     app = QtGui.QApplication(sys.argv)
