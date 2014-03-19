@@ -1,7 +1,8 @@
 #! /usr/bin/python3
-
 # A noobish text editor
 
+
+import os
 import sys
 from PyQt4 import QtGui
 
@@ -9,6 +10,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        self.file_path = ""
 
         self.initUI()
         
@@ -29,17 +32,18 @@ class MainWindow(QtGui.QMainWindow):
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
         self.toolbar = self.addToolBar("Exit")
-        self.toolbar.addAction(exitAction)
-        self.toolbar.addAction(saveAction)
-
         menubar = self.menuBar()
         fileMenu = menubar.addMenu("&File")
+
+        # Add items to the toolbar and menus
+        self.toolbar.addAction(exitAction)
+        self.toolbar.addAction(saveAction)
         fileMenu.addAction(exitAction)
         fileMenu.addAction(saveAction)
 
         # Window drawing options
-        self.setWindowTitle("A Noob's Window")
-        self.resize(500, 300)
+        self.setWindowTitle("YATE")
+        self.resize(600, 400)
         self.center()
         self.show()
 
@@ -50,7 +54,15 @@ class MainWindow(QtGui.QMainWindow):
         self.move(qr.topLeft())
 
     def saveFile(self, documentContents):
-        print(documentContents)
+        save_dialog = lambda: QtGui.QFileDialog.getSaveFileName(self, "Save File", os.path.expanduser("~"))
+
+        if not os.path.isfile(self.file_path): # Check if file exists
+            with open(save_dialog(), "w") as file_object:
+                file_object.write(documentContents)
+                self.file_path = os.path.abspath(file_object.name)
+        else:
+            with open(self.file_path, "w") as file_object:
+                file_object.write(documentContents)
 
 def main():
     app = QtGui.QApplication(sys.argv)
