@@ -16,18 +16,24 @@ class MainWindow(QtGui.QMainWindow):
         self.initUI()
         
     def initUI(self):
-        textEdit = QtGui.QTextEdit()
-        self.setCentralWidget(textEdit)
+        self.textEdit = QtGui.QTextEdit()
+        self.setCentralWidget(self.textEdit)
 
         exitAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/application-exit.png"), "&Exit", self)
         exitAction.setShortcut("Ctrl+Q")
         exitAction.setStatusTip("Exit Application")
         exitAction.triggered.connect(self.close)
 
+        openAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/document-open.png"), "&Open", self)
+        openAction.setShortcut("Ctrl+O")
+        openAction.setStatusTip("Open File")
+        openAction.triggered.connect(self.openFile)
+
         saveAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/document-save.png"), "&Save", self)
         saveAction.setShortcut("Ctrl+S")
         saveAction.setStatusTip("Save File")
-        saveAction.triggered.connect(lambda: self.saveFile(textEdit.toPlainText()))
+        saveAction.triggered.connect(lambda: self.saveFile(self.textEdit.toPlainText()))
+
 
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
@@ -36,10 +42,11 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu = menubar.addMenu("&File")
 
         # Add items to the toolbar and menus
-        self.toolbar.addAction(exitAction)
         self.toolbar.addAction(saveAction)
-        fileMenu.addAction(exitAction)
+        self.toolbar.addAction(openAction)
+        fileMenu.addAction(openAction)
         fileMenu.addAction(saveAction)
+        fileMenu.addAction(exitAction)
 
         # Window drawing options
         self.setWindowTitle("YATE")
@@ -63,6 +70,12 @@ class MainWindow(QtGui.QMainWindow):
         else:
             with open(self.file_path, "w") as file_object:
                 file_object.write(documentContents)
+
+    def openFile(self):
+        open_dialog = lambda: QtGui.QFileDialog.getOpenFileName(self, "Open File", os.path.expanduser("~"))
+        with open(open_dialog(), "r") as file_object:
+            self.textEdit.setText(file_object.read())
+            self.file_path = os.path.abspath(file_object.name)
 
 def main():
     app = QtGui.QApplication(sys.argv)
