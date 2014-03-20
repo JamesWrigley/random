@@ -4,7 +4,7 @@
 
 import os
 import sys
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 
 class MainWindow(QtGui.QMainWindow):
 
