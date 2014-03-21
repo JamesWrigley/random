@@ -10,17 +10,17 @@ class MainWindow(QtGui.QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.initUI()
-        self.center()
 
     def initUI(self):
-        lcd_widget = QtGui.QLCDNumber(self)
-        lcd_widget.display("00.00")
+        self.lcd_widget = QtGui.QLCDNumber(self)
+        self.lcd_widget.display("00.00")
         numberEntry_widget = QtGui.QLineEdit(self)
-        numberEntry_widget.setInputMask("00.00")
+        numberEntry_widget.setToolTip("Countdown time (in whole seconds, or value will be rounded)")
         timer_start_button = QtGui.QPushButton("Start Timer")
+        timer_start_button.clicked.connect(lambda: self.timer(numberEntry_widget.text()))
 
         vbox = QtGui.QVBoxLayout()
-        vbox.addWidget(lcd_widget)
+        vbox.addWidget(self.lcd_widget)
 
         hbox = QtGui.QHBoxLayout()
         hbox.addWidget(numberEntry_widget)
@@ -31,18 +31,25 @@ class MainWindow(QtGui.QWidget):
         
         self.resize(400, 250)
         self.setWindowTitle("YAT - Yet Another Timer")
+        self.center()
         self.show()
 
+
     def timer(self, value):
-        current_time = round(time.time(), 2)
-        end_time = current_time + value
+        try:
+            length_of_time = round(float(value), 0)
+        except ValueError:
+            QtGui.QMessageBox.warning(self, "Error", "Please enter numbers only")
+            return(1)
 
-        while current_time <= end_time:
+        current_time = length_of_time
+        self.lcd_widget.display(length_of_time)
+
+        while current_time > 0:
+            current_time -= 1
+            self.lcd_widget.display(current_time)
             time.sleep(1)
-            self.lcd_widget
-            current_time += 1
 
-        return(0)
 
     def center(self):
         qr = self.frameGeometry()
