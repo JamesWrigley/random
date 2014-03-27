@@ -13,7 +13,7 @@ class MainWindow(QtGui.QWidget):
 
     def initUI(self):
         self.lcd_widget = QtGui.QLCDNumber(self)
-        self.lcd_widget.display("00.00")
+        self.lcd_widget.display(0)
         numberEntry_widget = QtGui.QLineEdit(self)
         numberEntry_widget.setToolTip("Countdown time (in whole seconds, or value will be rounded)")
         timer_start_button = QtGui.QPushButton("Start Timer")
@@ -37,18 +37,33 @@ class MainWindow(QtGui.QWidget):
 
     def timer(self, value):
         try:
+            # In case the user enters letters or something
             length_of_time = round(float(value), 0)
         except ValueError:
             QtGui.QMessageBox.warning(self, "Error", "Please enter numbers only")
             return(1)
 
-        current_time = length_of_time
         self.lcd_widget.display(length_of_time)
 
-        while current_time > 0:
-            current_time -= 1
-            self.lcd_widget.display(current_time)
-            time.sleep(1)
+        countdown = length_of_time
+        qtimer = QtCore.QTimer()
+        qtimer.timeout.connect(lambda: self.lcd_widget.display(countdown))
+
+        qtimer.start(5000)
+        self.lcd_widget.display("Foo")
+
+        while countdown > 0:
+            try:
+                countdown -= 1
+                print(countdown)
+            finally:
+                qtimer.start(1000)
+
+        print("Done")
+
+
+    def update_lcd(self, value):
+        self.lcd_widget.display(value)
 
 
     def center(self):
