@@ -56,6 +56,7 @@ class MainWindow(QtGui.QWidget):
 
     def update_lcd(self, value):
         self.length_of_time -= 1
+
         if self.length_of_time >= 0:
             self.lcd_widget.display(self.length_of_time)
             print(self.length_of_time)
