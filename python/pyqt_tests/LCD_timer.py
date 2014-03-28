@@ -17,7 +17,9 @@ class MainWindow(QtGui.QWidget):
         numberEntry_widget = QtGui.QLineEdit(self)
         numberEntry_widget.setToolTip("Countdown time (in whole seconds, or value will be rounded)")
         timer_start_button = QtGui.QPushButton("Start Timer")
-        timer_start_button.clicked.connect(lambda: self.timer(numberEntry_widget.text()))
+        timer_start_button.clicked.connect(lambda: self.restart_timer(numberEntry_widget.text()))
+        self.qtimer = QtCore.QTimer(self)
+        self.qtimer.timeout.connect(lambda: self.update_lcd(self.length_of_time))
 
         vbox = QtGui.QVBoxLayout()
         vbox.addWidget(self.lcd_widget)
@@ -35,35 +37,31 @@ class MainWindow(QtGui.QWidget):
         self.show()
 
 
-    def timer(self, value):
+    def restart_timer(self, value):
         try:
             # In case the user enters letters or something
-            length_of_time = round(float(value), 0)
+            self.length_of_time = round(float(value), 0)
+            print(self.length_of_time)
         except ValueError:
             QtGui.QMessageBox.warning(self, "Error", "Please enter numbers only")
             return(1)
 
-        self.lcd_widget.display(length_of_time)
+        self.lcd_widget.display(self.length_of_time)
 
-        countdown = length_of_time
-        qtimer = QtCore.QTimer()
-        qtimer.timeout.connect(lambda: self.lcd_widget.display(countdown))
-
-        qtimer.start(5000)
-        self.lcd_widget.display("Foo")
-
-        while countdown > 0:
-            try:
-                countdown -= 1
-                print(countdown)
-            finally:
-                qtimer.start(1000)
-
-        print("Done")
+        # Reset the timer and the lcd
+        self.qtimer.stop()
+        # Restart the timer
+        self.qtimer.start(1000)
 
 
     def update_lcd(self, value):
-        self.lcd_widget.display(value)
+        self.length_of_time -= 1
+        if self.length_of_time >= 0:
+            self.lcd_widget.display(self.length_of_time)
+            print(self.length_of_time)
+        else:
+            self.qtimer.stop()
+            print("Done")
 
 
     def center(self):
