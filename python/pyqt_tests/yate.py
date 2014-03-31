@@ -17,8 +17,10 @@ class MainWindow(QtGui.QMainWindow):
         
     def initUI(self):
         self.textEdit = QtGui.QTextEdit()
+        self.textEdit.setStyleSheet("QTextEdit {color:#000000}")
         self.setCentralWidget(self.textEdit)
 
+        # File menu actions
         exitAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/application-exit.png"), "&Exit", self)
         exitAction.setShortcut("Ctrl+Q")
         exitAction.setStatusTip("Exit Application")
@@ -34,12 +36,18 @@ class MainWindow(QtGui.QMainWindow):
         saveAction.setStatusTip("Save File")
         saveAction.triggered.connect(lambda: self.saveFile(self.textEdit.toPlainText()))
 
+        # Edit menu actions
+        changeTextColorAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/color-picker.png"), "&Text Color", self)
+        changeTextColorAction.setShortcut("Ctrl+T")
+        changeTextColorAction.setStatusTip("Set text color")
+        changeTextColorAction.triggered.connect(self.changeTextColor)
 
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
         self.toolbar = self.addToolBar("Exit")
         menubar = self.menuBar()
         fileMenu = menubar.addMenu("&File")
+        editMenu = menubar.addMenu("&Edit")
 
         # Add items to the toolbar and menus
         self.toolbar.addAction(saveAction)
@@ -47,6 +55,7 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu.addAction(openAction)
         fileMenu.addAction(saveAction)
         fileMenu.addAction(exitAction)
+        editMenu.addAction(changeTextColorAction)
 
         # Window drawing options
         self.setWindowTitle("YATE - Yet Another Text Editor™")
@@ -54,11 +63,13 @@ class MainWindow(QtGui.QMainWindow):
         self.center()
         self.show()
 
+
     def center(self):
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
 
     def saveFile(self, documentContents):
         save_dialog = lambda: QtGui.QFileDialog.getSaveFileName(self, "Save File", os.path.expanduser("~"))
@@ -71,11 +82,18 @@ class MainWindow(QtGui.QMainWindow):
             with open(self.file_path, "w") as file_object:
                 file_object.write(documentContents)
 
+
     def openFile(self):
         open_dialog = lambda: QtGui.QFileDialog.getOpenFileName(self, "Open File", os.path.expanduser("~"))
         with open(open_dialog(), "r") as file_object:
             self.textEdit.setText(file_object.read())
             self.file_path = os.path.abspath(file_object.name)
+
+
+    def changeTextColor(self):
+        color = QtGui.QColorDialog.getColor()
+        self.textEdit.setStyleSheet("QTextEdit {color:" + color.name() + "}")
+            
 
 def main():
     app = QtGui.QApplication(sys.argv)
