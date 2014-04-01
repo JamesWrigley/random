@@ -58,10 +58,8 @@ class MainWindow(QtGui.QWidget):
 
         if self.length_of_time >= 0:
             self.lcd_widget.display(self.length_of_time)
-            print(self.length_of_time)
         else:
             self.qtimer.stop()
-            print("Done")
 
 
     def center(self):
