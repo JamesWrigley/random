@@ -37,10 +37,13 @@ class MainWindow(QtGui.QMainWindow):
         saveAction.triggered.connect(lambda: self.saveFile(self.textEdit.toPlainText()))
 
         # Edit menu actions
-        changeTextColorAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/color-picker.png"), "&Text Color", self)
-        changeTextColorAction.setShortcut("Ctrl+T")
+        changeTextColorAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/format-text-color.png"), "&Text Color", self)
         changeTextColorAction.setStatusTip("Set text color")
         changeTextColorAction.triggered.connect(self.changeTextColor)
+
+        changeFontAction = QtGui.QAction(QtGui.QIcon("/usr/share/icons/oxygen/32x32/actions/character-set.png"), "&Font", self)
+        changeFontAction.setStatusTip("Set text font")
+        changeFontAction.triggered.connect(self.changeFont)
 
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
@@ -56,6 +59,7 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu.addAction(saveAction)
         fileMenu.addAction(exitAction)
         editMenu.addAction(changeTextColorAction)
+        editMenu.addAction(changeFontAction)
 
         # Window drawing options
         self.setWindowTitle("YATE - Yet Another Text Editor™")
@@ -93,7 +97,13 @@ class MainWindow(QtGui.QMainWindow):
     def changeTextColor(self):
         color = QtGui.QColorDialog.getColor()
         self.textEdit.setStyleSheet("QTextEdit {color:" + color.name() + "}")
-            
+
+
+    def changeFont(self):
+        font, ok = QtGui.QFontDialog.getFont()
+        if ok:
+            self.textEdit.setStyleSheet("QTextEdit {font:" + str(font.pointSize()) + "pt " + font.family() +"}")
+
 
 def main():
     app = QtGui.QApplication(sys.argv)
