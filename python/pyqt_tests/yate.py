@@ -1,10 +1,20 @@
 #! /usr/bin/python3
-# A noobish text editor
-
+# A text editor
 
 import os
 import sys
 from PyQt4 import QtGui, QtCore
+
+class PrefsWindow(QtGui.QDialog):
+
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+
+        vbox = QtGui.QVBoxLayout()
+        
+        self.setLayout(vbox)
+        self.resize(400, 300)
+
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -45,6 +55,10 @@ class MainWindow(QtGui.QMainWindow):
         changeFontAction.setStatusTip("Set text font")
         changeFontAction.triggered.connect(self.changeFont)
 
+        openPrefsAction = QtGui.QAction("&Preferences", self)
+        openPrefsAction.setStatusTip("Edit Preferences")
+        openPrefsAction.triggered.connect(lambda: PrefsWindow(self).exec_())
+
         # Make the status bar, tool bar, and menu bar
         self.statusBar()
         self.toolbar = self.addToolBar("Exit")
@@ -60,6 +74,7 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu.addAction(exitAction)
         editMenu.addAction(changeTextColorAction)
         editMenu.addAction(changeFontAction)
+        editMenu.addAction(openPrefsAction)
 
         # Window drawing options
         self.setWindowTitle("YATE - Yet Another Text Editor™")
