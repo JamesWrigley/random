@@ -13,7 +13,7 @@ class PrefsWindow(QtGui.QDialog):
         vbox = QtGui.QVBoxLayout()
         
         self.setLayout(vbox)
-        self.resize(400, 300)
+        self.resize(250, 300)
 
 
 class MainWindow(QtGui.QMainWindow):
