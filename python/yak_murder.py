@@ -2,8 +2,8 @@
 
 def yak_killer(victim):
     if len(victim) < 3:
-        print("String too short!")
-        return 0
+        no_yak = victim
+        return no_yak
     else:
         victim_list = list(victim)
         for i in victim_list:
