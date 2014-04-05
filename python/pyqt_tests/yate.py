@@ -3,7 +3,8 @@
 
 import os
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui
+
 
 class PrefsWindow(QtGui.QDialog):
 
@@ -17,7 +18,6 @@ class PrefsWindow(QtGui.QDialog):
 
 
 class MainWindow(QtGui.QMainWindow):
-
     def __init__(self):
         super(MainWindow, self).__init__()
 
