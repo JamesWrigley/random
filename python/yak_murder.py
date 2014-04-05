@@ -2,8 +2,7 @@
 
 def yak_killer(victim):
     if len(victim) < 3:
-        no_yak = victim
-        return no_yak
+        print(victim)
     else:
         victim_list = list(victim)
         for i in victim_list:
