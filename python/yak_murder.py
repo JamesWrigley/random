@@ -5,7 +5,6 @@ def yak_killer(victim):
         print("String too short!")
         return 0
     else:
-#        victim_list = list(victim.replace(" ", ""))
         victim_list = list(victim)
         for i in victim_list:
             if i == "y" and victim_list[victim_list.index(i) + 2] == "k":
