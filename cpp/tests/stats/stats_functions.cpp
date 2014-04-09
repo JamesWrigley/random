@@ -70,14 +70,14 @@ float lower_quartile(std::vector<float> numbers)
   // vector, else don't include it.
   if (std::find(numbers.begin(), numbers.end(), numbers_median) != numbers.end())
     {
-      for (int n = 0; numbers[n] <= numbers_median; n++)
+      for (unsigned int n = 0; numbers[n] <= numbers_median; n++)
         {
           lower_half.push_back(numbers[n]);
         }
     }
   else
     {
-      for (int n = 0; numbers[n] < numbers_median; n++)
+      for (unsigned int n = 0; numbers[n] < numbers_median; n++)
         {
           lower_half.push_back(numbers[n]);
         }

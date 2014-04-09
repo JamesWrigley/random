@@ -18,7 +18,8 @@ int main()
   // Input section
   std::cout << "Enter the list of numbers separated by spaces: ";
   std::getline(std::cin, raw_input); // I should put this in a header
-  // Split numbers_str by whitespace, then converts the string vector into an float vector
+  // Trim whitespace, then split raw_input into numbers_str by whitespace, then converts the string vector into an float vector
+  boost::trim(raw_input);
   boost::split(raw_input_vect, raw_input, boost::is_any_of("\t "));
   std::transform(raw_input_vect.begin(), raw_input_vect.end(), std::back_inserter(numbers_vect), [](const std::string& val) { return std::stof(val); });
 

@@ -1,4 +1,4 @@
-CC = g++
+CC = clang++
 CFLAGS = -Wall -g -std=c++11
 LDFLAGS = -lboost_system -lboost_filesystem
 
