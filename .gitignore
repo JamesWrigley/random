@@ -88,3 +88,4 @@ Session.vim
 
 *.xyz
 *.o
+__*__/
