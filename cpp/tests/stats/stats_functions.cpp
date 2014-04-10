@@ -4,6 +4,7 @@
 #include "stats_functions.h"
 #include <boost/algorithm/string.hpp>
 
+
 std::string print_mode(std::vector<float> numbers)
 {
   // Makes the output of mode() a bit prettier based on the length of the return vector
@@ -31,6 +32,7 @@ std::string print_mode(std::vector<float> numbers)
       return formatted_output;
     }
 }
+
 
 float mean(std::vector<float> numbers)
 {
@@ -154,7 +156,6 @@ float upper_quartile(std::vector<float> numbers)
             }
         }
     }
-
   upper_quartile_value = median(upper_half);
 
   return upper_quartile_value;

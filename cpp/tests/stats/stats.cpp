@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <exception>
 #include "stats_functions.h"
 #include <boost/algorithm/string.hpp>
 
@@ -22,7 +23,15 @@ int main()
   // Trim whitespace, then split raw_input into numbers_str by whitespace, then converts the string vector into an float vector
   boost::trim(raw_input);
   boost::split(raw_input_vect, raw_input, boost::is_any_of("\t "));
-  std::transform(raw_input_vect.begin(), raw_input_vect.end(), std::back_inserter(numbers_vect), [](const std::string& val) { return std::stof(val); });
+  try
+    {
+      std::transform(raw_input_vect.begin(), raw_input_vect.end(), std::back_inserter(numbers_vect), [](const std::string& val) { return std::stof(val); });
+    }
+  catch (std::exception e)
+    {
+      std::cout << "Invalid input! An element was entered that is not a number." << std::endl;
+      return 1;
+    }
 
 
   // Sorts the numbers numerically
