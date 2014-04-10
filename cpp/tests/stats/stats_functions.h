@@ -7,4 +7,6 @@ std::vector<float> mode(std::vector<float> numbers);
 float lower_quartile(std::vector<float> numbers);
 float upper_quartile(std::vector<float> numbers);
 
+std::string print_mode(std::vector<float> numbers);
+
 #endif

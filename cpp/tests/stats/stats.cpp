@@ -4,8 +4,9 @@
   mode, lower quartile and upper quartile.
 */
 
-#include <iostream>
 #include <vector>
+#include <string>
+#include <iostream>
 #include "stats_functions.h"
 #include <boost/algorithm/string.hpp>
 
@@ -31,24 +32,5 @@ int main()
   std::cout << "Median (also middle quartile): " << median(numbers_vect) << std::endl;
   std::cout << "Lower Quartile: " << lower_quartile(numbers_vect) << std::endl;
   std::cout << "Upper Quartile: " << upper_quartile(numbers_vect) << std::endl;
-  std::cout << "Mode: ";
-
-  // Makes the output of mode() a bit prettier based on the length of the return vector
-  std::vector<float> mode_vector = mode(numbers_vect);
-  if (mode_vector.size() == numbers_vect.size())
-    {
-      std::cout << "No mode found!" << std::endl;
-    }
-  else if (mode_vector.size() == 1)
-    {
-      std::cout << mode_vector[0] << std::endl;
-    }
-  else
-    {
-      for (float n = 0; n < (mode_vector.size() - 1); n++)
-        {
-          std::cout << mode_vector[n] << ", ";
-        }
-      std::cout << mode_vector.back() << std::endl;
-    }
+  std::cout << "Mode: " << print_mode(numbers_vect) << std::endl;
 }

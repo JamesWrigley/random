@@ -4,6 +4,34 @@
 #include "stats_functions.h"
 #include <boost/algorithm/string.hpp>
 
+std::string print_mode(std::vector<float> numbers)
+{
+  // Makes the output of mode() a bit prettier based on the length of the return vector
+  std::vector<float> mode_vector = mode(numbers);
+  std::vector<std::string> modes(mode_vector.size());
+  std::transform(mode_vector.begin(), mode_vector.end(), modes.begin(), [](float i){ return std::to_string(i); });
+
+  if (modes.size() == numbers.size())
+    {
+      return "No mode found!";
+    }
+  else if (modes.size() == 1)
+    {
+      return modes[0];
+    }
+  else
+    {
+      std::string formatted_output;
+      for (unsigned int n = 0; n < (modes.size() - 1); n++)
+        {
+          formatted_output.append(modes[n] + ", ");
+        }
+      formatted_output.append(modes.back());
+
+      return formatted_output;
+    }
+}
+
 float mean(std::vector<float> numbers)
 {
   // Self-explanatory, this calculates the mean of the numbers
