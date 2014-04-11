@@ -12,16 +12,29 @@ int main()
   unsigned int max_product;
   std::array<std::string, 200> numbers_array;
 
-  unsigned int index = 0;
-  for (unsigned int i = 0; i + 5 <= 1000; i += 5)
+  {
+    unsigned int index = 0;
+    for (unsigned int i = 0; i + 5 <= 1000; i += 5)
+      {
+        numbers_array[index] = massive_digit.substr(i, 5);
+        index++;
+      }
+  }
+
+  for (std::string multiplicands : numbers_array)
     {
-      numbers_array[index] = massive_digit.substr(i, 5);
-      //      std::cout << "Got to " << i << std::endl;
-      index++;
+      unsigned int accumulator = 1;
+
+      for (char multiplier : multiplicands)
+        {
+          accumulator *= std::atoi(&multiplier);
+        }
+
+      if (accumulator > max_product)
+        {
+          max_product = accumulator;
+        }
     }
 
-  for (auto i : numbers_array)
-    {
-      std::cout << i << std::endl;
-    }
+  std::cout << max_product << std::endl;
 }
