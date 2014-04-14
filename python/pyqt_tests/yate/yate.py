@@ -16,6 +16,9 @@ class YateWindow(QtGui.QMainWindow):
         # For the openFile() method
         self.file_path = ""
 
+        # For setting stylesheets
+        self.stylesheet = ["QTextEdit {color:#000000}", "QTextEdit {font:10pt DejaVu Sans Mono}"]
+
         # Connect the actions to their methods
         self.ui.actionQuit.triggered.connect(self.close)
         self.ui.actionOpen.triggered.connect(self.openFile)
@@ -40,18 +43,24 @@ class YateWindow(QtGui.QMainWindow):
         open_dialog = lambda: QtGui.QFileDialog.getOpenFileName(self, "Open File", os.path.expanduser("~"))
         with open(open_dialog(), "r") as file_object:
             self.ui.textEdit.setText(file_object.read())
+            self.setWindowTitle(file_object.name)
             self.file_path = os.path.abspath(file_object.name)
 
 
     def changeTextColor(self):
         color = QtGui.QColorDialog.getColor()
-        self.ui.textEdit.setStyleSheet("QTextEdit {color:" + color.name() + "}")
+        colorStyle = "QTextEdit {color:" + color.name() + "}"
+#        self.stylesheet[0] = colorStyle
+        self.ui.textEdit.setStyleSheet(colorStyle)
+        print(colorStyle)
 
 
     def changeFont(self):
         font, ok = QtGui.QFontDialog.getFont()
         if ok:
-            self.ui.textEdit.setStyleSheet("QTextEdit {font:" + str(font.pointSize()) + "pt " + font.family() +"}")
+            fontStyle = "QTextEdit {font:" + str(font.pointSize()) + "pt " + font.family() +"}"
+            self.ui.textEdit.setStyleSheet(fontStyle)
+            print(fontStyle)
 
 
 def main():
