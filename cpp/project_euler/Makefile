@@ -9,6 +9,7 @@ all:
 	make -j4 6-sum_square_difference
 	make -j4 7-10001st_prime
 	make -j4 8-largest_product_in_series
+	make -j4 9-special_pythagorean_triplet
 
 clean:
 	rm -f 1-multiples_of_3_and_5
@@ -19,3 +20,4 @@ clean:
 	rm -f 6-sum_square_difference
 	rm -f 7-10001st_prime
 	rm -f 8-largest_product_in_series
+	rm -f 9-special_pythagorean_triplet
