@@ -17,7 +17,7 @@ class YateWindow(QtGui.QMainWindow):
         self.file_path = ""
 
         # For setting stylesheets
-        self.stylesheet = ["QTextEdit {color:#000000}", "QTextEdit {font:10pt DejaVu Sans Mono}"]
+        self.stylesheet = ["{color:#000000} ", "{font:10pt DejaVu Sans Mono}"]
 
         # Connect the actions to their methods
         self.ui.actionQuit.triggered.connect(self.close)
@@ -29,7 +29,6 @@ class YateWindow(QtGui.QMainWindow):
 
     def saveFile(self, documentContents):
         save_dialog = lambda: QtGui.QFileDialog.getSaveFileName(self, "Save File", os.path.expanduser("~"))
-
         if not os.path.isfile(self.file_path): # Check if file exists
             with open(save_dialog(), "w") as file_object:
                 file_object.write(documentContents)
@@ -50,17 +49,17 @@ class YateWindow(QtGui.QMainWindow):
     def changeTextColor(self):
         color = QtGui.QColorDialog.getColor()
         colorStyle = "QTextEdit {color:" + color.name() + "}"
-#        self.stylesheet[0] = colorStyle
-        self.ui.textEdit.setStyleSheet(colorStyle)
-        print(colorStyle)
+        self.stylesheet[0] = colorStyle
+        self.ui.textEdit.setStyleSheet(''.join(self.stylesheet))
 
 
     def changeFont(self):
         font, ok = QtGui.QFontDialog.getFont()
         if ok:
-            fontStyle = "QTextEdit {font:" + str(font.pointSize()) + "pt " + font.family() +"}"
-            self.ui.textEdit.setStyleSheet(fontStyle)
-            print(fontStyle)
+            fontStyle = " QTextEdit {font:" + str(font.pointSize()) + "pt " + font.family() +"}"
+            self.stylesheet[1] = fontStyle
+            self.ui.textEdit.setStyleSheet(''.join(self.stylesheet))
+            print(''.join(self.stylesheet))
 
 
 def main():

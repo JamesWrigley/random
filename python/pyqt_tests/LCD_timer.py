@@ -40,7 +40,6 @@ class MainWindow(QtGui.QWidget):
         try:
             # In case the user enters letters or something
             self.length_of_time = round(float(value), 0)
-            print(self.length_of_time)
         except ValueError:
             QtGui.QMessageBox.warning(self, "Error", "Please enter numbers only")
             return(1)
