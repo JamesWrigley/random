@@ -6,8 +6,8 @@
 
 
 std::string print_mode(std::vector<float> numbers)
-{
-  // Makes the output of mode() a bit prettier based on the length of the return vector
+{ // Makes the output of mode() a bit prettier based on the length of the return vector
+
   std::vector<float> mode_vector = mode(numbers);
   std::vector<std::string> modes(mode_vector.size());
   std::transform(mode_vector.begin(), mode_vector.end(), modes.begin(), [](float i){ return std::to_string(i); });
@@ -35,15 +35,16 @@ std::string print_mode(std::vector<float> numbers)
 
 
 float mean(std::vector<float> numbers)
-{
-  // Self-explanatory, this calculates the mean of the numbers
+{ // Self-explanatory, this calculates the mean of the numbers
+
   float mean_value = std::accumulate(numbers.begin(), numbers.end(), 0.0) / numbers.size();
   return mean_value;
 }
 
 
 float median(std::vector<float> numbers)
-{
+{ // As the name says, this function calculates the median of a dataset.
+
   int vector_size = numbers.size(); // So we don't have to recompute it often
 
   // Cases for where the vector size is odd and even, respectively
@@ -60,7 +61,8 @@ float median(std::vector<float> numbers)
 
 
 std::vector<float> mode(std::vector<float> numbers)
-{
+{ // Calculate the mode of the dataset
+
   std::vector<float> mode_values; // What the mode(s) will be put into
   unsigned int last_N_occurrences = 0; // Holds the current largest number of occurrences
 
@@ -91,7 +93,7 @@ std::vector<float> mode(std::vector<float> numbers)
 
 
 float lower_quartile(std::vector<float> numbers)
-{
+{ // Calculate the lower quartile of a dataset
   std::vector<float> lower_half;
   float numbers_median = median(numbers); // So we don't have to recompute it often
   float lower_quartile_value;
@@ -120,11 +122,11 @@ float lower_quartile(std::vector<float> numbers)
 
 
 float upper_quartile(std::vector<float> numbers)
-{
+{ // Calculate the upper quartile of a dataset
+
   std::vector<float> upper_half;
   float numbers_median = median(numbers); // So we don't have to recompute it often
   float upper_quartile_value;
-
 
   // If the median is in the numbers vector, then include it in the upper_half
   // vector, else don't include it.
