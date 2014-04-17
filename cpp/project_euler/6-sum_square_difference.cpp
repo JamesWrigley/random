@@ -7,7 +7,7 @@
 int main()
 {
   int max_number = 100;
-  int sum_of_squares;
+  int sum_of_squares = 0;
   int square_of_sum = pow(((max_number * (max_number + 1)) / 2), 2);
 
   for (int i = 1; i <= max_number; i++)
