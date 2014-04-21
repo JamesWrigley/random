@@ -7,13 +7,14 @@
 
 int main()
 {
-  std::vector<int> primes;
+  std::vector<int> number_list(2000000);
+  std::iota(number_list.begin(), number_list.end(), 2);
 
-  for (unsigned int n = 2; n <= sqrt(10); n++)
+  for (unsigned int n = 0; n <= sqrt(10); n++)
     {
-      std::vector<int> n_multiples;
-      for (unsigned int p = 2; p <= sqrt(10); p++)
+      for (unsigned int p = n + 1; p <= number_list.size(); p++)
         {
+          if (fmod(number_list[p], number_list[n]) != 0
         }
     }
 }
