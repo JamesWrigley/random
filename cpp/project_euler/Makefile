@@ -1,4 +1,4 @@
-CC = clang++
+CC = g++
 CFLAGS = -Wall -g -std=c++11
 
 1-multiples_of_3_and_5:
