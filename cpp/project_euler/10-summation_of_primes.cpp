@@ -1,40 +1,42 @@
 // Problem 10 from Project Euler
 // http://projecteuler.net/problem=10
 
-#include <vector>
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
 
 int main()
 {
-  std::vector<unsigned int> number_list(9999);
-  std::iota(number_list.begin(), number_list.end(), 2); // Populate the vector
-
-  unsigned int erasion_count = 0;
-
-  for (unsigned int n = 0; n <= sqrt(number_list.size()); ++n)
+  std::unordered_map<unsigned int, bool> number_map;
+  unsigned int size = 100;
+  unsigned int iter = 2;
+  while (iter <= size)
     {
-      unsigned int n_product = 0;
+      //      number_map[iter] = true;
+      number_map.emplace(iter, true);
+      ++iter;
+    }
 
-      // While the product is less than the greatest element of number_list
-      while (n_product < number_list.back())
+  // The Sieve of Eratosthenes (WIP)
+  for (auto keyValue : number_map)
+    {
+      if (keyValue.second)
         {
-          for (unsigned int multiplicand = 2; multiplicand < number_list.back(); ++multiplicand)
+          unsigned int n_product = 0;
+
+          // While the product is less than the greatest element of number_map
+          for (unsigned int multiplicand = 2; n_product < size; ++multiplicand)
             {
-              n_product = number_list[n] * multiplicand;
-              // Get rid of all occurences of n_product in number_list
-              // This also seems to be the bottleneck
-              number_list.erase(std::remove(number_list.begin(), number_list.end(), n_product), number_list.end());
-              ++erasion_count;
+              n_product = keyValue.first * multiplicand;
+              number_map[n_product] = false;
             }
         }
     }
 
   unsigned int primes_sum = 0;
-  for (unsigned int prime : number_list)
-    {
-      primes_sum += prime;
-    }
-  std::cout << primes_sum << std::endl;
-  std::cout << "Number of calls to std::erase: " << erasion_count << std::endl;
+  // for (auto keyValue : number_map)
+  //   {
+  //     std::cout << keyValue.first << std::endl;
+  //   }
+  //  std::cout << primes_sum << std::endl;
 }

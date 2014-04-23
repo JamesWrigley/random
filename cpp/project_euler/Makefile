@@ -31,6 +31,9 @@ CFLAGS = -Wall -g -std=c++11
 10-summation_of_primes:
 	${CC} ${CFLAGS} 10-summation_of_primes.cpp -o 10-summation_of_primes
 
+profile:
+	${CC} ${CFLAGS} 10-summation_of_primes.cpp -o 10-summation_of_primes -pg
+
  all:
 	make 1-multiples_of_3_and_5
 	make 2-even_fibonacci_numbers
