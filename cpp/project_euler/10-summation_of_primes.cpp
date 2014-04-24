@@ -7,14 +7,12 @@
 
 int main()
 {
-  std::unordered_map<unsigned long long, bool> number_map;
-  unsigned long long size = 2000000;
-  unsigned long long iter = 2;
+  std::unordered_map<unsigned int, bool> number_map;
+  unsigned int size = 2000000;
   // Populate the map
-  while (iter <= size)
+  for (unsigned int iter = 2; iter <= size; ++iter)
     {
       number_map[iter] = true;
-      ++iter;
     }
 
   // The Sieve of Eratosthenes
@@ -22,8 +20,8 @@ int main()
     {
       if (keyValue.second)
         {
-          unsigned long long multiplicand = 2;
-          unsigned long long n_product = multiplicand * keyValue.first;
+          unsigned int multiplicand = 2;
+          unsigned int n_product = multiplicand * keyValue.first;
 
           // While the product is less than the greatest element of number_map
           while (n_product <= size)
