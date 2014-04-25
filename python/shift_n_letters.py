@@ -1,9 +1,12 @@
 #! /usr/bin/python3
+# http://www.pasteall.org/51082/python
+
+
 import string
 
 def shift_n_letters(letter, steps):
     letter_index = string.ascii_lowercase.index(letter) + 1 + steps
-    print()
+    print(string.ascii_lowercase[letter_index])
 
 if __name__ == "__main__":
     user_input = list(input("Enter a letter and a number of steps: ").split())
