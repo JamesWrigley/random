@@ -1,13 +1,11 @@
 #! /usr/bin/python3
+import string
 
 def freq_analysis(message):
     freq_list = []
-    processed_letters = []
 
-    for letter in message:
-        if letter not in processed_letters:
-            freq_list.append(message.count(letter) / len(message))
-            processed_letters.append(letter)
+    for letter in string.ascii_lowercase:
+        freq_list.append(message.count(letter) / len(message))
 
     print(freq_list)
 
