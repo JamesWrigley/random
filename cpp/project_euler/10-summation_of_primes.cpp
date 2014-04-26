@@ -6,9 +6,10 @@
 
 int main()
 {
-  const unsigned int size = 10;
+  const unsigned int size = 2000000;
   std::array<bool, size> bool_array;
   bool_array.fill(true);
+  bool_array[0] = false; bool_array[1] = false;
 
   // The Sieve of Eratosthenes
   for (unsigned int number = 0; number < size; ++number)
@@ -16,16 +17,15 @@ int main()
       if (bool_array[number])
         {
           unsigned int multiplicand = 2;
-          // Add 2 to 'number' because the sieve is meant to start from the number 2
-          // and so number will always be 2 less than the intended number
-          unsigned int n_product = multiplicand * (number + 2);
+          // We increment 'number' by 1 to offset the zero indexing
+          unsigned int n_product = multiplicand * (number + 1);
 
           // While the product is less than the upper bound
           while (n_product <= size)
             {
               bool_array[n_product - 1] = false;
               ++multiplicand;
-              n_product = multiplicand * (number + 2);
+              n_product = multiplicand * (number + 1);
             }
         }
     }
@@ -37,10 +37,10 @@ int main()
       if (bool_array[i])
         {
           primes_sum += i + 1;
-          std::cout << i + 2 << std::endl;
         }
     }
-  --primes_sum;
+  // Subtract one because
+  primes_sum -= 2;
 
   std::cout << primes_sum << std::endl;
 }
