@@ -9,8 +9,8 @@ int main()
   const unsigned int size = 2000000;
   std::array<bool, size> bool_array;
   bool_array.fill(true);
-  // We set the numbers 1 and 2 to false here, it makes it a bit simpler
-  bool_array[0] = false; bool_array[1] = false;
+  // We set the number 1 to false here, it makes it a bit simpler
+  bool_array[0] = false;
 
   // The Sieve of Eratosthenes
   for (unsigned int number = 0; number < size; ++number)
@@ -40,8 +40,6 @@ int main()
           primes_sum += i + 1;
         }
     }
-  // I have no idea why this is neccessary
-  primes_sum -= 2;
 
   std::cout << primes_sum << std::endl;
 }
