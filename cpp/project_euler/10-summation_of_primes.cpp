@@ -1,46 +1,46 @@
 // Problem 10 from Project Euler
 // http://projecteuler.net/problem=10
 
-#include <vector>
+#include <array>
 #include <iostream>
-#include <unordered_map>
 
 int main()
 {
-  std::unordered_map<unsigned int, bool> number_map;
-  unsigned int size = 2000000;
-  // Populate the map
-  for (unsigned int iter = 2; iter <= size; ++iter)
-    {
-      number_map[iter] = true;
-    }
+  const unsigned int size = 10;
+  std::array<bool, size> bool_array;
+  bool_array.fill(true);
 
   // The Sieve of Eratosthenes
-  for (auto keyValue : number_map)
+  for (unsigned int number = 0; number < size; ++number)
     {
-      if (keyValue.second)
+      if (bool_array[number])
         {
           unsigned int multiplicand = 2;
-          unsigned int n_product = multiplicand * keyValue.first;
+          // Add 2 to 'number' because the sieve is meant to start from the number 2
+          // and so number will always be 2 less than the intended number
+          unsigned int n_product = multiplicand * (number + 2);
 
-          // While the product is less than the greatest element of number_map
+          // While the product is less than the upper bound
           while (n_product <= size)
             {
-              number_map[n_product] = false;
+              bool_array[n_product - 1] = false;
               ++multiplicand;
-              n_product = multiplicand * keyValue.first;
+              n_product = multiplicand * (number + 2);
             }
         }
     }
 
   // Add all the primes together
   unsigned long long primes_sum = 0;
-  for (auto keyValue : number_map)
+  for (unsigned int i = 0; i < size; ++i)
     {
-      if (keyValue.second)
+      if (bool_array[i])
         {
-          primes_sum += keyValue.first;
+          primes_sum += i + 1;
+          std::cout << i + 2 << std::endl;
         }
     }
+  --primes_sum;
+
   std::cout << primes_sum << std::endl;
 }
