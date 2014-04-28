@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 
 """
+QtHasher
+
 A program that outputs a cryptographic hash given input from the user.
 Input can be plaintext or a file.
 """
@@ -15,16 +17,21 @@ class MainWindow(QtGui.QWidget):
         super(MainWindow, self).__init__()
         self.initUI()
         
-    # A little function to center the program window
     def center(self):
+        """
+        A little function to center the program window
+        """
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    # Reimplementation of the event handler to hash the input when the return
-    # key is pressed
+
     def keyPressEvent(self, event):
+        """
+        Reimplementation of the event handler to hash the input when the return
+        key is pressed
+        """
         if event.key() == QtCore.Qt.Key_Return:
             hasher(self.lineEdit_input.text())
 
@@ -49,15 +56,17 @@ class MainWindow(QtGui.QWidget):
         vbox.addLayout(hbox)
 
         self.setLayout(vbox)
-        self.setWindowTitle("Qpasher")
+        self.setWindowTitle("QtHasher")
         self.center()
         self.show()
 
 
 hash_algo = hashlib.sha1
 
-# Returns the hash
 def hasher(text):
+    """
+    Returns the hash
+    """
     hashed_text = hash_algo(text.encode()).hexdigest()
     print(hashed_text)
 
