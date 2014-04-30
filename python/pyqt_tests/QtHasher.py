@@ -15,6 +15,8 @@ class MainWindow(QtGui.QWidget):
 
     algo_list = {"MD5":hashlib.md5, "SHA-1":hashlib.sha1, "SHA-224":hashlib.sha224,
                  "SHA-256":hashlib.sha256, "SHA-384":hashlib.sha384, "SHA-512":hashlib.sha512}
+    hash_algo = hashlib.sha1
+    title_font = QtGui.QFont("Inconsolata", 40)
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -36,7 +38,7 @@ class MainWindow(QtGui.QWidget):
         key is pressed
         """
         if event.key() == QtCore.Qt.Key_Return:
-            hasher(self.lineEdit_input.text())
+            self.hash_algo()
 
 
     def initUI(self):
@@ -45,19 +47,21 @@ class MainWindow(QtGui.QWidget):
         hash_button = QtGui.QPushButton("Hash")
         object_type_comboBox = QtGui.QComboBox(self)
         algos_comboBox = QtGui.QComboBox(self)
+        title_label = QtGui.QLabel("QtHasher")
 
-        # Add items to algos_comboBox
-        #        for key in self.algo_list:
+        # Set title font
+        title_label.setFont(self.title_font)
+
+        # Add items to algos_comboBox, and set default algorithm to SHA-1
         algos_comboBox.addItems(["MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512"])
+        algos_comboBox.setCurrentIndex(1)
 
         # Add items to object_type_comboBox
-        object_type_comboBox.addItem("String/Text")
-        object_type_comboBox.addItem("File")
+        object_type_comboBox.addItems(["String/Text", "File"])
 
-
-        # Make connections
-        hash_button.clicked.connect(lambda: hasher(self.lineEdit_input.text()))
-        self.connect(self.lineEdit_input, QtCore.SIGNAL("enterPressed"), lambda: hasher(self.lineEdit_input.text()))
+        # Connect button to function
+        self.hash_algo = lambda: hasher(self.lineEdit_input.text(), self.algo_list[algos_comboBox.currentText()])
+        hash_button.clicked.connect(self.hash_algo)
 
         # Make the layouts
         main_vbox = QtGui.QVBoxLayout()  # Holds all the other layouts
@@ -65,6 +69,8 @@ class MainWindow(QtGui.QWidget):
         lower_hbox = QtGui.QHBoxLayout() # Holds the hash button and algos_comboBox
 
         # Packing
+        main_vbox.addWidget(title_label, 0, QtCore.Qt.AlignHCenter)
+        main_vbox.addSpacing(20)
         upper_hbox.addWidget(object_type_comboBox)
         upper_hbox.addWidget(self.lineEdit_input)
 
@@ -74,20 +80,21 @@ class MainWindow(QtGui.QWidget):
         main_vbox.addLayout(upper_hbox)
         main_vbox.addLayout(lower_hbox)
 
+
         self.setLayout(main_vbox)
         self.setWindowTitle("QtHasher")
+        self.resize(320, 200)
         self.center()
         self.show()
 
 
-hash_algo = hashlib.sha1
 
-def hasher(text):
+def hasher(text, algorithm):
     """
-    Returns the hash
+    Returns the hash of the users input
     """
-    hashed_text = hash_algo(text.encode()).hexdigest()
-    print(hashed_text)
+    hash_value = algorithm(text.encode()).hexdigest()
+    print(hash_value)
 
 
 # Code to actually start the program
