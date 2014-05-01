@@ -12,6 +12,7 @@ import hashlib
 from os.path import expanduser
 from PyQt4 import QtGui, QtCore
 
+
 class MainWindow(QtGui.QWidget):
     # Declare some class variables, their names should make their purpose clear
     algo_list = {"MD5":hashlib.md5, "SHA-1":hashlib.sha1, "SHA-224":hashlib.sha224,
@@ -51,12 +52,26 @@ class MainWindow(QtGui.QWidget):
         """
         if self.object_type_comboBox.currentText() == "String/Text":
             is_objType_string = True
+            self.lineEdit_input.setText("")
             self.lineEdit_input.setReadOnly(False)
             self.open_file_button.setEnabled(False)
         elif self.object_type_comboBox.currentText() == "File":
             is_objType_string = False
+            self.lineEdit_input.setText("")
             self.lineEdit_input.setReadOnly(True)
             self.open_file_button.setEnabled(True)
+
+
+    def hasher_call(self):
+        """
+        This calls hasher() with the users input and displays it in a dialog box.
+        Not quite finished.
+        """
+        hash_value = hasher(self.lineEdit_input.text(),
+                            self.algo_list[self.algos_comboBox.currentText()],
+                            self.is_objType_string)
+        dialog_box = QtGui.QMessageBox.information(self, "Hash Value", hash_value)
+
 
 
     def initUI(self):
@@ -65,23 +80,21 @@ class MainWindow(QtGui.QWidget):
         object_type_label = QtGui.QLabel("Object type:")
         self.object_type_comboBox = QtGui.QComboBox(self)
         self.lineEdit_input = QtGui.QLineEdit(self)
-        algos_comboBox = QtGui.QComboBox(self)
+        self.algos_comboBox = QtGui.QComboBox(self)
         self.open_file_button = QtGui.QPushButton("Open File")
         hash_button = QtGui.QPushButton("Hash")
 
         # Set title font
         title_label.setFont(self.title_font)
 
-        # Add items to algos_comboBox, and set default algorithm to SHA-1
-        algos_comboBox.addItems(["MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512"])
-        algos_comboBox.setCurrentIndex(1)
+        # Add items to self.algos_comboBox, and set default algorithm to SHA-1
+        self.algos_comboBox.addItems(["MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512"])
+        self.algos_comboBox.setCurrentIndex(1)
 
         # Add items to self.object_type_comboBox
         self.object_type_comboBox.addItems(["String/Text", "File"])
 
         # Connect 'hash_button' to 'self.hasher_call'
-        self.hasher_call = lambda: hasher(self.lineEdit_input.text(), self.algo_list[algos_comboBox.currentText()],
-                                        self.object_type_comboBox.currentIndex())
         hash_button.clicked.connect(self.hasher_call)
         
         # Call 'self.change_object_type' when the combo box is changed
@@ -96,7 +109,7 @@ class MainWindow(QtGui.QWidget):
         # Make the layouts
         main_vbox = QtGui.QVBoxLayout()  # Holds all the other layouts
         upper_hbox = QtGui.QHBoxLayout() # Holds lineEdit_input and the hash object combo box
-        lower_hbox = QtGui.QHBoxLayout() # Holds the hash button and algos_comboBox
+        lower_hbox = QtGui.QHBoxLayout() # Holds the hash button and self.algos_comboBox
 
         # Packing
         main_vbox.addWidget(title_label, 0, QtCore.Qt.AlignHCenter)
@@ -106,7 +119,7 @@ class MainWindow(QtGui.QWidget):
         upper_hbox.addWidget(self.lineEdit_input)
 
         lower_hbox.insertStretch(1)
-        lower_hbox.addWidget(algos_comboBox)
+        lower_hbox.addWidget(self.algos_comboBox)
         lower_hbox.addWidget(self.open_file_button)
         lower_hbox.addWidget(hash_button)
         main_vbox.addLayout(upper_hbox)
@@ -122,28 +135,28 @@ class MainWindow(QtGui.QWidget):
 
 
 
-def hasher(text, algorithm, object_type):
+def hasher(text, algorithm, is_object_string):
     """
     Returns the hash of the users input. 'object_type' is the index of the
-    'algos_comboBox', so if it's 0 then the type is string, and if it's 1 it's
+    'self.algos_comboBox', so if it's 0 then the type is string, and if it's 1 it's
     a file.
     """
-    algorithm_instance = algorithm()
 
     # The actual hashing step
-    if object_type == 0:
+    if is_object_string:
         hash_value = algorithm(text.encode()).hexdigest()
-        print(hash_value)
-    elif object_type == 1:
-        blocksize = 262144
+        return hash_value
+    elif not is_object_string:
+        blocksize = 65536
+        algorithm_instance = algorithm()
 
-        with open(text, 'rb') as file:
-            buffer = file.read(blocksize)
+        with open(text, 'rb') as file_object:
+            buffer = file_object.read(blocksize)
             while len(buffer) > 0:
                 algorithm_instance.update(buffer)
-                buffer = file.read(blocksize)
+                buffer = file_object.read(blocksize)
         hash_value = algorithm_instance.hexdigest()
-        print(hash_value)
+        return hash_value
 
 
 
