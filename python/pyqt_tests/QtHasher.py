@@ -73,7 +73,6 @@ class MainWindow(QtGui.QWidget):
         dialog_box = QtGui.QMessageBox.information(self, "Hash Value", hash_value)
 
 
-
     def initUI(self):
         # Widgets, sorted by order of appearance
         title_label = QtGui.QLabel("QtHasher")

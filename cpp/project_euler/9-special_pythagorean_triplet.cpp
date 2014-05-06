@@ -8,7 +8,7 @@
 
 int main()
 {
-  // We set 'a's upper bound to 998, thus making sure that it will always be 
+  // We set 'a's upper bound to 998, thus making sure that it will always be
   // possible to get a 'b' and 'c' larger than 'a'
   for (unsigned int a = 1; a <= 998; a++)
     {
