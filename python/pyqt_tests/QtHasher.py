@@ -13,6 +13,19 @@ from os.path import expanduser
 from PyQt4 import QtGui, QtCore
 
 
+
+class dialog_box(QtGui.QDialog):
+    def __init__(self, parent=None):
+        super(dialog_box, self).__init__(parent)
+
+        self.dialog_window = QtGui.QMessageBox()
+        self.dialog_window.addButton(QtGui.QPushButton("Copy to Clipboard"), QtGui.QMessageBox.YesRole)
+
+    def show_dialog(self, hash_value):
+        self.dialog_window.setText(hash_value)
+        ret = self.dialog_window.exec_()
+
+
 class MainWindow(QtGui.QWidget):
     # Declare some class variables, their names should make their purpose clear
     algo_list = {"MD5":hashlib.md5, "SHA-1":hashlib.sha1, "SHA-224":hashlib.sha224,
@@ -70,7 +83,9 @@ class MainWindow(QtGui.QWidget):
         hash_value = hasher(self.lineEdit_input.text(),
                             self.algo_list[self.algos_comboBox.currentText()],
                             self.is_objType_string)
-        dialog_box = QtGui.QMessageBox.information(self, "Hash Value", hash_value)
+
+        hash_dialog = dialog_box()
+        hash_dialog.show_dialog(hash_value)
 
 
     def initUI(self):
