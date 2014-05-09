@@ -18,12 +18,10 @@ class dialog_box(QtGui.QDialog):
     def __init__(self, parent=None):
         super(dialog_box, self).__init__(parent)
 
-        self.dialog_window = QtGui.QMessageBox()
-        self.dialog_window.addButton(QtGui.QPushButton("Copy to Clipboard"), QtGui.QMessageBox.YesRole)
-
     def show_dialog(self, hash_value):
-        self.dialog_window.setText(hash_value)
-        ret = self.dialog_window.exec_()
+        dialog_window = QtGui.QMessageBox()
+        dialog_window.setText(hash_value)
+        ret = dialog_window.exec_()
 
 
 class MainWindow(QtGui.QWidget):
