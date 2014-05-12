@@ -13,7 +13,6 @@ from os.path import expanduser
 from PyQt4 import QtGui, QtCore
 
 
-
 class dialog_box(QtGui.QDialog):
     def __init__(self, parent=None):
         super(dialog_box, self).__init__(parent)
