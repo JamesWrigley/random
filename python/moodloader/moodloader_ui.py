@@ -36,6 +36,7 @@ class MoodLoader(QtGui.QWidget):
         # Map mod widgets
         map_mod_label = QtGui.QLabel("Map Mods")
         install_map_mod_button = QtGui.QPushButton("Install Map Mod")
+        run_map_mod_button = QtGui.QPushButton("Run Map Mod")
         map_mod_frame = QtGui.QFrame()
         map_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
         map_mod_frame.setLayout(map_mods_vbox)
@@ -43,6 +44,7 @@ class MoodLoader(QtGui.QWidget):
         # Campaign mod widgets
         cam_mod_label = QtGui.QLabel("Campaign Mods")
         install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
+        run_cam_mod_button = QtGui.QPushButton("Run Campaign Mod")
         cam_mod_frame = QtGui.QFrame()
         cam_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
         cam_mod_frame.setLayout(cam_mods_vbox)
@@ -50,24 +52,36 @@ class MoodLoader(QtGui.QWidget):
         # Global mod widgets
         global_mod_label = QtGui.QLabel("Global Mods")
         install_global_mod_button = QtGui.QPushButton("Install Global Mod")
+        run_global_mod_button = QtGui.QPushButton("Run Global Mod")
         global_mod_frame = QtGui.QFrame()
         global_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
         global_mod_frame.setLayout(global_mods_vbox)
 
 
         ### Pack everything ###
+        # Pack labels, the weird addStretch()'s are to semi-center the labels
+        mods_labels_hbox.addStretch()
         mods_labels_hbox.addWidget(map_mod_label)
+        mods_labels_hbox.addStretch()
         mods_labels_hbox.addWidget(cam_mod_label)
+        mods_labels_hbox.addStretch()
         mods_labels_hbox.addWidget(global_mod_label)
+        mods_labels_hbox.addStretch()
 
+        # Pack buttons
         map_mods_vbox.addWidget(install_map_mod_button)
+        map_mods_vbox.addWidget(run_map_mod_button)
         cam_mods_vbox.addWidget(install_cam_mod_button)
+        cam_mods_vbox.addWidget(run_cam_mod_button)
         global_mods_vbox.addWidget(install_global_mod_button)
+        global_mods_vbox.addWidget(run_global_mod_button)
 
+        # Pack frames
         mods_hbox.addWidget(map_mod_frame)
         mods_hbox.addWidget(cam_mod_frame)
         mods_hbox.addWidget(global_mod_frame)
 
+        # Pack everything into 'main_vbox'
         main_vbox.addWidget(header_image_label)
         main_vbox.addLayout(mods_labels_hbox)
         main_vbox.addLayout(mods_hbox)
@@ -75,7 +89,7 @@ class MoodLoader(QtGui.QWidget):
 
 
         self.setLayout(main_vbox)
-        self.setWindowTitle("Mood Loader")
+        self.setWindowTitle("Warzone 2100 Mood Loader")
         self.resize(800, 600)
         self.center()
         self.show()
