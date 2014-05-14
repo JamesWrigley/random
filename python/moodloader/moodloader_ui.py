@@ -21,6 +21,9 @@ class MoodLoader(QtGui.QWidget):
         ### Make all the layouts ###
         main_vbox = QtGui.QVBoxLayout()
         mods_hbox = QtGui.QHBoxLayout()
+        mods_labels_hbox = QtGui.QHBoxLayout()
+        map_mods_vbox = QtGui.QVBoxLayout()
+        cam_mods_vbox = QtGui.QVBoxLayout()
 
 
         ### Make all the widgets ###
@@ -28,20 +31,33 @@ class MoodLoader(QtGui.QWidget):
         header_image_label = QtGui.QLabel()
         header_image_label.setPixmap(header_image)
 
-        # Settings widgets
-        install_mapMod_button = QtGui.QPushButton("Install Map Mod")
-
-        map_mod_frame = QtGui.QFrame(self)
+        # Map mod widgets
+        map_mod_label = QtGui.QLabel("Map Mods")
+        install_map_mod_button = QtGui.QPushButton("Install Map Mod")
+        map_mod_frame = QtGui.QFrame()
         map_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        map_mod_frame.setLayout(mods_hbox)
+        map_mod_frame.setLayout(map_mods_vbox)
+
+        # Campaign mod widgets
+        cam_mod_label = QtGui.QLabel("Campaign Mods")
+        install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
+        cam_mod_frame = QtGui.QFrame()
+        cam_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        cam_mod_frame.setLayout(cam_mods_vbox)
 
 
         ### Pack everything ###
-        mods_hbox.addWidget(install_mapMod_button)
-        mods_hbox.addStretch()
+        mods_labels_hbox.addWidget(map_mod_label)
+        mods_labels_hbox.addWidget(cam_mod_label)
+
+        map_mods_vbox.addWidget(install_map_mod_button)
+        cam_mods_vbox.addWidget(install_cam_mod_button)
+
+        mods_hbox.addWidget(map_mod_frame)
+        mods_hbox.addWidget(cam_mod_frame)
 
         main_vbox.addWidget(header_image_label)
-        main_vbox.addWidget(map_mod_frame)
+        main_vbox.addLayout(mods_hbox)
         main_vbox.addStretch()
 
 
