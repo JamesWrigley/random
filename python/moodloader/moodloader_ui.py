@@ -26,7 +26,7 @@ class MoodLoader(QtGui.QWidget):
         cam_mods_vbox = QtGui.QVBoxLayout()
         global_mods_vbox = QtGui.QVBoxLayout()
 
-        run_options_hbox = QtGui.QHBoxLayout()
+        game_options_hbox = QtGui.QHBoxLayout()
 
 
         ### Stylesheet for the mod QGroupBox's ###
@@ -61,13 +61,17 @@ class MoodLoader(QtGui.QWidget):
         global_mod_gbox.setStyleSheet(mods_stylesheet)
         global_mod_gbox.setLayout(global_mods_vbox)
 
-        # Radio buttons for the WZ running options
-        fullscreen_rb = QtGui.QRadioButton()
-        windowed_rb = QtGui.QRadioButton()
-        shadows_on_fb = QtGui.QRadioButton()
-        shadows_off_fb = QtGui.QRadioButton()
-        shaders_on_rb = QtGui.QRadioButton()
-        shadows_off_fb = QtGui.QRadioButton()
+        # Game options
+        fullscreen_rb = QtGui.QRadioButton("Fullscreen")
+        windowed_rb = QtGui.QRadioButton("Windowed")
+        shadows_on_fb = QtGui.QRadioButton("Shadows On")
+        shadows_off_fb = QtGui.QRadioButton("Shadows Off")
+        shaders_on_rb = QtGui.QRadioButton("Shaders On")
+        shaders_off_rb = QtGui.QRadioButton("Shaders Off")
+
+        game_options_gbox = QtGui.QGroupBox("Game Options")
+        game_options_gbox.setStyleSheet(mods_stylesheet)
+        game_options_gbox.setLayout(game_options_hbox)
 
 
         ### Pack everything ###
@@ -85,6 +89,14 @@ class MoodLoader(QtGui.QWidget):
         global_mods_vbox.addWidget(install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
 
+        # Pack game options radio buttons
+        game_options_hbox.addWidget(fullscreen_rb)
+        game_options_hbox.addWidget(windowed_rb)
+        game_options_hbox.addWidget(shadows_on_fb)
+        game_options_hbox.addWidget(shadows_off_fb)
+        game_options_hbox.addWidget(shaders_on_rb)
+        game_options_hbox.addWidget(shaders_off_rb)
+
         # Pack group boxes into the main 'mods_hbox'
         mods_hbox.addWidget(map_mod_gbox)
         mods_hbox.addWidget(cam_mod_gbox)
@@ -93,6 +105,8 @@ class MoodLoader(QtGui.QWidget):
         # Pack everything into 'main_vbox'
         main_vbox.addWidget(header_image_label)
         main_vbox.addLayout(mods_hbox)
+        main_vbox.insertSpacing(2, 50)
+        main_vbox.addWidget(game_options_gbox)
         main_vbox.addStretch()
 
 
