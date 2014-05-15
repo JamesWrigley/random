@@ -29,8 +29,8 @@ class MoodLoader(QtGui.QWidget):
         run_options_hbox = QtGui.QHBoxLayout()
 
 
-        ### Stylesheets ###
-        mods_stylesheet = "QGroupBox {border: 2px solid gray; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
+        ### Stylesheet for the mod QGroupBox's ###
+        mods_stylesheet = "QGroupBox {border: 2px solid gray; font-family: Inconsolata; font-size: 21px; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
 
 
         ### Make all the widgets ###
@@ -50,8 +50,8 @@ class MoodLoader(QtGui.QWidget):
         # Campaign mod widgets
         install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
         run_cam_mod_button = QtGui.QPushButton("Run Campaign Mod")
-        cam_mod_gbox = QtGui.QFrame()
-        cam_mod_gbox.setFrameShape(QtGui.QFrame.StyledPanel)
+        cam_mod_gbox = QtGui.QGroupBox("Campaign Mods")
+        cam_mod_gbox.setStyleSheet(mods_stylesheet)
         cam_mod_gbox.setLayout(cam_mods_vbox)
 
         # Global mod widgets
@@ -72,15 +72,20 @@ class MoodLoader(QtGui.QWidget):
 
         ### Pack everything ###
 
-        # Pack buttons
+        # Pack mod buttons into their vbox's
+        map_mods_vbox.insertSpacing(0, 10)
         map_mods_vbox.addWidget(install_map_mod_button)
         map_mods_vbox.addWidget(run_map_mod_button)
+
+        cam_mods_vbox.insertSpacing(0, 10)
         cam_mods_vbox.addWidget(install_cam_mod_button)
         cam_mods_vbox.addWidget(run_cam_mod_button)
+        
+        global_mods_vbox.insertSpacing(0, 10)
         global_mods_vbox.addWidget(install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
 
-        # Pack frames
+        # Pack group boxes into the main 'mods_hbox'
         mods_hbox.addWidget(map_mod_gbox)
         mods_hbox.addWidget(cam_mod_gbox)
         mods_hbox.addWidget(global_mod_gbox)
