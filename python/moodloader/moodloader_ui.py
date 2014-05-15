@@ -21,52 +21,56 @@ class MoodLoader(QtGui.QWidget):
         ### Make all the layouts ###
         main_vbox = QtGui.QVBoxLayout()
         mods_hbox = QtGui.QHBoxLayout()
-        mods_labels_hbox = QtGui.QHBoxLayout()
 
         map_mods_vbox = QtGui.QVBoxLayout()
         cam_mods_vbox = QtGui.QVBoxLayout()
         global_mods_vbox = QtGui.QVBoxLayout()
 
+        run_options_hbox = QtGui.QHBoxLayout()
+
+
+        ### Stylesheets ###
+        mods_stylesheet = "QGroupBox {border: 2px solid gray; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
+
 
         ### Make all the widgets ###
+
+        # Header image is randomly chosen, 'choice()' is from the random module
         header_image = QtGui.QPixmap("addons-header-bg"+ choice(str(123)) + ".gif")
         header_image_label = QtGui.QLabel()
         header_image_label.setPixmap(header_image)
 
         # Map mod widgets
-        map_mod_label = QtGui.QLabel("Map Mods")
         install_map_mod_button = QtGui.QPushButton("Install Map Mod")
         run_map_mod_button = QtGui.QPushButton("Run Map Mod")
-        map_mod_frame = QtGui.QFrame()
-        map_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        map_mod_frame.setLayout(map_mods_vbox)
+        map_mod_gbox = QtGui.QGroupBox("Map Mods")
+        map_mod_gbox.setStyleSheet(mods_stylesheet)
+        map_mod_gbox.setLayout(map_mods_vbox)
 
         # Campaign mod widgets
-        cam_mod_label = QtGui.QLabel("Campaign Mods")
         install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
         run_cam_mod_button = QtGui.QPushButton("Run Campaign Mod")
-        cam_mod_frame = QtGui.QFrame()
-        cam_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        cam_mod_frame.setLayout(cam_mods_vbox)
+        cam_mod_gbox = QtGui.QFrame()
+        cam_mod_gbox.setFrameShape(QtGui.QFrame.StyledPanel)
+        cam_mod_gbox.setLayout(cam_mods_vbox)
 
         # Global mod widgets
-        global_mod_label = QtGui.QLabel("Global Mods")
         install_global_mod_button = QtGui.QPushButton("Install Global Mod")
         run_global_mod_button = QtGui.QPushButton("Run Global Mod")
-        global_mod_frame = QtGui.QFrame()
-        global_mod_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        global_mod_frame.setLayout(global_mods_vbox)
+        global_mod_gbox = QtGui.QGroupBox("Global Mods")
+        global_mod_gbox.setStyleSheet(mods_stylesheet)
+        global_mod_gbox.setLayout(global_mods_vbox)
+
+        # Radio buttons for the WZ running options
+        fullscreen_rb = QtGui.QRadioButton()
+        windowed_rb = QtGui.QRadioButton()
+        shadows_on_fb = QtGui.QRadioButton()
+        shadows_off_fb = QtGui.QRadioButton()
+        shaders_on_rb = QtGui.QRadioButton()
+        shadows_off_fb = QtGui.QRadioButton()
 
 
         ### Pack everything ###
-        # Pack labels, the weird addStretch()'s are to semi-center the labels
-        mods_labels_hbox.addStretch()
-        mods_labels_hbox.addWidget(map_mod_label)
-        mods_labels_hbox.addStretch()
-        mods_labels_hbox.addWidget(cam_mod_label)
-        mods_labels_hbox.addStretch()
-        mods_labels_hbox.addWidget(global_mod_label)
-        mods_labels_hbox.addStretch()
 
         # Pack buttons
         map_mods_vbox.addWidget(install_map_mod_button)
@@ -77,13 +81,12 @@ class MoodLoader(QtGui.QWidget):
         global_mods_vbox.addWidget(run_global_mod_button)
 
         # Pack frames
-        mods_hbox.addWidget(map_mod_frame)
-        mods_hbox.addWidget(cam_mod_frame)
-        mods_hbox.addWidget(global_mod_frame)
+        mods_hbox.addWidget(map_mod_gbox)
+        mods_hbox.addWidget(cam_mod_gbox)
+        mods_hbox.addWidget(global_mod_gbox)
 
         # Pack everything into 'main_vbox'
         main_vbox.addWidget(header_image_label)
-        main_vbox.addLayout(mods_labels_hbox)
         main_vbox.addLayout(mods_hbox)
         main_vbox.addStretch()
 
