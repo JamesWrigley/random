@@ -12,19 +12,25 @@ class MainWindow(MoodLoader):
     """
 
     def get_config_path(self):
+        """
+        Get the path of the config folder of the latest version of WZ on the
+        users computer.
+        """
         config_dirs = []
         config_dirs = [directory for directory in os.listdir(os.path.expanduser("~")) if ".warzone2100-" in directory]
 
         if len(config_dirs) == 1:
-            return config_dirs[0]
+            return(os.path.expanduser("~") + "/" + config_dirs[0])
         else:
+            # Else we find the latest version number and append it to the base name
             dir_versions = [float(re.findall(r'\d+\.\d+', foo)[0]) for directory in config_dirs]
-            return ".warzone2100-" + max(dir_versions)
+            return(os.path.expanduser("~") + ".warzone2100-" + str(max(dir_versions)))
 
 
     def __init__(self):
         ### Create some system variables ###
         config_dir = self.get_config_path()
+        print(config_dir)
 
         super(MoodLoader, self).__init__()
         self.initUI()
