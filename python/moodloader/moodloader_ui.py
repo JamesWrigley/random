@@ -26,6 +26,7 @@ class MoodLoader(QtGui.QWidget):
         cam_mods_vbox = QtGui.QVBoxLayout()
         global_mods_vbox = QtGui.QVBoxLayout()
 
+        game_options_vbox = QtGui.QVBoxLayout()
         game_options_hbox = QtGui.QHBoxLayout()
 
 
@@ -64,10 +65,21 @@ class MoodLoader(QtGui.QWidget):
         # Game options
         fullscreen_rb = QtGui.QRadioButton("Fullscreen")
         windowed_rb = QtGui.QRadioButton("Windowed")
-        shadows_on_fb = QtGui.QRadioButton("Shadows On")
-        shadows_off_fb = QtGui.QRadioButton("Shadows Off")
+        shadows_on_rb = QtGui.QRadioButton("Shadows On")
+        shadows_off_rb = QtGui.QRadioButton("Shadows Off")
         shaders_on_rb = QtGui.QRadioButton("Shaders On")
         shaders_off_rb = QtGui.QRadioButton("Shaders Off")
+
+        windowing_button_group = QtGui.QButtonGroup(game_options_hbox)
+        shadows_button_group = QtGui.QButtonGroup(game_options_hbox)
+        shaders_button_group = QtGui.QButtonGroup(game_options_hbox)
+
+        windowing_button_group.addButton(fullscreen_rb)
+        windowing_button_group.addButton(windowed_rb)
+        shadows_button_group.addButton(shadows_on_rb)
+        shadows_button_group.addButton(shadows_off_rb)
+        shaders_button_group.addButton(shaders_on_rb)
+        shaders_button_group.addButton(shaders_off_rb)
 
         game_options_gbox = QtGui.QGroupBox("Game Options")
         game_options_gbox.setStyleSheet(mods_stylesheet)
@@ -92,8 +104,8 @@ class MoodLoader(QtGui.QWidget):
         # Pack game options radio buttons
         game_options_hbox.addWidget(fullscreen_rb)
         game_options_hbox.addWidget(windowed_rb)
-        game_options_hbox.addWidget(shadows_on_fb)
-        game_options_hbox.addWidget(shadows_off_fb)
+        game_options_hbox.addWidget(shadows_on_rb)
+        game_options_hbox.addWidget(shadows_off_rb)
         game_options_hbox.addWidget(shaders_on_rb)
         game_options_hbox.addWidget(shaders_off_rb)
 
