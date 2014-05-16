@@ -30,7 +30,7 @@ class MoodLoader(QtGui.QWidget):
         game_options_hbox = QtGui.QHBoxLayout()
 
 
-        ### Stylesheet for the mod QGroupBox's ###
+        ### Stylesheet for the mods QGroupBox's ###
         mods_stylesheet = "QGroupBox {border: 2px solid gray; font-family: Inconsolata; font-size: 21px; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
 
 
@@ -41,8 +41,13 @@ class MoodLoader(QtGui.QWidget):
         header_image_label = QtGui.QLabel()
         header_image_label.setPixmap(header_image)
 
+        # Generic button tooltips
+        install_mod_tooltip = "Install a mod permanently"
+        run_mod_tooltip = "Run a mod in a WZ session (will not install it)"
+
         # Map mod widgets
         install_map_mod_button = QtGui.QPushButton("Install Map Mod")
+        install_map_mod_button.setToolTip(install_mod_tooltip)
         run_map_mod_button = QtGui.QPushButton("Run Map Mod")
         map_mod_gbox = QtGui.QGroupBox("Map Mods")
         map_mod_gbox.setStyleSheet(mods_stylesheet)
@@ -62,7 +67,7 @@ class MoodLoader(QtGui.QWidget):
         global_mod_gbox.setStyleSheet(mods_stylesheet)
         global_mod_gbox.setLayout(global_mods_vbox)
 
-        # Game options
+        # Game options widgets
         fullscreen_rb = QtGui.QRadioButton("Fullscreen")
         windowed_rb = QtGui.QRadioButton("Windowed")
         shadows_on_rb = QtGui.QRadioButton("Shadows On")
@@ -101,11 +106,15 @@ class MoodLoader(QtGui.QWidget):
         global_mods_vbox.addWidget(install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
 
-        # Pack game options radio buttons
+        # Pack game options radio buttons, note the 'addStretch()'s
         game_options_hbox.addWidget(fullscreen_rb)
         game_options_hbox.addWidget(windowed_rb)
+        game_options_hbox.addStretch()
+
         game_options_hbox.addWidget(shadows_on_rb)
         game_options_hbox.addWidget(shadows_off_rb)
+        game_options_hbox.addStretch()
+
         game_options_hbox.addWidget(shaders_on_rb)
         game_options_hbox.addWidget(shaders_off_rb)
 
