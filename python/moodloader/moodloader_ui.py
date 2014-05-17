@@ -34,6 +34,16 @@ class MoodLoader(QtGui.QWidget):
         mods_stylesheet = "QGroupBox {border: 2px solid gray; font-family: Inconsolata; font-size: 21px; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
 
 
+        ### Make status bar ###
+        self.statusbar = QtGui.QStatusBar(self)
+        self.statusbar.showMessage("Ready")
+
+
+        ### Generic button tooltips ###
+        install_mod_tooltip = "Install a mod permanently"
+        run_mod_tooltip = "Run a mod in a WZ session (will not install it)"
+
+
         ### Make all the widgets ###
 
         # Header image is randomly chosen, 'choice()' is from the random module
@@ -41,28 +51,29 @@ class MoodLoader(QtGui.QWidget):
         header_image_label = QtGui.QLabel()
         header_image_label.setPixmap(header_image)
 
-        # Generic button tooltips
-        install_mod_tooltip = "Install a mod permanently"
-        run_mod_tooltip = "Run a mod in a WZ session (will not install it)"
-
         # Map mod widgets
-        install_map_mod_button = QtGui.QPushButton("Install Map Mod")
-        install_map_mod_button.setToolTip(install_mod_tooltip)
-        run_map_mod_button = QtGui.QPushButton("Run Map Mod")
+        self.install_map_mod_button = QtGui.QPushButton("Install Map Mod")
+        self.install_map_mod_button.setToolTip(install_mod_tooltip)
+        self.run_map_mod_button = QtGui.QPushButton("Run Map Mod")
+        self.run_map_mod_button.setToolTip(run_mod_tooltip)
         map_mod_gbox = QtGui.QGroupBox("Map Mods")
         map_mod_gbox.setStyleSheet(mods_stylesheet)
         map_mod_gbox.setLayout(map_mods_vbox)
 
         # Campaign mod widgets
         install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
+        install_cam_mod_button.setToolTip(install_mod_tooltip)
         run_cam_mod_button = QtGui.QPushButton("Run Campaign Mod")
+        run_cam_mod_button.setToolTip(run_mod_tooltip)
         cam_mod_gbox = QtGui.QGroupBox("Campaign Mods")
         cam_mod_gbox.setStyleSheet(mods_stylesheet)
         cam_mod_gbox.setLayout(cam_mods_vbox)
 
         # Global mod widgets
         install_global_mod_button = QtGui.QPushButton("Install Global Mod")
+        install_global_mod_button.setToolTip(install_mod_tooltip)
         run_global_mod_button = QtGui.QPushButton("Run Global Mod")
+        run_global_mod_button.setToolTip(run_mod_tooltip)
         global_mod_gbox = QtGui.QGroupBox("Global Mods")
         global_mod_gbox.setStyleSheet(mods_stylesheet)
         global_mod_gbox.setLayout(global_mods_vbox)
@@ -95,8 +106,8 @@ class MoodLoader(QtGui.QWidget):
 
         # Pack mod buttons into their vbox's
         map_mods_vbox.insertSpacing(0, 10)
-        map_mods_vbox.addWidget(install_map_mod_button)
-        map_mods_vbox.addWidget(run_map_mod_button)
+        map_mods_vbox.addWidget(self.install_map_mod_button)
+        map_mods_vbox.addWidget(self.run_map_mod_button)
 
         cam_mods_vbox.insertSpacing(0, 10)
         cam_mods_vbox.addWidget(install_cam_mod_button)
@@ -129,6 +140,7 @@ class MoodLoader(QtGui.QWidget):
         main_vbox.insertSpacing(2, 50)
         main_vbox.addWidget(game_options_gbox)
         main_vbox.addStretch()
+        main_vbox.addWidget(self.statusbar)
 
 
         self.setLayout(main_vbox)
