@@ -24,7 +24,7 @@ class MainWindow(MoodLoader):
             return(os.path.expanduser("~") + "/" + matching_dirs[0])
         else:
             # Else we find the latest version number, append it to the base path, and return
-            dir_versions = [float(re.findall(r'\d+\.\d+', directory)) for directory in matching_dirs]
+            dir_versions = [float(re.findall(r'\d+\.\d+', directory)[0]) for directory in matching_dirs]
             return(os.path.expanduser("~") + "/.warzone2100-" + str(max(dir_versions)))
 
 
