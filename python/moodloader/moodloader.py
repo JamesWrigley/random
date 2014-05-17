@@ -21,11 +21,16 @@ class MainWindow(MoodLoader):
         matching_dirs = [directory for directory in os.listdir(os.path.expanduser("~")) if ".warzone2100-" in directory]
 
         if len(matching_dirs) == 1:
+            print(os.path.expanduser("~") + "/" + matching_dirs[0])
             return(os.path.expanduser("~") + "/" + matching_dirs[0])
-        else:
+        elif len(matching_dirs) > 1:
             # Else we find the latest version number, append it to the base path, and return
             dir_versions = [float(re.findall(r'\d+\.\d+', directory)[0]) for directory in matching_dirs]
+            print(os.path.expanduser("~") + "/.warzone2100-" + str(max(dir_versions)))
             return(os.path.expanduser("~") + "/.warzone2100-" + str(max(dir_versions)))
+        else:
+            self.statusbar.showMessage("No config folder found!")
+            return("")
 
 
     def __init__(self):
