@@ -61,8 +61,8 @@ class MoodLoader(QtGui.QWidget):
         map_mod_gbox.setLayout(map_mods_vbox)
 
         # Campaign mod widgets
-        install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
-        install_cam_mod_button.setToolTip(install_mod_tooltip)
+        self.install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
+        self.install_cam_mod_button.setToolTip(install_mod_tooltip)
         run_cam_mod_button = QtGui.QPushButton("Run Campaign Mod")
         run_cam_mod_button.setToolTip(run_mod_tooltip)
         cam_mod_gbox = QtGui.QGroupBox("Campaign Mods")
@@ -70,8 +70,8 @@ class MoodLoader(QtGui.QWidget):
         cam_mod_gbox.setLayout(cam_mods_vbox)
 
         # Global mod widgets
-        install_global_mod_button = QtGui.QPushButton("Install Global Mod")
-        install_global_mod_button.setToolTip(install_mod_tooltip)
+        self.install_global_mod_button = QtGui.QPushButton("Install Global Mod")
+        self.install_global_mod_button.setToolTip(install_mod_tooltip)
         run_global_mod_button = QtGui.QPushButton("Run Global Mod")
         run_global_mod_button.setToolTip(run_mod_tooltip)
         global_mod_gbox = QtGui.QGroupBox("Global Mods")
@@ -110,11 +110,11 @@ class MoodLoader(QtGui.QWidget):
         map_mods_vbox.addWidget(self.run_map_mod_button)
 
         cam_mods_vbox.insertSpacing(0, 10)
-        cam_mods_vbox.addWidget(install_cam_mod_button)
+        cam_mods_vbox.addWidget(self.install_cam_mod_button)
         cam_mods_vbox.addWidget(run_cam_mod_button)
         
         global_mods_vbox.insertSpacing(0, 10)
-        global_mods_vbox.addWidget(install_global_mod_button)
+        global_mods_vbox.addWidget(self.install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
 
         # Pack game options radio buttons, note the 'addStretch()'s
