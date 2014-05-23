@@ -32,33 +32,40 @@ class MainWindow(MoodLoader):
     def __init__(self):
         ### Create some system variables ###
         self.config_dir = self.get_config_path()
+        self.open_dialog_dir = os.path.expanduser("~")
 
 
         super(MoodLoader, self).__init__()
         self.initUI()
 
         ### Set up connections ###
-        self.install_map_mod_button.clicked.connect(lambda: self.install_mod("/maps"))
-        self.install_cam_mod_button.clicked.connect(lambda: self.install_mod("/campaign"))
-        self.install_global_mod_button.clicked.connect(lambda: self.install_mod("/global"))
+        self.install_map_mod_button.clicked.connect(lambda: self.install_mod("/maps/"))
+        self.install_cam_mod_button.clicked.connect(lambda: self.install_mod("/campaign/"))
+        self.install_global_mod_button.clicked.connect(lambda: self.install_mod("/global/"))
 
 
     def install_mod(self, mod_type):
         """
         Install a map to the /.warzone2100-xx/maps folder.
         Note that even the name of the argument is 'mod_type', it's actually
-        the folder name the map is to be installed into (i.e. '/maps' for a map mod).
+        the folder name the map is to be installed into (i.e. '/maps/' for a map mod).
         """
-        mod_path = QtGui.QFileDialog.getOpenFileName(self, "Select Mod", os.path.expanduser("~"), "WZ Mods (*.wz);; All files (*.*)")
+        mod_path = QtGui.QFileDialog.getOpenFileName(self, "Select Mod", self.open_dialog_dir, "WZ Mods (*.wz);; All files (*.*)")
+        mod_install_path  = self.config_dir + mod_type
+        mod_name = os.path.basename(mod_path)
 
-        if mod_path and os.path.isdir(mod_path):
-            shutil.copy(mod_path, self.config_dir + mod_type)
-            self.statusbar.showMessage("Map installed!")
-        elif not mod_path:
+        # Check that all cases are covered before installing
+        if not mod_path:
             return
-        elif not os.path.isdir(mod_path):
-            os.mkdir(self.config_dir + mod_type)
-            self.statusbar.showMessage("Created " + self.config_dir + mod_type + " and installed mod.")
+        elif not os.path.isdir(mod_install_path):
+            os.mkdir(mod_install_path)
+        elif os.path.isfile(mod_install_path + mod_name):
+            self.statusbar.showMessage("Mod already installed!")
+            return
+
+        shutil.copy(mod_path, mod_install_path)
+        self.statusbar.showMessage("Map installed!")
+        self.open_dialog_dir = os.path.dirname(mod_path) # Note that we reset 'self.open_dialog_dir' to the last used folder
 
 
 def main():

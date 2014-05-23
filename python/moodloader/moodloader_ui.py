@@ -86,6 +86,13 @@ class MoodLoader(QtGui.QWidget):
         self.map_data_model = QtGui.QStandardItemModel(self.map_mods_listview)
         self.map_mods_listview.setModel(self.map_data_model)
 
+        self.cam_mods_listview = QtGui.QListView()
+        self.cam_data_model = QtGui.QStandardItemModel(self.cam_mods_listview)
+        self.cam_mods_listview.setModel(self.cam_data_model)
+
+        self.global_mods_listview = QtGui.QListView()
+        self.global_data_model = QtGui.QStandardItemModel(self.global_mods_listview)
+        self.global_mods_listview.setModel(self.global_data_model)
 
         # Game options widgets
         fullscreen_rb = QtGui.QRadioButton("Fullscreen")
@@ -128,7 +135,8 @@ class MoodLoader(QtGui.QWidget):
 
         # Pack listviews
         list_view_hbox.addWidget(self.map_mods_listview)
-        list_view_hbox.addStretch()
+        list_view_hbox.addWidget(self.cam_mods_listview)
+        list_view_hbox.addWidget(self.global_mods_listview)
 
         # Pack game options radio buttons, note the 'addStretch()'s
         game_options_hbox.addWidget(fullscreen_rb)
