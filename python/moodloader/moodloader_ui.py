@@ -29,6 +29,8 @@ class MoodLoader(QtGui.QWidget):
         game_options_vbox = QtGui.QVBoxLayout()
         game_options_hbox = QtGui.QHBoxLayout()
 
+        list_view_hbox = QtGui.QHBoxLayout()
+
 
         ### Stylesheet for the mods QGroupBox's ###
         mods_stylesheet = "QGroupBox {border: 2px solid gray; font-family: Inconsolata; font-size: 21px; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
@@ -78,6 +80,13 @@ class MoodLoader(QtGui.QWidget):
         global_mod_gbox.setStyleSheet(mods_stylesheet)
         global_mod_gbox.setLayout(global_mods_vbox)
 
+
+        ### QListViews to display existing mods ###
+        self.map_mods_listview = QtGui.QListView()
+        self.map_data_model = QtGui.QStandardItemModel(self.map_mods_listview)
+        self.map_mods_listview.setModel(self.map_data_model)
+
+
         # Game options widgets
         fullscreen_rb = QtGui.QRadioButton("Fullscreen")
         windowed_rb = QtGui.QRadioButton("Windowed")
@@ -117,6 +126,10 @@ class MoodLoader(QtGui.QWidget):
         global_mods_vbox.addWidget(self.install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
 
+        # Pack listviews
+        list_view_hbox.addWidget(self.map_mods_listview)
+        list_view_hbox.addStretch()
+
         # Pack game options radio buttons, note the 'addStretch()'s
         game_options_hbox.addWidget(fullscreen_rb)
         game_options_hbox.addWidget(windowed_rb)
@@ -137,9 +150,9 @@ class MoodLoader(QtGui.QWidget):
         # Pack everything into 'main_vbox'
         main_vbox.addWidget(header_image_label)
         main_vbox.addLayout(mods_hbox)
-        main_vbox.insertSpacing(2, 50)
-        main_vbox.addWidget(game_options_gbox)
+        main_vbox.addLayout(list_view_hbox)
         main_vbox.addStretch()
+        main_vbox.addWidget(game_options_gbox)
         main_vbox.addWidget(self.statusbar)
 
 
