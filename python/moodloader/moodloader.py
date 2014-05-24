@@ -4,7 +4,7 @@ import re
 import os
 import sys
 import shutil
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from moodloader_ui import MoodLoader
 
 class MainWindow(MoodLoader):
@@ -74,11 +74,16 @@ class MainWindow(MoodLoader):
         Gets a list of map, campaign, and global mods, and populates their
         respective QListView's with them.
         """
+        # We need this to elide the text
+        mod_size = QtCore.QSize(50, 15)
+
         if os.path.isdir(self.config_dir + "/maps/"):
             map_mods = [mod for mod in os.listdir(self.config_dir + "/maps/")
                         if os.path.isfile(self.config_dir + "/maps/" + mod)]
             for mod in map_mods:
                 mod_item = QtGui.QStandardItem(mod)
+                mod_item.setSizeHint(mod_size)
+                mod_item.setEditable(False)
                 self.map_data_model.appendRow(mod_item)
 
         if os.path.isdir(self.config_dir + "/campaign"):
@@ -86,6 +91,8 @@ class MainWindow(MoodLoader):
                         if os.path.isfile(self.config_dir + "/campaign/" + mod)]
             for mod in cam_mods:
                 mod_item = QtGui.QStandardItem(mod)
+                mod_item.setSizeHint(mod_size)
+                mod_item.setEditable(False)
                 self.cam_data_model.appendRow(mod_item)
 
         if os.path.isdir(self.config_dir + "/global/"):
@@ -93,6 +100,8 @@ class MainWindow(MoodLoader):
                            if os.path.isfile(self.config_dir + "/global/" + mod)]
             for mod in global_mods:
                 mod_item = QtGui.QStandardItem(mod)
+                mod_item.setSizeHint(mod_size)
+                mod_item.setEditable(False)
                 self.global_data_model.appendRow(mod_item)
 
 
