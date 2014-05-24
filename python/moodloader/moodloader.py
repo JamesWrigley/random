@@ -13,6 +13,22 @@ class MainWindow(MoodLoader):
     also set up connections for the widgets.
     """
 
+    def __init__(self):
+        ### Create some system variables ###
+        self.config_dir = self.get_config_path()
+        self.open_dialog_dir = os.path.expanduser("~")
+
+
+        super(MoodLoader, self).__init__()
+        self.initUI()
+
+        ### Set up connections ###
+        self.install_map_mod_button.clicked.connect(lambda: self.install_mod("/maps/"))
+        self.install_cam_mod_button.clicked.connect(lambda: self.install_mod("/campaign/"))
+        self.install_global_mod_button.clicked.connect(lambda: self.install_mod("/global/"))
+
+        self.populate_listviews()
+
     def get_config_path(self):
         """
         Get the path of the config folder of the latest version of WZ on the
@@ -27,21 +43,6 @@ class MainWindow(MoodLoader):
         else:
             self.statusbar.showMessage("No config folder found!")
             return("")
-
-
-    def __init__(self):
-        ### Create some system variables ###
-        self.config_dir = self.get_config_path()
-        self.open_dialog_dir = os.path.expanduser("~")
-
-
-        super(MoodLoader, self).__init__()
-        self.initUI()
-
-        ### Set up connections ###
-        self.install_map_mod_button.clicked.connect(lambda: self.install_mod("/maps/"))
-        self.install_cam_mod_button.clicked.connect(lambda: self.install_mod("/campaign/"))
-        self.install_global_mod_button.clicked.connect(lambda: self.install_mod("/global/"))
 
 
     def install_mod(self, mod_type):
@@ -66,6 +67,33 @@ class MainWindow(MoodLoader):
         shutil.copy(mod_path, mod_install_path)
         self.statusbar.showMessage("Map installed!")
         self.open_dialog_dir = os.path.dirname(mod_path) # Note that we reset 'self.open_dialog_dir' to the last used folder
+
+
+    def populate_listviews(self):
+        """
+        Gets a list of map, campaign, and global mods, and populates their
+        respective QListView's with them.
+        """
+        if os.path.isdir(self.config_dir + "/maps/"):
+            map_mods = [mod for mod in os.listdir(self.config_dir + "/maps/")
+                        if os.path.isfile(self.config_dir + "/maps/" + mod)]
+            for mod in map_mods:
+                mod_item = QtGui.QStandardItem(mod)
+                self.map_data_model.appendRow(mod_item)
+
+        if os.path.isdir(self.config_dir + "/campaign"):
+            cam_mods = [mod for mod in os.listdir(self.config_dir + "/campaign/")
+                        if os.path.isfile(self.config_dir + "/campaign/" + mod)]
+            for mod in cam_mods:
+                mod_item = QtGui.QStandardItem(mod)
+                self.cam_data_model.appendRow(mod_item)
+
+        if os.path.isdir(self.config_dir + "/global/"):
+            global_mods = [mod for mod in os.listdir(self.config_dir + "/global/")
+                           if os.path.isfile(self.config_dir + "/global/" + mod)]
+            for mod in global_mods:
+                mod_item = QtGui.QStandardItem(mod)
+                self.global_data_model.appendRow(mod_item)
 
 
 def main():
