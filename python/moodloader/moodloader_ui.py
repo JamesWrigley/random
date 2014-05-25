@@ -29,8 +29,6 @@ class MoodLoader(QtGui.QWidget):
         game_options_vbox = QtGui.QVBoxLayout()
         game_options_hbox = QtGui.QHBoxLayout()
 
-        list_view_hbox = QtGui.QHBoxLayout()
-
 
         ### Stylesheet for the mods QGroupBox's ###
         mods_stylesheet = "QGroupBox {border: 2px solid gray; font-family: Inconsolata; font-size: 21px; margin-top: .5em;} QGroupBox::title {subcontrol-origin: margin; subcontrol-position: top center; padding:0 10px;}"
@@ -127,21 +125,19 @@ class MoodLoader(QtGui.QWidget):
         map_mods_vbox.insertSpacing(0, 10)
         map_mods_vbox.addWidget(self.install_map_mod_button)
         map_mods_vbox.addWidget(self.run_map_mod_button)
+        map_mods_vbox.addWidget(self.map_mods_listview)
 
         cam_mods_vbox.insertSpacing(0, 10)
         cam_mods_vbox.addWidget(self.install_cam_mod_button)
         cam_mods_vbox.addWidget(run_cam_mod_button)
+        cam_mods_vbox.addWidget(self.cam_mods_listview)
         
         global_mods_vbox.insertSpacing(0, 10)
         global_mods_vbox.addWidget(self.install_global_mod_button)
         global_mods_vbox.addWidget(run_global_mod_button)
+        global_mods_vbox.addWidget(self.global_mods_listview)
 
-        # Pack listviews
-        list_view_hbox.addWidget(self.map_mods_listview)
-        list_view_hbox.addWidget(self.cam_mods_listview)
-        list_view_hbox.addWidget(self.global_mods_listview)
-
-        # Pack game options radio buttons, note the 'addStretch()'s
+        # Pack game options radio buttons, note the deplorable 'addStretch()'s
         game_options_hbox.addWidget(fullscreen_rb)
         game_options_hbox.addWidget(windowed_rb)
         game_options_hbox.addStretch()
@@ -161,7 +157,6 @@ class MoodLoader(QtGui.QWidget):
         # Pack everything into 'main_vbox'
         main_vbox.addWidget(header_image_label)
         main_vbox.addLayout(mods_hbox)
-        main_vbox.addLayout(list_view_hbox)
         main_vbox.addStretch()
         main_vbox.addWidget(game_options_gbox)
         main_vbox.addWidget(self.statusbar)
