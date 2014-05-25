@@ -83,6 +83,7 @@ class MainWindow(MoodLoader):
             for mod in map_mods:
                 mod_item = QtGui.QStandardItem(mod)
                 mod_item.setSizeHint(mod_size)
+                mod_item.setToolTip(mod)
                 mod_item.setEditable(False)
                 self.map_data_model.appendRow(mod_item)
 
@@ -92,6 +93,7 @@ class MainWindow(MoodLoader):
             for mod in cam_mods:
                 mod_item = QtGui.QStandardItem(mod)
                 mod_item.setSizeHint(mod_size)
+                mod_item.setToolTip(mod)
                 mod_item.setEditable(False)
                 self.cam_data_model.appendRow(mod_item)
 
@@ -101,6 +103,7 @@ class MainWindow(MoodLoader):
             for mod in global_mods:
                 mod_item = QtGui.QStandardItem(mod)
                 mod_item.setSizeHint(mod_size)
+                mod_item.setToolTip(mod)
                 mod_item.setEditable(False)
                 self.global_data_model.appendRow(mod_item)
 
