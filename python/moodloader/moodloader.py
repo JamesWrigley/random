@@ -23,11 +23,17 @@ class MainWindow(MoodLoader):
         self.initUI()
 
         ### Set up connections ###
-        self.install_map_mod_button.clicked.connect(lambda: self.install_mod("/maps/"))
+        self.install_map_button.clicked.connect(lambda: self.install_mod("/maps/"))
         self.install_cam_mod_button.clicked.connect(lambda: self.install_mod("/campaign/"))
         self.install_global_mod_button.clicked.connect(lambda: self.install_mod("/global/"))
 
+        ### Set up the QListView's
         self.populate_listviews()
+#        for view in [self.map_mods_listview, self.cam_mods_listview, self.global_mods_listview]:
+#            view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+#            view.connect(view, QtCore.signal("customContextMenuRequested(QPoint)"),
+#                         self.listview_menu)
+
 
     def get_config_path(self):
         """
@@ -106,6 +112,15 @@ class MainWindow(MoodLoader):
                 mod_item.setToolTip(mod)
                 mod_item.setEditable(False)
                 self.global_data_model.appendRow(mod_item)
+
+
+    def listview_menu(self):
+        """
+        Called when a QListView item is right-clicked on, lets the user delete
+        the selected mod.
+        """
+        menu = QtGui.QMenu("Options", self)
+        #        menu.addAction
 
 
 def main():

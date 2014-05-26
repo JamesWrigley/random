@@ -22,7 +22,7 @@ class MoodLoader(QtGui.QWidget):
         main_vbox = QtGui.QVBoxLayout()
         mods_hbox = QtGui.QHBoxLayout()
 
-        map_mods_vbox = QtGui.QVBoxLayout()
+        maps_vbox = QtGui.QVBoxLayout()
         cam_mods_vbox = QtGui.QVBoxLayout()
         global_mods_vbox = QtGui.QVBoxLayout()
 
@@ -51,14 +51,14 @@ class MoodLoader(QtGui.QWidget):
         header_image_label = QtGui.QLabel()
         header_image_label.setPixmap(header_image)
 
-        # Map mod widgets
-        self.install_map_mod_button = QtGui.QPushButton("Install Map Mod")
-        self.install_map_mod_button.setToolTip(install_mod_tooltip)
-        self.run_map_mod_button = QtGui.QPushButton("Run Map Mod")
-        self.run_map_mod_button.setToolTip(run_mod_tooltip)
-        map_mod_gbox = QtGui.QGroupBox("Map Mods")
-        map_mod_gbox.setStyleSheet(mods_stylesheet)
-        map_mod_gbox.setLayout(map_mods_vbox)
+        # Map widgets
+        self.install_map_button = QtGui.QPushButton("Install Map")
+        self.install_map_button.setToolTip(install_mod_tooltip)
+        self.run_map_button = QtGui.QPushButton("Run Map")
+        self.run_map_button.setToolTip(run_mod_tooltip)
+        maps_gbox = QtGui.QGroupBox("Maps")
+        maps_gbox.setStyleSheet(mods_stylesheet)
+        maps_gbox.setLayout(maps_vbox)
 
         # Campaign mod widgets
         self.install_cam_mod_button = QtGui.QPushButton("Install Campaign Mod")
@@ -122,10 +122,10 @@ class MoodLoader(QtGui.QWidget):
         ### Pack everything ###
 
         # Pack mod buttons into their vbox's
-        map_mods_vbox.insertSpacing(0, 10)
-        map_mods_vbox.addWidget(self.install_map_mod_button)
-        map_mods_vbox.addWidget(self.run_map_mod_button)
-        map_mods_vbox.addWidget(self.map_mods_listview)
+        maps_vbox.insertSpacing(0, 10)
+        maps_vbox.addWidget(self.install_map_button)
+        maps_vbox.addWidget(self.run_map_button)
+        maps_vbox.addWidget(self.map_mods_listview)
 
         cam_mods_vbox.insertSpacing(0, 10)
         cam_mods_vbox.addWidget(self.install_cam_mod_button)
@@ -150,7 +150,7 @@ class MoodLoader(QtGui.QWidget):
         game_options_hbox.addWidget(shaders_off_rb)
 
         # Pack group boxes into the main 'mods_hbox'
-        mods_hbox.addWidget(map_mod_gbox)
+        mods_hbox.addWidget(maps_gbox)
         mods_hbox.addWidget(cam_mod_gbox)
         mods_hbox.addWidget(global_mod_gbox)
 
