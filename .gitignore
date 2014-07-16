@@ -89,3 +89,7 @@ Session.vim
 *.xyz
 *.o
 __*__/
+
+### Project specific stuff ###
+## Qt Hasher ##
+moc_hasher*
