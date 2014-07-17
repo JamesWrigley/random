@@ -1,6 +1,11 @@
 #include <QDir>
+#include <string>
+#include <iostream>
+#include <algorithm>
+#include <QMessageBox>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <openssl/evp.h>
 #include "hasher.h"
 
 Hasher::Hasher(QWidget *parent) : QWidget(parent)
@@ -13,6 +18,8 @@ Hasher::Hasher(QWidget *parent) : QWidget(parent)
                    this, SLOT(change_object_type(int)));
   QObject::connect(open_file_button, SIGNAL(clicked(bool)),
                    this, SLOT(select_file()));
+  QObject::connect(hash_button, SIGNAL(clicked(bool)),
+                   this, SLOT(generate_digest()));
 
   // Packing
   title_hbox->addStretch();
@@ -70,6 +77,38 @@ void Hasher::create_widgets()
   algos_comboBox->setCurrentIndex(1);
 
   lineEdit_input = new QLineEdit(this);
+}
+
+
+void Hasher::generate_digest()
+{
+  // Get the users data, notice we clean up 'algo' before passing it to 'EVP_get_digestbyname()'
+  std::string message = lineEdit_input->text().toStdString();
+  std::string algo = algos_comboBox->currentText().toStdString();
+  algo.erase(std::remove(algo.begin(), algo.end(), '-'), algo.end());
+
+  OpenSSL_add_all_digests();
+  EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
+  const EVP_MD *md = EVP_get_digestbyname(algo.c_str());
+  unsigned char md_value[EVP_MAX_MD_SIZE];
+  unsigned int md_length = 0;
+
+  if (0 == object_types_comboBox->currentIndex())
+    {
+      EVP_DigestInit_ex(mdctx, md, NULL);
+      EVP_DigestUpdate(mdctx, message.c_str(), message.length());
+      EVP_DigestFinal_ex(mdctx, md_value, &md_length);
+      EVP_MD_CTX_destroy(mdctx);
+    }
+
+  QString digest;
+  char buff[md_length];
+  for (unsigned int i = 0; i < md_length; ++i)
+    {
+      sprintf(buff, "%02x", md_value[i]);
+      digest.append(buff);
+    }
+  QMessageBox::information(this, "Message Digest", digest);
 }
 
 

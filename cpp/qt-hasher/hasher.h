@@ -21,6 +21,7 @@ class Hasher : public QWidget
   private slots:
     void change_object_type(int);
     void select_file();
+    void generate_digest();
 
  private:
     void center_window();
