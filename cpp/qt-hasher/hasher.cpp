@@ -1,6 +1,5 @@
 #include <QDir>
 #include <string>
-#include <iostream>
 #include <algorithm>
 #include <QMessageBox>
 #include <QApplication>
