@@ -1,5 +1,7 @@
 #include <QDir>
+#include <QFile>
 #include <string>
+#include <fstream>
 #include <algorithm>
 #include <QMessageBox>
 #include <QApplication>
@@ -91,11 +93,25 @@ void Hasher::generate_digest()
   const EVP_MD *md = EVP_get_digestbyname(algo.c_str());
   unsigned char md_value[EVP_MAX_MD_SIZE];
   unsigned int md_length = 0;
+  EVP_DigestInit_ex(mdctx, md, NULL);
 
   if (0 == object_types_comboBox->currentIndex())
     {
-      EVP_DigestInit_ex(mdctx, md, NULL);
       EVP_DigestUpdate(mdctx, message.c_str(), message.length());
+      EVP_DigestFinal_ex(mdctx, md_value, &md_length);
+      EVP_MD_CTX_destroy(mdctx);
+    }
+  else if (1 == object_types_comboBox->currentIndex())
+    {
+      int blocksize = 65536;
+      char buffer[blocksize];
+      std::ifstream file(lineEdit_input->text().toStdString());
+      while (file.read(reinterpret_cast<char*>(&buffer), blocksize))
+        {
+          EVP_DigestUpdate(mdctx, buffer, blocksize);
+        }
+
+      file.close();
       EVP_DigestFinal_ex(mdctx, md_value, &md_length);
       EVP_MD_CTX_destroy(mdctx);
     }
