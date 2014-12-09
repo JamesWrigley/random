@@ -31,8 +31,8 @@ CFLAGS = -Wall -g -std=c++11
 10-summation_of_primes:
 	${CC} ${CFLAGS} 10-summation_of_primes.cpp -o 10-summation_of_primes
 
-debug:
-	${CC} ${CFLAGS} -g 10-summation_of_primes.cpp
+11-largest_product_in_grid:
+	${CC} ${CFLAGS} 11-largest_product_in_grid.cpp -o 11-largest_product_in_grid
 
  all:
 	make 1-multiples_of_3_and_5
@@ -45,6 +45,7 @@ debug:
 	make 8-largest_product_in_series
 	make 9-special_pythagorean_triplet
 	make 10-summation_of_primes
+	make 11-largest_product_in_grid
 
  clean:
 	rm -f 1-multiples_of_3_and_5
@@ -57,3 +58,4 @@ debug:
 	rm -f 8-largest_product_in_series
 	rm -f 9-special_pythagorean_triplet
 	rm -f 10-summation_of_primes
+	rm -f 11-largest_product_in_grid
