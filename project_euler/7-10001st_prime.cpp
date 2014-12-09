@@ -1,4 +1,4 @@
-// Problem 1 from Project Euler
+// Problem 7 from Project Euler
 // http://projecteuler.net/problem=7
 
 #include <iostream>
